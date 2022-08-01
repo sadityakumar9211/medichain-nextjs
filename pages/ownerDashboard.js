@@ -28,9 +28,14 @@ export default function OwnerDashboard() {
 
     return (
         <div className="container mx-auto">
+        <Head>
+                <title>MediChain - Owner Dashboard</title>
+                <meta name="description" content="MediChain - Owner Dashboard" />
+                <link rel="icon" href="/logo.svg" />
+            </Head>
             <Header />
-            <h1 className="py-4 px-3 font-bold text-2xl">Owner Dashboard</h1>
-            <ConnectButton /> 
+            <h1 className="py-4 px-3 font-bold text-2xl mx-auto">Owner Dashboard</h1>
+            <ConnectButton moralisAuth={false}/> 
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
                     <div>Web3 is Enabled</div>

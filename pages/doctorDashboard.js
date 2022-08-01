@@ -28,9 +28,14 @@ export default function DoctorDashboard() {
 
     return (
         <div className="container mx-auto">
+        <Head>
+                <title>MediChain - Doctor Dashboard</title>
+                <meta name="description" content="MediChain - Doctor Dashboard" />
+                <link rel="icon" href="/logo.svg" />
+            </Head>
             <Header />
-            <h1 className="py-4 px-3 font-bold text-2xl">Doctor Dashboard</h1>
-            <ConnectButton /> 
+            <h1 className="py-4 px-3 font-bold text-4xl mx-auto">Doctor Dashboard</h1>
+            <ConnectButton moralisAuth={false}/> 
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
                     <div>Web3 is Enabled</div>
