@@ -2,7 +2,10 @@
 import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
-import { ConnectButton } from "web3uikit"
+import Header from '../components/Header'
+
+import Link from "next/link"
+
 
 export default function Home() {
     return (
@@ -13,98 +16,9 @@ export default function Home() {
                 <link rel="icon" href="/logo.svg" />
             </Head>
             <div className="overflow-x-hidden antialiased">
-                {/* <!-- Header Section --> */}
-                <header className="relative z-50 w-full h-24">
-                    <div className="container flex items-center justify-center h-full max-w-6xl px-8 mx-auto sm:justify-between xl:px-0">
-                        <a
-                            href="/"
-                            className="relative flex items-center inline-block h-5 h-full font-black leading-none"
-                        >
-                            {/* We have a SVG here */}
-                            <img src="/logo.svg" alt="Logo of MediChain" />
-                            <span className="ml-3 text-xl text-gray-800">
-                                MediChain
-                                <span className="text-pink-500">.</span>
-                            </span>
-                        </a>
-
-                        <nav
-                            id="nav"
-                            className="absolute top-0 left-0 z-50 flex flex-col items-center justify-between hidden w-full h-64 pt-5 mt-24 text-sm text-gray-800 bg-white border-t border-gray-200 md:w-auto md:flex-row md:h-24 lg:text-base md:bg-transparent md:mt-0 md:border-none md:py-0 md:flex md:relative"
-                        >
-                            <a
-                                href="#"
-                                className="ml-0 mr-0 font-bold duration-100 md:ml-12 md:mr-3 lg:mr-8 transition-color hover:text-indigo-600"
-                            >
-                                Home
-                            </a>
-                            <a
-                                href="#features"
-                                className="mr-0 font-bold duration-100 md:mr-3 lg:mr-8 transition-color hover:text-indigo-600"
-                            >
-                                Features
-                            </a>
-                            <a
-                                href="/hospitalLogin"
-                                className="mr-0 font-bold duration-100 md:mr-3 lg:mr-8 transition-color hover:text-indigo-600"
-                            >
-                                Hospital
-                            </a>
-                            <a
-                                href="/doctorLogin"
-                                className="mr-0 font-bold duration-100 md:mr-3 lg:mr-8 transition-color hover:text-indigo-600"
-                            >
-                                Doctor
-                            </a>
-                            <div class="flex flex-col block w-full font-medium border-t border-gray-200 md:hidden">
-                                <a
-                                    href="/ownerLogin"
-                                    class="w-full py-2 font-bold text-center text-pink-500"
-                                >
-                                    Owner
-                                </a>
-                                <a
-                                    href="/patientLogin"
-                                    class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold"
-                                >
-                                    Patient
-                                </a>
-                            </div>
-                        </nav>
-
-                        <div class="absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
-                            <a
-                              href="/OwnerLogin"
-                                class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0"
-                            >
-                                Owner
-                            </a>
-                            <a
-                                href="/patientLogin"
-                                class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded-lg shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl"
-                            >
-                                Patient
-                            </a>
-                            {/* We have an SVG Here */}
-                            <img
-                                src="/overlappedSquare.svg"
-                                className="absolute top-0 left-0 hidden w-screen max-w-3xl -mt-64 -ml-12 lg:block"
-                                alt="overlapped square svg"
-                            />
-                        </div>
-
-                        <div
-                            id="nav-mobile-btn"
-                            className="absolute top-0 right-0 z-50 block w-6 mt-8 mr-10 cursor-pointer select-none md:hidden sm:mt-10"
-                        >
-                            <span className="block w-full h-1 mt-2 duration-200 transform bg-gray-800 rounded-full sm:mt-1"></span>
-                            <span className="block w-full h-1 mt-1 duration-200 transform bg-gray-800 rounded-full"></span>
-                        </div>
-                    </div>
-                </header>
-                {/* <!-- End Header Section--> */}
-
-                {/* <!-- BEGIN HERO SECTION --> */}
+                {/* Header Here */}
+                <Header />
+                {/* <!-- BEGIN MAIN SECTION --> */}
                 <div className="relative items-center justify-center w-full overflow-x-hidden lg:pt-40 lg:pb-40 xl:pt-40 xl:pb-64">
                     <div className="container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0">
                         <div className="z-30 flex flex-col items-center w-full max-w-xl pt-48 text-center lg:items-start lg:w-1/2 lg:pt-20 xl:pt-40 lg:text-left">
@@ -112,14 +26,18 @@ export default function Home() {
                                 Decentralized Medical Record Keeping System
                             </h1>
                             <p className="pr-0 mb-8 text-base text-gray-600 sm:text-lg xl:text-xl lg:pr-20">
-                                An ethereum based decentralized application where only patients can access there medical data, providing full control over the data.
+                                An ethereum based decentralized application
+                                where only patients can access there medical
+                                data, providing full control over the data.
                             </p>
+                            <Link href="/patientDashboard">
                             <a
-                                href="#_"
+                                
                                 className="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0"
                             >
                                 Patient Login
                             </a>
+                            </Link>
                         </div>
                         <div className="relative z-50 flex flex-col items-end justify-center w-full h-full lg:w-1/2 ms:pl-10">
                             <div className="container relative left-0 w-full max-w-4xl lg:absolute lg:w-screen">
@@ -140,10 +58,11 @@ export default function Home() {
                 >
                     <div className="container flex flex-col items-center justify-between h-full max-w-6xl mx-auto">
                         <h2 className="my-5 text-base font-medium tracking-tight text-indigo-500 uppercase">
-                            Features 
+                            Features
                         </h2>
                         <h3 className="max-w-2xl px-5 mt-2 text-3xl font-black leading-tight text-center text-gray-900 sm:mt-0 sm:px-0 sm:text-6xl">
-                            Built and Designed with patients ease and privacy in Mind
+                            Built and Designed with patients ease and privacy in
+                            Mind
                         </h3>
                         <div className="flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-20">
                             <div className="w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/3">
@@ -161,10 +80,13 @@ export default function Home() {
                                         className="relative w-20 h-20"
                                     />
                                     <h4 className="relative mt-6 text-lg font-bold">
-                                        Ease and Control 
+                                        Ease and Control
                                     </h4>
                                     <p className="relative mt-2 text-base text-center text-gray-600">
-                                        Ease and control of your medical records. You can access it whenever you want. Only you can access your data and no one can. 
+                                        Ease and control of your medical
+                                        records. You can access it whenever you
+                                        want. Only you can access your data and
+                                        no one can.
                                     </p>
                                     <a
                                         href="https://www.cloudflare.com/en-in/learning/ssl/how-does-public-key-encryption-work/"
@@ -193,7 +115,10 @@ export default function Home() {
                                         Immutability
                                     </h4>
                                     <p className="relative mt-2 text-base text-center text-gray-600">
-                                        Being deployed on public blockchain, this application makes sure that the patient's data is permanent, indellible and unalterable. 
+                                        Being deployed on public blockchain,
+                                        this application makes sure that the
+                                        patient's data is permanent, indellible
+                                        and unalterable.
                                     </p>
                                     <a
                                         href="https://www.solulab.com/what-is-immutable-ledger-in-blockchain-and-its-benefits"
@@ -222,7 +147,11 @@ export default function Home() {
                                         Enhanced Security
                                     </h4>
                                     <p className="relative mt-2 text-base text-center text-gray-600">
-                                        Every node in the network has an encrypted copy of you data which only you can decrypt. This removes single point of failure making the data safe from ransomeware hacking attempts.
+                                        Every node in the network has an
+                                        encrypted copy of you data which only
+                                        you can decrypt. This removes single
+                                        point of failure making the data safe
+                                        from ransomeware hacking attempts.
                                     </p>
                                     <a
                                         href="https://www.techopedia.com/can-the-blockchain-be-hacked/2/33623"
@@ -406,7 +335,7 @@ export default function Home() {
                     </div>
 
                     <div className="pt-2 pt-4 mt-2 text-center text-gray-600 border-t border-gray-100">
-                        Developed by {" "}
+                        Developed by{" "}
                         <a href="https://saditya9211.me">Aditya Kumar Singh</a>
                     </div>
                 </footer>
