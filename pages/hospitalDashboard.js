@@ -10,6 +10,7 @@ import { useQuery } from "@apollo/client"
 import styles from "../styles/Home.module.css"
 import { ConnectButton } from "web3uikit"
 import Header from "../components/Header"
+import HospitalWorkflow from '../components/HospitalWorkflow'
 
 export default function HospitalDashboard() {
     const { isWeb3Enabled, chainId: chainHexId } = useMoralis()
@@ -36,15 +37,29 @@ export default function HospitalDashboard() {
                 <link rel="icon" href="/logo.svg" />
             </Head>
             <Header />
-            <h1 className="py-4 px-3 font-bold text-4xl mx-auto">Hospital Dashboard</h1>
-            <ConnectButton moralisAuth={false}/> 
-            <div className="flex flex-wrap">
-                {isWeb3Enabled ? (
-                    <div>Web3 is Enabled</div>
-                ) : (
-                    <div>Web3 Currently Not Enabled</div>
-                )}
+            <div className="container">
+                <div className="py-4 px-3 font-bold text-4xl ml-12">
+                    Hospital Dashboard
+                    {isWeb3Enabled ? (<div className="badge badge-primary ml-4">Web3 is Enabled</div>):(<div class="badge badge-warning ml-4">Web3 Not Enabled</div>)}
+                </div>
+                <div className="mx-auto ml-12"><ConnectButton moralisAuth={false}/></div>
+                <div className="flex flex-wrap">
+                    {isWeb3Enabled ? (
+                        <div>{/* 1. if patient is registered then show the medical record of the patient 
+                        
+                        2. Otherwise give a registration form to the patient to register in form of a modal.
+                          */}</div>
+                    ) : (
+                        <div>
+                        
+                        <HospitalWorkflow/>
+                        </div>
+
+
+                    )}
+                </div>
             </div>
         </div>
     )
 }
+
