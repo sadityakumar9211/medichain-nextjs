@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client"
 import styles from "../styles/Home.module.css"
 import { ConnectButton } from "web3uikit"
 import Header from "../components/Header"
-import PatientWorkflow from '../components/PatientWorkflow'
+import PatientWorkflow from "../components/PatientWorkflow"
 
 export default function PatientDashboard() {
     const { isWeb3Enabled, chainId: chainHexId } = useMoralis()
@@ -30,29 +30,41 @@ export default function PatientDashboard() {
         <div className="container mx-auto">
             <Head>
                 <title>MediChain - Patient Dashboard</title>
-                <meta name="description" content="MediChain - Patient Dashboard" />
+                <meta
+                    name="description"
+                    content="MediChain - Patient Dashboard"
+                />
                 <link rel="icon" href="/logo.svg" />
             </Head>
             <Header />
             <div className="container">
                 <div className="py-4 px-3 font-bold text-4xl ml-12">
                     Patient Dashboard
-                    {isWeb3Enabled ? (<div className="badge badge-primary ml-4">Web3 is Enabled</div>):(<div class="badge badge-warning ml-4">Web3 Not Enabled</div>)}
+                    {isWeb3Enabled ? (
+                        <div className="badge badge-primary ml-4">
+                            Web3 is Enabled
+                        </div>
+                    ) : (
+                        <div className="badge badge-warning ml-4">
+                            Web3 Not Enabled
+                        </div>
+                    )}
                 </div>
-                <div className="mx-auto ml-12"><ConnectButton moralisAuth={false}/></div>
+                <div className="mx-auto ml-12">
+                    <ConnectButton moralisAuth={false} />
+                </div>
                 <div className="flex flex-wrap">
                     {isWeb3Enabled ? (
-                        <div>{/* 1. if patient is registered then show the medical record of the patient 
+                        <div>
+                            {/* 1. if patient is registered then show the medical record of the patient 
                         
                         2. Otherwise give a registration form to the patient to register in form of a modal.
-                          */}</div>
+                          */}
+                        </div>
                     ) : (
                         <div>
-                        
-                        <PatientWorkflow/>
+                            <PatientWorkflow />
                         </div>
-
-
                     )}
                 </div>
             </div>

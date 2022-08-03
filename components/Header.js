@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function Header() {
     return (
-        <header className="relative z-50 w-full h-24">
+        <header className="relative z-0 w-full h-24 shadow-sm">
             <div className="container flex items-center justify-center h-full max-w-6xl px-8 mx-auto sm:justify-between xl:px-0">
                 <Link href="/">
                     <a className="relative flex items-center inline-block h-5 h-full font-black leading-none">
@@ -40,28 +40,28 @@ export default function Header() {
                             Doctor
                         </a>
                     </Link>
-                    <div class="flex flex-col block w-full font-medium border-t border-gray-200 md:hidden">
+                    <div className="flex flex-col block w-full font-medium border-t border-gray-200 md:hidden">
                         <Link href="/ownerDashboard">
-                            <a class="w-full py-2 font-bold text-center text-pink-500">
+                            <a className="w-full py-2 font-bold text-center text-pink-500">
                                 Owner
                             </a>
                         </Link>
                         <Link href="/patientDashboard">
-                            <a class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">
+                            <a className="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">
                                 Patient
                             </a>
                         </Link>
                     </div>
                 </nav>
 
-                <div class="absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
+                <div className=" absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
                     <Link href="/ownerDashboard">
-                        <a class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
+                        <a className="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
                             Owner
                         </a>
                     </Link>
                     <Link href="/patientDashboard">
-                        <a class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded-lg shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl">
+                        <a className="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded-lg shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl">
                             Patient
                         </a>
                     </Link>

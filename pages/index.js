@@ -17,7 +17,7 @@ export default function Home() {
             </Head>
             <div className="overflow-x-hidden antialiased">
                 {/* Header Here */}
-                <Header />
+                    <Header />
                 {/* <!-- BEGIN MAIN SECTION --> */}
                 <div className="relative items-center justify-center w-full overflow-x-hidden lg:pt-40 lg:pb-40 xl:pt-40 xl:pb-64">
                     <div className="container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0">

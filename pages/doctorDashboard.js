@@ -1,30 +1,37 @@
 import Head from "next/head"
-import Image from "next/image"
-import { useMoralisQuery, useMoralis } from "react-moralis"
-// import networkMapping from "../constants/networkMapping.json"
-import { useQuery } from "@apollo/client"
-// import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
-import styles from "../styles/Home.module.css"
-import { ConnectButton } from "web3uikit"
+import { useMoralis, useWeb3Contract } from "react-moralis"
+import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import DoctorWorkflow from "../components/DoctorWorkflow"
+import { useQuery, gql } from "@apollo/client"
+import networkMapping from "../constants/networkMapping.json"
+import { GET_ADDED_DOCTORS } from "../constants/subgraphQueries"
+import DoctorProfile from "../components/DoctorProfile"
+import NotRegistered from "../components/NotRegistered"
 
 export default function DoctorDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId } = useMoralis()
+    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
+
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-    // const marketplaceAddress = networkMapping[chainId].NftMarketplace[0]
+    console.log(chainId)
+    const patientMedicalRecordSystemAddress =
+        networkMapping[chainId].PatientMedicalRecordSystem[-1]
+    const {
+        loading: fetchingAddedDoctors,
+        error,
+        data: addedDoctors,
+    } = useQuery(GET_ADDED_DOCTORS)
 
-    // const {
-    //     loading: fetchingListedNfts,
-    //     data: listedNfts,
-    //     error,
-    // } = useQuery(GET_ACTIVE_ITEMS)
-
-    // if (listedNfts) {
-    //     console.log(listedNfts)
-    // } else {
-    //     console.log("listed NFT is empty")
-    // }
+    let doctorProfileFound = false
+    let doctorAddresses
+    if (!fetchingAddedDoctors && addedDoctors) {
+        doctorAddresses = addedDoctors.addedDoctors.map(
+            (doctor) => doctor.doctorAddress
+        )
+        if (doctorAddresses.includes(account)) {
+            doctorProfileFound = true
+        }
+    }
 
     return (
         <div className="container mx-auto">
@@ -45,7 +52,7 @@ export default function DoctorDashboard() {
                             Web3 is Enabled
                         </div>
                     ) : (
-                        <div class="badge badge-warning ml-4">
+                        <div className="badge badge-warning ml-4">
                             Web3 Not Enabled
                         </div>
                     )}
@@ -53,14 +60,59 @@ export default function DoctorDashboard() {
                 <div className="mx-auto ml-12">
                     <ConnectButton moralisAuth={false} />
                 </div>
-                <div className="flex flex-wrap">
+
+                <div className="ml-10 w-4/6">
                     {isWeb3Enabled ? (
-                        <div>
-                            {/* 1. if registered doctors can view their details. 
-                        
-                        2. Registered doctors can add diagnostic tests and diagnosis details in a particular patient's record. 
-                          */}
-                        </div>
+                        fetchingAddedDoctors || !addedDoctors ? (
+                            <div
+                                style={{
+                                    backgroundColor: "#ECECFE",
+                                    borderRadius: "6px",
+                                    padding: "15px",
+                                }}
+                                className="ml-10 mt-5"
+                            >
+                                <Loading
+                                    direction="right"
+                                    fontSize={14}
+                                    size={16}
+                                    spinnerColor="rgba(91, 96, 222, 0.8)"
+                                    spinnerType="wave"
+                                    text="Loading Profile..."
+                                />
+                            </div>
+                        ) : doctorProfileFound ? (
+                            addedDoctors.addedDoctors.map((doctor) => {
+                                doctorAddresses.push(doctor.doctorAddress)
+                                if (doctor.doctorAddress === account) {
+                                    const {
+                                        name,
+                                        doctorAddress,
+                                        dateOfRegistration,
+                                        specialization,
+                                        hospitalAddress,
+                                    } = doctor
+                                    return (
+                                        <div>
+                                            <DoctorProfile
+                                                key={doctorAddress}
+                                                name={name}
+                                                doctorAddress={doctorAddress}
+                                                dateOfRegistration={
+                                                    dateOfRegistration
+                                                }
+                                                specialization={specialization}
+                                                hospitalAddress={
+                                                    hospitalAddress
+                                                }
+                                            />
+                                        </div>
+                                    )
+                                }
+                            })
+                        ) : (
+                            <NotRegistered name="Doctor" />
+                        )
                     ) : (
                         <div>
                             <DoctorWorkflow />
@@ -71,3 +123,8 @@ export default function DoctorDashboard() {
         </div>
     )
 }
+
+/* 1. registered doctors can view their details. 
+                        
+2. Registered doctors can add diagnostic tests and diagnosis details in a particular patient's record. For this Add a Button which opens a modal form.
+*/
