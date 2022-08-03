@@ -13,4 +13,17 @@ const GET_ADDED_DOCTORS = gql`
     }
 `
 
-export { GET_ADDED_DOCTORS }
+
+const GET_ADDED_HOSPITALS = gql`
+    {
+        addedHospitals(first: 10) {
+            id
+            name
+            hospitalAddress
+            email
+            phoneNumber
+        }
+    }
+`
+
+export { GET_ADDED_DOCTORS, GET_ADDED_HOSPITALS }

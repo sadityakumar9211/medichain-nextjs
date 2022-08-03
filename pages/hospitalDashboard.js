@@ -2,32 +2,40 @@
 //This is just a add-on / redundant page. Just entity was coming up so I made this new page.
 
 import Head from "next/head"
-import Image from "next/image"
-import { useMoralisQuery, useMoralis } from "react-moralis"
-// import networkMapping from "../constants/networkMapping.json"
+import { useMoralis } from "react-moralis"
+import networkMapping from "../constants/networkMapping.json"
 import { useQuery } from "@apollo/client"
 // import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
 import styles from "../styles/Home.module.css"
-import { ConnectButton } from "web3uikit"
+import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import HospitalWorkflow from "../components/HospitalWorkflow"
+import { GET_ADDED_HOSPITALS } from "../constants/subgraphQueries"
+import HospitalProfile from "../components/HospitalProfile"
+import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId } = useMoralis()
+    const { isWeb3Enabled, chainId: chainHexId, account} = useMoralis()
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-    // const marketplaceAddress = networkMapping[chainId].NftMarketplace[0]
 
-    // const {
-    //     loading: fetchingListedNfts,
-    //     data: listedNfts,
-    //     error,
-    // } = useQuery(GET_ACTIVE_ITEMS)
+    const patientMedicalRecordSystemAddress =
+        networkMapping[chainId].PatientMedicalRecordSystem[-1]
+    const {
+        loading: fetchingAddedHospitals,
+        error,
+        data: addedHospitals,
+    } = useQuery(GET_ADDED_HOSPITALS)
 
-    // if (listedNfts) {
-    //     console.log(listedNfts)
-    // } else {
-    //     console.log("listed NFT is empty")
-    // }
+    let hospitalProfileFound = false
+    let hospitalAddresses
+    if (!fetchingAddedHospitals && addedHospitals) {
+        hospitalAddresses = addedHospitals.addedHospitals.map(
+            (hospital) => hospital.hospitalAddress
+        )
+        if (hospitalAddresses.includes(account)) {
+            hospitalProfileFound = true
+        }
+    }
 
     return (
         <div className="container mx-auto">
@@ -56,14 +64,55 @@ export default function HospitalDashboard() {
                 <div className="mx-auto ml-12">
                     <ConnectButton moralisAuth={false} />
                 </div>
-                <div className="flex flex-wrap">
+
+                <div className="ml-10 w-4/6">
                     {isWeb3Enabled ? (
-                        <div>
-                            {/* 1. if patient is registered then show the medical record of the patient 
-                        
-                        2. Otherwise give a registration form to the patient to register in form of a modal.
-                          */}
-                        </div>
+                        fetchingAddedHospitals || !addedHospitals ? (
+                            <div
+                                style={{
+                                    backgroundColor: "#ECECFE",
+                                    borderRadius: "6px",
+                                    padding: "15px",
+                                }}
+                                className="ml-10 mt-5"
+                            >
+                                <Loading
+                                    direction="right"
+                                    fontSize={14}
+                                    size={16}
+                                    spinnerColor="rgba(91, 96, 222, 0.8)"
+                                    spinnerType="wave"
+                                    text="Loading Profile..."
+                                />
+                            </div>
+                        ) : hospitalProfileFound ? (
+                            addedHospitals.addedHospitals.map((hospital) => {
+                                hospitalAddresses.push(hospital.hospitalAddress)
+                                if (hospital.hospitalAddress === account) {
+                                    const {
+                                        name,
+                                        hospitalAddress,
+                                        email,
+                                        phoneNumber,
+                                    } = hospital
+                                    return (
+                                        <div>
+                                            <HospitalProfile
+                                                key={hospitalAddress}
+                                                name={name}
+                                                hospitalAddress={
+                                                    hospitalAddress
+                                                }
+                                                email={email}
+                                                phoneNumber={phoneNumber}
+                                            />
+                                        </div>
+                                    )
+                                }
+                            })
+                        ) : (
+                            <NotRegistered name="Hospital" />
+                        )
                     ) : (
                         <div>
                             <HospitalWorkflow />

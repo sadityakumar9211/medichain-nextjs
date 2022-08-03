@@ -5,14 +5,14 @@ import { useState } from "react"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import AddPatientModal from "./addPatientModal"
 
-export default function DoctorProfile({
+export default function HospitalProfile({
     name,
-    doctorAddress,
     hospitalAddress,
-    specialization,
-    dateOfRegistration,
+    email,
+    phoneNumber
 }) {
-    const [showModal, setShowModal] = useState(false)
+
+    const [showModal, setShowModal] = useState(false) 
 
     const handleButtonClick = () => {
         // show the modal
@@ -23,12 +23,7 @@ export default function DoctorProfile({
     return (
         <div>
             <div>
-                <AddPatientModal
-                    isVisible={showModal}
-                    onClose={() => {
-                        setShowModal(false)
-                    }}
-                />
+                <AddPatientModal isVisible={showModal} onClose={()=>{setShowModal(false)}}/>
                 <div className="md:w-fit md:mx-auto w-full mx-auto bg-sky-200 bg-opacity-80 mt-10 p-5 rounded-lg hover:bg-opacity-100">
                     <div className="card p-4 hover">
                         <div className="mb-1">
@@ -41,26 +36,6 @@ export default function DoctorProfile({
                                     {name}
                                 </span>
                             </span>
-                            <span className="badge badge-warning ml-5 md:p-2.5">
-                                {specialization}
-                            </span>
-                        </div>
-                        <div className="mb-1">
-                            <span className="font-sans md:text-xl font-medium hover:underline">
-                                Doctor Account Address
-                            </span>
-                            :{" "}
-                            <a
-                                className="badge ml-3 md:p-2 px-4"
-                                title="view on etherscan"
-                                target="_blank"
-                                href={
-                                    "https://rinkeby.etherscan.io/address/" +
-                                    doctorAddress
-                                }
-                            >
-                                {truncatStr(doctorAddress, 25)}
-                            </a>
                         </div>
                         <div className="mb-1">
                             <span className="font-sans md:text-xl font-medium hover:underline">
@@ -79,13 +54,23 @@ export default function DoctorProfile({
                                 {truncatStr(hospitalAddress, 25)}
                             </a>
                         </div>
+                        
                         <div>
                             <span className="font-sans md:text-xl font-medium hover:underline">
-                                Registered on (system)
+                                E-mail
                             </span>
                             :{" "}
                             <span className="badge badge-accent">
-                                {timestampToDate(dateOfRegistration)}
+                                {email}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="font-sans md:text-xl font-medium hover:underline">
+                                Phone Number
+                            </span>
+                            :{" "}
+                            <span className="badge badge-warning">
+                                {phoneNumber}
                             </span>
                         </div>
                     </div>
