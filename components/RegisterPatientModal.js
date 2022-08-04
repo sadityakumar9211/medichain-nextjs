@@ -5,7 +5,6 @@ import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import dateInUnix from "../utils/dateInUnix"
 import NodeRSA from "node-rsa"
-import showKeysModal from "./showKeysModal"
 
 export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const dispatch = useNotification()
