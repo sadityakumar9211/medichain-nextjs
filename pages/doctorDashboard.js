@@ -91,7 +91,9 @@ export default function DoctorDashboard() {
                                         dateOfRegistration,
                                         specialization,
                                         hospitalAddress,
+                                        doctorRegistrationId
                                     } = doctor
+                                    console.log(doctor)
                                     return (
                                         <div>
                                             <DoctorProfile
@@ -105,6 +107,7 @@ export default function DoctorDashboard() {
                                                 hospitalAddress={
                                                     hospitalAddress
                                                 }
+                                                doctorRegistrationId={doctorRegistrationId}
                                             />
                                         </div>
                                     )

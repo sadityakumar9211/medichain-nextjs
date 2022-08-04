@@ -10,6 +10,8 @@ export default function HospitalProfile({
     hospitalAddress,
     email,
     phoneNumber,
+    dateOfRegistration,
+    hospitalRegistrationId
 }) {
     const [showModal, setShowModal] = useState(false)
 
@@ -52,6 +54,17 @@ export default function HospitalProfile({
                                 {truncatStr(hospitalAddress, 25)}
                             </a>
                         </div>
+                        <div className="mb-1">
+                            <span className="font-sans md:text-xl font-medium hover:underline">
+                                Hospital Registration Id
+                            </span>
+                            :{" "}
+                            <a
+                                className="badge ml-3 md:p-2 px-4"
+                            >
+                                {hospitalRegistrationId}
+                            </a>
+                        </div>
 
                         <div>
                             <span className="font-sans md:text-xl font-medium hover:underline">
@@ -67,6 +80,15 @@ export default function HospitalProfile({
                             :{" "}
                             <span className="badge badge-warning">
                                 {phoneNumber}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="font-sans md:text-xl font-medium hover:underline">
+                                Registered on (system)
+                            </span>
+                            :{" "}
+                            <span className="badge badge-accent">
+                                {timestampToDate(dateOfRegistration)}
                             </span>
                         </div>
                     </div>

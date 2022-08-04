@@ -6,6 +6,7 @@ const GET_ADDED_DOCTORS = gql`
             id
             name
             doctorAddress
+            doctorRegistrationId
             dateOfRegistration
             specialization
             hospitalAddress
@@ -13,13 +14,14 @@ const GET_ADDED_DOCTORS = gql`
     }
 `
 
-
 const GET_ADDED_HOSPITALS = gql`
     {
         addedHospitals(first: 10) {
             id
             name
             hospitalAddress
+            hospitalRegistrationId
+            dateOfRegistration
             email
             phoneNumber
         }
@@ -40,8 +42,19 @@ const GET_ADDED_PATIENTS = gql`
             accidentHash
             chronicHash
             acuteHash
+            publicKey
         }
     }
 `
 
-export { GET_ADDED_DOCTORS, GET_ADDED_HOSPITALS, GET_ADDED_PATIENTS }
+const GET_PUBLIC_KEY = gql`
+    {
+        addedPublicKey(first: 10) {
+            id
+            patientAddress
+            publicKey
+        }
+    }
+`
+
+export { GET_ADDED_DOCTORS, GET_ADDED_HOSPITALS, GET_ADDED_PATIENTS, GET_PUBLIC_KEY }

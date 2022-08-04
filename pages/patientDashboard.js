@@ -89,13 +89,13 @@ export default function PatientDashboard() {
                                         name,
                                         patientAddress,
                                         dateOfRegistration,
-                                        dob, 
+                                        dob,
                                         phoneNumber,
                                         bloodGroup,
                                         vaccinationHash,
                                         accidentalHash,
-                                        chronicHash, 
-                                        acuteHash
+                                        chronicHash,
+                                        acuteHash,
                                     } = patient
                                     return (
                                         <div>
@@ -107,24 +107,14 @@ export default function PatientDashboard() {
                                                     dateOfRegistration
                                                 }
                                                 dob={dob}
-                                                phoneNumber={
-                                                    phoneNumber
-                                                }
-                                                bloodGroup={
-                                                    bloodGroup
-                                                }
+                                                phoneNumber={phoneNumber}
+                                                bloodGroup={bloodGroup}
                                                 vaccinationHash={
                                                     vaccinationHash
                                                 }
-                                                accidentalHash={
-                                                    accidentalHash
-                                                }
-                                                chronicHash={
-                                                    chronicHash
-                                                }
-                                                acuteHash={
-                                                    acuteHash
-                                                }
+                                                accidentalHash={accidentalHash}
+                                                chronicHash={chronicHash}
+                                                acuteHash={acuteHash}
                                             />
                                         </div>
                                     )

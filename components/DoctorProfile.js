@@ -2,7 +2,6 @@ import Link from "next/link"
 import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
-import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import AddPatientModal from "./addPatientModal"
 
 export default function DoctorProfile({
@@ -11,6 +10,7 @@ export default function DoctorProfile({
     hospitalAddress,
     specialization,
     dateOfRegistration,
+    doctorRegistrationId
 }) {
     const [showModal, setShowModal] = useState(false)
 
@@ -44,6 +44,17 @@ export default function DoctorProfile({
                             <span className="badge badge-warning ml-5 md:p-2.5">
                                 {specialization}
                             </span>
+                        </div>
+                        <div className="mb-1">
+                            <span className="font-sans md:text-xl font-medium hover:underline">
+                                Doctor Registration Id
+                            </span>
+                            :{" "}
+                            <a
+                                className="badge ml-3 md:p-2 px-4"
+                            >
+                                {doctorRegistrationId}
+                            </a>
                         </div>
                         <div className="mb-1">
                             <span className="font-sans md:text-xl font-medium hover:underline">
