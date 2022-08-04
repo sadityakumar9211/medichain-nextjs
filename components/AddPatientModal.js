@@ -51,6 +51,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //Getting the parameters for the transaction
         //we have patientAddress, category and file. 
         //we need to encrypt the file and upload the encrypted file to ipfs and get the hash.
+
+
+        
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
             contractAddress: medicalRecordSystemAddress,
