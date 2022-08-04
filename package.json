@@ -11,6 +11,8 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "daisyui": "^2.20.0",
+    "flowbite": "^1.5.1",
+    "flowbite-react": "^0.1.5",
     "graphql": "^16.5.0",
     "moralis": "^1.9.0",
     "moralis-admin-cli": "^2.1.16",

@@ -5,11 +5,17 @@ import { useState } from "react"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import AddPatientModal from "./addPatientModal"
 
-export default function HospitalProfile({
+export default function PatientProfile({
     name,
-    hospitalAddress,
-    email,
+    patientAddress,
+    dob,
     phoneNumber,
+    bloodGroup,
+    dateOfRegistration,
+    vaccinationHash,
+    accidentHash,
+    chronicHash,
+    acuteHash,
 }) {
     const [showModal, setShowModal] = useState(false)
 
@@ -18,7 +24,6 @@ export default function HospitalProfile({
         setShowModal(true)
     }
 
-    console.log(showModal)
     return (
         <div>
             <div>
@@ -34,10 +39,13 @@ export default function HospitalProfile({
                                     {name}
                                 </span>
                             </span>
+                            <span className="badge badge-warning ml-5 md:p-2.5">
+                                {bloodGroup}
+                            </span>
                         </div>
                         <div className="mb-1">
                             <span className="font-sans md:text-xl font-medium hover:underline">
-                                Hospital Account Address
+                                Patient Account Address
                             </span>
                             :{" "}
                             <a
@@ -46,26 +54,36 @@ export default function HospitalProfile({
                                 target="_blank"
                                 href={
                                     "https://rinkeby.etherscan.io/address/" +
-                                    hospitalAddress
+                                    patientAddress
                                 }
                             >
-                                {truncatStr(hospitalAddress, 25)}
+                                {truncatStr(patientAddress, 25)}
                             </a>
                         </div>
-
-                        <div>
+                        <div className="mb-1">
                             <span className="font-sans md:text-xl font-medium hover:underline">
-                                E-mail
+                                Date of Birth
                             </span>
                             :{" "}
-                            <span className="badge badge-accent">{email}</span>
+                            <a className="badge ml-3 md:p-2 px-4">
+                                {timestampToDate(dob)}
+                            </a>
+                        </div>
+                        <div className="mb-1">
+                            <span className="font-sans md:text-xl font-medium hover:underline">
+                                Date of Registration
+                            </span>
+                            :{" "}
+                            <a className="badge ml-3 md:p-2 px-4">
+                                {timestampToDate(dateOfRegistration)}
+                            </a>
                         </div>
                         <div>
                             <span className="font-sans md:text-xl font-medium hover:underline">
                                 Phone Number
                             </span>
                             :{" "}
-                            <span className="badge badge-warning">
+                            <span className="badge badge-accent">
                                 {phoneNumber}
                             </span>
                         </div>

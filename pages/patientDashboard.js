@@ -1,30 +1,37 @@
 import Head from "next/head"
-import Image from "next/image"
-import { useMoralisQuery, useMoralis } from "react-moralis"
-// import networkMapping from "../constants/networkMapping.json"
-import { useQuery } from "@apollo/client"
-// import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
-import styles from "../styles/Home.module.css"
-import { ConnectButton } from "web3uikit"
+import { useMoralis, useWeb3Contract } from "react-moralis"
+import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import PatientWorkflow from "../components/PatientWorkflow"
+import { useQuery } from "@apollo/client"
+import networkMapping from "../constants/networkMapping.json"
+import { GET_ADDED_PATIENTS } from "../constants/subgraphQueries"
+import PatientProfile from "../components/PatientProfile"
+import NotRegisteredPatient from "../components/NotRegisteredPatient"
 
 export default function PatientDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId } = useMoralis()
+    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
+
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-    // const marketplaceAddress = networkMapping[chainId].NftMarketplace[0]
+    console.log(chainId)
+    const patientMedicalRecordSystemAddress =
+        networkMapping[chainId].PatientMedicalRecordSystem[0]
+    const {
+        loading: fetchingAddedPatients,
+        error,
+        data: addedPatients,
+    } = useQuery(GET_ADDED_PATIENTS)
 
-    // const {
-    //     loading: fetchingListedNfts,
-    //     data: listedNfts,
-    //     error,
-    // } = useQuery(GET_ACTIVE_ITEMS)
-
-    // if (listedNfts) {
-    //     console.log(listedNfts)
-    // } else {
-    //     console.log("listed NFT is empty")
-    // }
+    let isRegistered = false
+    let patientAddresses
+    if (!fetchingAddedPatients && addedPatients) {
+        patientAddresses = addedPatients.addedPatients.map(
+            (patient) => patient.patientAddress
+        )
+        if (patientAddresses.includes(account)) {
+            isRegistered = true
+        }
+    }
 
     return (
         <div className="container mx-auto">
@@ -53,14 +60,79 @@ export default function PatientDashboard() {
                 <div className="mx-auto ml-12">
                     <ConnectButton moralisAuth={false} />
                 </div>
-                <div className="flex flex-wrap">
+
+                <div className="ml-10 w-4/6">
                     {isWeb3Enabled ? (
-                        <div>
-                            {/* 1. if patient is registered then show the medical record of the patient 
-                        
-                        2. Otherwise give a registration form to the patient to register in form of a modal.
-                          */}
-                        </div>
+                        fetchingAddedPatients || !addedPatients ? (
+                            <div
+                                style={{
+                                    backgroundColor: "#ECECFE",
+                                    borderRadius: "6px",
+                                    padding: "15px",
+                                }}
+                                className="ml-10 mt-5"
+                            >
+                                <Loading
+                                    direction="right"
+                                    fontSize={14}
+                                    size={16}
+                                    spinnerColor="rgba(91, 96, 222, 0.8)"
+                                    spinnerType="wave"
+                                    text="Loading Profile..."
+                                />
+                            </div>
+                        ) : isRegistered ? (
+                            addedPatients.addedPatients.map((patient) => {
+                                patientAddresses.push(patient.patientAddress)
+                                if (patient.patientAddress === account) {
+                                    const {
+                                        name,
+                                        patientAddress,
+                                        dateOfRegistration,
+                                        dob, 
+                                        phoneNumber,
+                                        bloodGroup,
+                                        vaccinationHash,
+                                        accidentalHash,
+                                        chronicHash, 
+                                        acuteHash
+                                    } = patient
+                                    return (
+                                        <div>
+                                            <PatientProfile
+                                                key={patientAddress}
+                                                name={name}
+                                                patientAddress={patientAddress}
+                                                dateOfRegistration={
+                                                    dateOfRegistration
+                                                }
+                                                dob={dob}
+                                                phoneNumber={
+                                                    phoneNumber
+                                                }
+                                                bloodGroup={
+                                                    bloodGroup
+                                                }
+                                                vaccinationHash={
+                                                    vaccinationHash
+                                                }
+                                                accidentalHash={
+                                                    accidentalHash
+                                                }
+                                                chronicHash={
+                                                    chronicHash
+                                                }
+                                                acuteHash={
+                                                    acuteHash
+                                                }
+                                            />
+                                        </div>
+                                    )
+                                }
+                            })
+                        ) : (
+                            <NotRegisteredPatient account={account} />
+                        )
                     ) : (
                         <div>
                             <PatientWorkflow />
@@ -71,3 +143,8 @@ export default function PatientDashboard() {
         </div>
     )
 }
+
+/* 1. registered patients can view their details. 
+                        
+2. Registered patients can add diagnostic tests and diagnosis details in a particular patient's record. For this Add a Button which opens a modal form.
+*/

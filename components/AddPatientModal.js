@@ -6,7 +6,8 @@ import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSyst
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
-
+    const { runContractFunction } = useWeb3Contract()
+    
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
@@ -50,11 +51,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //Getting the parameters for the transaction
         //we have patientAddress, category and file. 
         //we need to encrypt the file and upload the encrypted file to ipfs and get the hash.
-
-
-
-        // ---------Here I am getting the contract function which has to be run for addPatientDetails -----------------------
-        const { runContractFunction: addPatientDetails } = useWeb3Contract({
+        const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
             contractAddress: medicalRecordSystemAddress,
             functionName: "addPatientDetails",
@@ -63,11 +60,12 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 _category: category, //This will be chosen by the doctor
                 _IpfsHash: "2lkjlkjf", //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
             },
-        })
+        }
 
         //Acutaly calling the function. [This is where the transaction initiation actually begins].
 
-        addPatientDetails({
+        await runContractFunction({
+            params: addPatientDetailsOptions,
             onError: (error) => {
                 console.log(error)
             },
@@ -81,7 +79,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
             onCancel={onClose}
             onCloseButtonPressed={onClose}
             onOk={initiateAddPatientDetailsTransaction}
-            okButtonColor="blue"
         >
             <div className="mb-5">
                 <Input
@@ -94,7 +91,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 />
             </div>
 
-            <div classNameName="gap-2">
+            <div className="gap-2">
                 <Select
                     label="Choose Category"
                     onChangeTraditional={(event) => {
@@ -128,7 +125,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             <div className="mt-3 mb-3">
                 <label
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 font-semibold"
-                    for="file_input"
+                    htmlFor="file_input"
                 >
                     Upload file
                 </label>
