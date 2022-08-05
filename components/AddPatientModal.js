@@ -84,7 +84,14 @@ export default function AddPatientModal({ isVisible, onClose }) {
 
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, 'base64')
 
-        console.log('encryptedIpfsHash:', encryptedIpfsHash)
+        dispatch({
+            type: "warning",
+            title: "IPFS Upload Successful!",
+            message:
+                "Patient Medical Report Added to IPFS network successfully!",
+            position: "topL",
+        })
+        
 
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
@@ -93,8 +100,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
             params: {
                 _patientAddress: patientAddressToAddTo, /////////////Here this will be inputted by the doctor
                 _category: category, //This will be chosen by the doctor
-                _IpfsHash: IpfsHash, //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
+                _IpfsHash: encryptedIpfsHash.toString(), //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
             },
+            
         }
 
         // //Acutaly calling the function. [This is where the transaction initiation actually begins].
@@ -108,7 +116,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         })      
     }
 
-    console.log('public keys:', fetchingAddedPublicKeys? "null" : addedPublicKeys.addedPublicKeys[0].publicKey)
+    // console.log('public keys:', fetchingAddedPublicKeys? "null" : addedPublicKeys.addedPublicKeys[0].publicKey)
 
     return (
         <Modal
