@@ -3,7 +3,8 @@ import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
-import AddPatientModal from "./addPatientModal"
+import { Tab, TabList } from "web3uikit"
+import ListMedicalFiles from "./ListMedicalFiles"
 
 export default function PatientProfile({
     name,
@@ -88,6 +89,27 @@ export default function PatientProfile({
                             </span>
                         </div>
                     </div>
+                </div>
+
+                <div className="mt-5">
+                    <TabList
+                        isWidthAuto
+                        onChange={function noRefCheck() {}}
+                        tabStyle="bulbUnion"
+                    >
+                        <Tab lineHeight={25} tabKey={1} tabName="Vaccination">
+                            <div><ListMedicalFiles /></div>    
+                        </Tab>
+                        <Tab lineHeight={25} tabKey={2} tabName="Chronic">
+                            <div><ListMedicalFiles /></div>
+                        </Tab>
+                        <Tab lineHeight={25} tabKey={3} tabName="Accidental">
+                            <div><ListMedicalFiles /></div>
+                        </Tab>
+                        <Tab lineHeight={25} tabKey={4} tabName="Acute">
+                            <div><ListMedicalFiles /></div>
+                        </Tab>
+                    </TabList>
                 </div>
             </div>
         </div>
