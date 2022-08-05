@@ -7,7 +7,7 @@ import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSyst
 import { GET_PUBLIC_KEYS } from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
 import NodeRSA from "node-rsa"
-import {create} from "ipfs-http-client"
+import { create } from "ipfs-http-client"
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
@@ -58,38 +58,46 @@ export default function AddPatientModal({ isVisible, onClose }) {
         }
     }
 
-
     const initiateAddPatientDetailsTransaction = async () => {
         //Getting the parameters for the transaction
         //we have patientAddress, category and file.
         //we need to encrypt the file and upload the encrypted file to ipfs and get the hash.
-        
+
         setOkDisabled(true)
         setCancelDisabled(true)
 
         console.log("inside function patient Publick key:", addedPublicKeys)
         let patientPublicKey
-        if(!fetchingAddedPublicKeys && addedPublicKeys){
-            for(let item of addedPublicKeys.addedPublicKeys){
-                if(item.patientAddress.toString().toLowerCase() == patientAddressToAddTo.toString().toLocaleLowerCase()){
+        if (!fetchingAddedPublicKeys && addedPublicKeys) {
+            for (let item of addedPublicKeys.addedPublicKeys) {
+                if (
+                    item.patientAddress.toString().toLowerCase() ==
+                    patientAddressToAddTo.toString().toLocaleLowerCase()
+                ) {
                     patientPublicKey = item.publicKey
                 }
                 // console.log("popo", item.patientAddress)
                 // console.log("jojo", patientAddressToAddTo)
                 // console.log("doodod", patientPublicKey)
-            }    //handle the case where the addresses doesnot match
+            } //handle the case where the addresses doesnot match
         }
         // console.log('inside function : ', patientPublicKey)
 
-
         //uploading file to ipfs
-        const client = create('https://ipfs.infura.io:5001/api/v0')
+        let IpfsHash
+        try {
+            const client = create("https://ipfs.infura.io:5001/api/v0")
 
-        const IpfsHash = (await client.add(file)).path
+            IpfsHash = (await client.add(file)).path
+        } catch (e) {
+            console.log("IPFS Upload Error", e)
+        }
 
         const publicKeyPatient = new NodeRSA(patientPublicKey)
 
-        const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, 'base64')
+        const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
+
+        console.log("encrypted IPFS hash: ", encryptedIpfsHash)
 
         dispatch({
             type: "warning",
@@ -98,7 +106,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 "Patient Medical Report Added to IPFS network successfully!",
             position: "topL",
         })
-        
 
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
@@ -109,7 +116,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 _category: category, //This will be chosen by the doctor
                 _IpfsHash: encryptedIpfsHash.toString(), //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
             },
-            
         }
 
         // //Acutaly calling the function. [This is where the transaction initiation actually begins].
@@ -120,8 +126,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 console.log(error)
             },
             onSuccess: handleAddedPatientDetailsSuccess,
-        })     
-        
+        })
+
         setOkDisabled(false)
         setCancelDisabled(false)
     }
