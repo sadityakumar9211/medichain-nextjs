@@ -16,12 +16,16 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
+    const [cancelDisabled, setCancelDisabled] = useState(false)
+    const [okDisabled, setOkDisabled] = useState(false)
+
     const { chainId: chainHexId } = useMoralis()
 
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
+    console.log(medicalRecordSystemAddress)
     const {
         loading: fetchingAddedPublicKeys,
         error,
@@ -59,6 +63,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //Getting the parameters for the transaction
         //we have patientAddress, category and file.
         //we need to encrypt the file and upload the encrypted file to ipfs and get the hash.
+        
+        setOkDisabled(true)
+        setCancelDisabled(true)
 
         console.log("inside function patient Publick key:", addedPublicKeys)
         let patientPublicKey
@@ -113,7 +120,10 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 console.log(error)
             },
             onSuccess: handleAddedPatientDetailsSuccess,
-        })      
+        })     
+        
+        setOkDisabled(false)
+        setCancelDisabled(false)
     }
 
     // console.log('public keys:', fetchingAddedPublicKeys? "null" : addedPublicKeys.addedPublicKeys[0].publicKey)
@@ -124,6 +134,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
             onCancel={onClose}
             onCloseButtonPressed={onClose}
             onOk={initiateAddPatientDetailsTransaction}
+            isCancelDisabled={cancelDisabled}
+            isOkDisabled={okDisabled}
         >
             <div className="mb-5">
                 <Input
