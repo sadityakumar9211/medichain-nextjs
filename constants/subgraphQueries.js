@@ -47,9 +47,9 @@ const GET_ADDED_PATIENTS = gql`
     }
 `
 
-const GET_PUBLIC_KEY = gql`
+const GET_PUBLIC_KEYS = gql`
     {
-        addedPublicKey(first: 10) {
+        addedPublicKeys(first: 10) {
             id
             patientAddress
             publicKey
@@ -57,4 +57,9 @@ const GET_PUBLIC_KEY = gql`
     }
 `
 
-export { GET_ADDED_DOCTORS, GET_ADDED_HOSPITALS, GET_ADDED_PATIENTS, GET_PUBLIC_KEY }
+export {
+    GET_ADDED_DOCTORS,
+    GET_ADDED_HOSPITALS,
+    GET_ADDED_PATIENTS,
+    GET_PUBLIC_KEYS,
+}

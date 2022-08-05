@@ -3,23 +3,31 @@ import { useMoralis, useWeb3Contract } from "react-moralis"
 import { Modal, Input, Select, IPFSInput, useNotification } from "web3uikit"
 import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
+// import FileReader from "../utils/fileReader"
+import { GET_PUBLIC_KEYS } from "../constants/subgraphQueries"
+import { useQuery } from "@apollo/client"
+import NodeRSA from "node-rsa"
+import {create} from "ipfs-http-client"
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
     const { runContractFunction } = useWeb3Contract()
-    
+
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
-    console.log(category)
-    console.log(`file: ${file}`)
     const { chainId: chainHexId } = useMoralis()
+
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
-    // console.log("I am contract address", medicalRecordSystemAddress)
-    // console.log("I am chain Id: ", chainId)
+    const {
+        loading: fetchingAddedPublicKeys,
+        error,
+        data: addedPublicKeys,
+    } = useQuery(GET_PUBLIC_KEYS)
+
     const handleAddedPatientDetailsSuccess = async (tx) => {
         await tx.wait(1)
         dispatch({
@@ -46,13 +54,37 @@ export default function AddPatientModal({ isVisible, onClose }) {
         }
     }
 
-    const initiateAddPatientDetailsTransaction = async () => {
 
+    const initiateAddPatientDetailsTransaction = async () => {
         //Getting the parameters for the transaction
-        //we have patientAddress, category and file. 
+        //we have patientAddress, category and file.
         //we need to encrypt the file and upload the encrypted file to ipfs and get the hash.
 
+        console.log("inside function patient Publick key:", addedPublicKeys)
+        let patientPublicKey
+        if(!fetchingAddedPublicKeys && addedPublicKeys){
+            for(let item of addedPublicKeys.addedPublicKeys){
+                if(item.patientAddress.toString().toLowerCase() == patientAddressToAddTo.toString().toLocaleLowerCase()){
+                    patientPublicKey = item.publicKey
+                }
+                // console.log("popo", item.patientAddress)
+                // console.log("jojo", patientAddressToAddTo)
+                // console.log("doodod", patientPublicKey)
+            }    //handle the case where the addresses doesnot match
+        }
+        // console.log('inside function : ', patientPublicKey)
 
+
+        //uploading file to ipfs
+        const client = create('https://ipfs.infura.io:5001/api/v0')
+
+        const IpfsHash = (await client.add(file)).path
+
+        const publicKeyPatient = new NodeRSA(patientPublicKey)
+
+        const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, 'base64')
+
+        console.log('encryptedIpfsHash:', encryptedIpfsHash)
 
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
@@ -61,11 +93,11 @@ export default function AddPatientModal({ isVisible, onClose }) {
             params: {
                 _patientAddress: patientAddressToAddTo, /////////////Here this will be inputted by the doctor
                 _category: category, //This will be chosen by the doctor
-                _IpfsHash: "2lkjlkjf", //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
+                _IpfsHash: IpfsHash, //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
             },
         }
 
-        //Acutaly calling the function. [This is where the transaction initiation actually begins].
+        // //Acutaly calling the function. [This is where the transaction initiation actually begins].
 
         await runContractFunction({
             params: addPatientDetailsOptions,
@@ -73,8 +105,10 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 console.log(error)
             },
             onSuccess: handleAddedPatientDetailsSuccess,
-        })
+        })      
     }
+
+    console.log('public keys:', fetchingAddedPublicKeys? "null" : addedPublicKeys.addedPublicKeys[0].publicKey)
 
     return (
         <Modal
@@ -118,7 +152,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
                             label: "Acute",
                         },
                     ]}
-                    traditionalHTML5
                     validation={{
                         required: true,
                     }}
