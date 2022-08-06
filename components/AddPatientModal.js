@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useMoralis, useWeb3Contract } from "react-moralis"
-import { Modal, Input, Select, IPFSInput, useNotification } from "web3uikit"
+import { Modal, Input, Select, useNotification } from "web3uikit"
 import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 // import FileReader from "../utils/fileReader"
@@ -16,6 +16,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
+    const [fileName, setFileName] = useState("")
     const [cancelDisabled, setCancelDisabled] = useState(false)
     const [okDisabled, setOkDisabled] = useState(false)
 
@@ -76,25 +77,41 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 ) {
                     patientPublicKey = item.publicKey
                 }
-                // console.log("popo", item.patientAddress)
-                // console.log("jojo", patientAddressToAddTo)
-                // console.log("doodod", patientPublicKey)
             } //handle the case where the addresses doesnot match
         }
         // console.log('inside function : ', patientPublicKey)
 
         //uploading file to ipfs
-        let IpfsHash
+        let fileIpfsHash
         try {
             const client = create("https://ipfs.infura.io:5001/api/v0")
-
-            IpfsHash = (await client.add(file)).path
+            fileIpfsHash = (await client.add(file)).path
         } catch (e) {
             console.log("IPFS Upload Error", e)
         }
 
-        const publicKeyPatient = new NodeRSA(patientPublicKey)
+        const fileMetadata = {
+            name: fileName,
+            dateOfUpload: new Date(),
+            fileIpfsHash: fileIpfsHash,
+        }
 
+        console.log("fileMetadata", fileMetadata)
+
+        //uploading the fileMetadata to IPFS
+        let IpfsHash
+        try {
+            const client = create("https://ipfs.infura.io:5001/api/v0")
+            IpfsHash = (await client.add(JSON.stringify(fileMetadata))).path
+        } catch (e) {
+            console.log(e)
+        }
+
+        console.log("fileMetadata Hash: ", IpfsHash)
+        console.log("Link: ", `ipfs.infura.io/ipfs/${IpfsHash}`)
+
+        //encrypting the fileMetadata using the public key of the patient
+        const publicKeyPatient = new NodeRSA(patientPublicKey)
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
 
         console.log("encrypted IPFS hash: ", encryptedIpfsHash)
@@ -112,13 +129,13 @@ export default function AddPatientModal({ isVisible, onClose }) {
             contractAddress: medicalRecordSystemAddress,
             functionName: "addPatientDetails",
             params: {
-                _patientAddress: patientAddressToAddTo, /////////////Here this will be inputted by the doctor
+                _patientAddress: patientAddressToAddTo, //Input by the doctor
                 _category: category, //This will be chosen by the doctor
-                _IpfsHash: encryptedIpfsHash.toString(), //This will be the Ipfs hash of the encrypted file uploaded by the doctor.
+                _IpfsHash: encryptedIpfsHash.toString(), //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
             },
         }
 
-        // //Acutaly calling the function. [This is where the transaction initiation actually begins].
+        // //Actually calling the function. [This is where the transaction initiation actually begins].
 
         await runContractFunction({
             params: addPatientDetailsOptions,
@@ -186,11 +203,12 @@ export default function AddPatientModal({ isVisible, onClose }) {
 
             <div className="mt-3 mb-3">
                 <label
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 font-semibold"
+                    className="block mb-2 text-md text-gray-600 dark:text-gray-300 font-semibold ml-1"
                     htmlFor="file_input"
                 >
                     Upload file
                 </label>
+
                 <input
                     className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     aria-describedby="file_input_help"
@@ -207,6 +225,16 @@ export default function AddPatientModal({ isVisible, onClose }) {
                     Upload the Patient Report to be encrypted and stored on the
                     blockchain.
                 </p>
+                <div className="mt-5 mb-5">
+                    <Input
+                        label="Enter the file name"
+                        name="File Name"
+                        type="text"
+                        onChange={(event) => {
+                            setFileName(event.target.value)
+                        }}
+                    />
+                </div>
             </div>
         </Modal>
     )
