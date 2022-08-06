@@ -79,7 +79,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 }
             } //handle the case where the addresses doesnot match
         }
-        // console.log('inside function : ', patientPublicKey)
+        console.log('inside function : ', patientPublicKey)
 
         //uploading file to ipfs
         let fileIpfsHash
@@ -117,12 +117,16 @@ export default function AddPatientModal({ isVisible, onClose }) {
         console.log("encrypted IPFS hash: ", encryptedIpfsHash)
 
         dispatch({
-            type: "warning",
+            type: "success",
             title: "IPFS Upload Successful!",
             message:
                 "Patient Medical Report Added to IPFS network successfully!",
             position: "topL",
         })
+
+        console.log(patientAddressToAddTo)
+        console.log(category)
+        console.log(encryptedIpfsHash)
 
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
@@ -131,7 +135,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             params: {
                 _patientAddress: patientAddressToAddTo, //Input by the doctor
                 _category: category, //This will be chosen by the doctor
-                _IpfsHash: encryptedIpfsHash.toString(), //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
+                _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
             },
         }
 
@@ -140,7 +144,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         await runContractFunction({
             params: addPatientDetailsOptions,
             onError: (error) => {
-                console.log(error)
+                console.log("Error while calling addPatientDetails function: ", error)
             },
             onSuccess: handleAddedPatientDetailsSuccess,
         })

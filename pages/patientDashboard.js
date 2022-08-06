@@ -93,10 +93,11 @@ export default function PatientDashboard() {
                                         phoneNumber,
                                         bloodGroup,
                                         vaccinationHash,
-                                        accidentalHash,
+                                        accidentHash,
                                         chronicHash,
                                         acuteHash,
                                     } = patient
+                                    console.log("vaccination hash from graph: ", vaccinationHash)
                                     return (
                                         <div>
                                             <PatientProfile
@@ -112,7 +113,7 @@ export default function PatientDashboard() {
                                                 vaccinationHash={
                                                     vaccinationHash
                                                 }
-                                                accidentalHash={accidentalHash}
+                                                accidentHash={accidentHash}
                                                 chronicHash={chronicHash}
                                                 acuteHash={acuteHash}
                                             />
