@@ -46,16 +46,16 @@ export default function AddPatientModal({ isVisible, onClose }) {
     }
 
     const convertCategoryToInt = (category) => {
-        if (category === "Vaccination") {
+        if (category === "vaccination") {
             return 0
-        } else if (category === "Accidental") {
+        } else if (category === "accidental") {
             return 1
-        } else if (category === "Chronic") {
+        } else if (category === "chronic") {
             return 2
-        } else if (category === "Acute") {
+        } else if (category === "acute") {
             return 3
         } else {
-            return 3 //by default it is treated as acute.
+            return 3 //by default it is trefated as acute.
         }
     }
 
@@ -80,6 +80,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             } //handle the case where the addresses doesnot match
         }
         console.log('inside function : ', patientPublicKey)
+        console.log(category)
 
         //uploading file to ipfs
         let fileIpfsHash
@@ -134,7 +135,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             functionName: "addPatientDetails",
             params: {
                 _patientAddress: patientAddressToAddTo, //Input by the doctor
-                _category: category, //This will be chosen by the doctor
+                _category: category.toString(), //This will be chosen by the doctor
                 _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
                 options: {gasLimit: 3e7}
             },
@@ -179,8 +180,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
             <div className="gap-2">
                 <Select
                     label="Choose Category"
-                    onChangeTraditional={(event) => {
-                        setCategory(convertCategoryToInt(event.target.value))
+                    onChange={(option) => {
+                        setCategory(convertCategoryToInt(option.id))
                     }}
                     options={[
                         {

@@ -49,7 +49,8 @@ export default function PatientProfile({
     }
 
     const onClose = () => {
-        showErrorModal(false)
+        setShowErrorModal(false)
+        setShowFiles(false)
     }
     const decryptHash = (encryptedHash) => {
         console.log(encryptedHash)
@@ -59,44 +60,54 @@ export default function PatientProfile({
         return decryptedHash
     }
 
-    const verifyDecryption = (potentiallyDecryptedHashes) => {
-        const firstDecryptedHash = potentiallyDecryptedHashes[0]
-        const { data, error } = useSWR(returnUriFromCid(firstDecryptedHash))
-
-        //error will be coming when timed out or anything else happens
-        if (error) {
-            return false
-        }
-        if (data) {
-            return true
-        }
-    }
+    const [decryptedVaccinationHash, setDecryptedVaccinationHash] = useState([])
+    const [decryptedChronicHash, setDecryptedChronicHash] = useState([])
+    const [decryptedAccidentHash, setDecryptedAccidentHash] = useState([])
+    const [decryptedAcuteHash, setDecryptedAcuteHash] = useState([])
 
     const handleOkPressed = () => {
         //decrypting the IPFS hashes and storing decrypted IPFS file metadatas in the same array
-        haveVaccinationFile &&
-            vaccinationHash.forEach((encryptedHash, index) => {
-                vaccinationHash[index] = decryptHash(encryptedHash)
-            })
-        haveAccidentFile &&
-            accidentHash.forEach((encryptedHash, index) => {
-                accidentHash[index] = decryptHash(encryptedHash)
-            })
-        haveChronicFile &&
-            chronicHash.forEach((encryptedHash, index) => {
-                chronicHash[index] = decryptHash(encryptedHash)
-            })
-        haveAcuteFile &&
-            acuteHash.forEach((encryptedHash, index) => {
-                acuteHash[index] = decryptHash(encryptedHash)
-            })
+        console.log("Encrypted vaccinationHash popo:", vaccinationHash)
+        try {
+            haveVaccinationFile &&
+                setDecryptedVaccinationHash(
+                    vaccinationHash.map((encryptedHash) => {
+                        return decryptHash(encryptedHash)
+                    })
+                )
 
+            haveAccidentFile &&
+                setDecryptedAccidentHash(
+                    accidentHash.map((encryptedHash) => {
+                        return decryptHash(encryptedHash)
+                    })
+                )
+
+            haveChronicFile &&
+                setDecryptedChronicHash(
+                    chronicHash.map((encryptedHash) => {
+                        return decryptHash(encryptedHash)
+                    })
+                )
+            haveAcuteFile &&
+                setDecryptedAcuteHash(
+                    acuteHash.map((encryptedHash) => {
+                        return decryptHash(encryptedHash)
+                    })
+                )
+                console.log("decryptedVaccinationHash:", decryptedVaccinationHash)
+        } catch (e) {
+            console.log(e)
+            setIsCorrectlyDecrypted(false)
+            setShowErrorModal(true)
+            setShowModal(false)
+        }
         //If it has no files in any category
         if (
             !(
-                haveAccidentFile &&
-                haveChronicFile &&
-                haveAcuteFile &&
+                haveAccidentFile ||
+                haveChronicFile ||
+                haveAcuteFile ||
                 haveVaccinationFile
             )
         ) {
@@ -109,25 +120,17 @@ export default function PatientProfile({
             showModal && setShowModal(false)
             return
         } else {
-            //at least one of these has to be true
-            if (haveAccidentFile) {
-                setIsCorrectlyDecrypted(verifyDecryption(accidentHash))
-            } else if (haveChronicFile) {
-                setIsCorrectlyDecrypted(verifyDecryption(chronicHash))
-            } else if (haveAcuteFile) {
-                setIsCorrectlyDecrypted(verifyDecryption(acuteHash))
-            } else if (haveVaccinationFile) {
-                setIsCorrectlyDecrypted(verifyDecryption(vaccinationHash))
-            }
-
             dispatch({
                 type: "success",
-                title: "Files Decrypted Successfully",
+                title: "File Decryption Process Over",
                 position: "topL",
             })
+            setShowFiles(true)
+            setShowModal(false)
+            console.log("Files Encryption was Successful")
         }
-        setShowFiles(true)
     }
+    // console.log("Decrypted Vaccination Hash: ", decryptedVaccinationHash)
 
     return (
         <div>
@@ -149,8 +152,8 @@ export default function PatientProfile({
                         <div className="mt-b mb-8">
                             <div className="mb-5 mt-3">
                                 <span className="font-semibold">
-                                    Important:{" "}
-                                </span>{" "}
+                                    Important:
+                                </span>
                                 Copy-Paste your Private Key from the text file
                                 downloaded while registering to the system. We
                                 will not store it and only use to decrypt the
@@ -247,42 +250,33 @@ export default function PatientProfile({
                     ) : iscorrectlyDecrypted ? (
                         <div>
                             <ListMedicalFiles
-                                vaccinationHash={vaccinationHash}
-                                acuteHash={acuteHash}
-                                accidentHash={accidentHash}
-                                chronicHash={chronicHash}
+                                vaccinationHash={[...decryptedVaccinationHash]}
+                                acuteHash={[...decryptedAcuteHash]}
+                                accidentHash={[...decryptedAccidentHash]}
+                                chronicHash={[...decryptedChronicHash]}
                             />
                         </div>
                     ) : (
                         <div>
-                            <div
-                                style={{
-                                    height: "90vh",
-                                    transform: "scale(1)",
-                                }}
+                            <Modal
+                                isVisible={showErrorModal}
+                                okText="close"
+                                onCancel={onClose}
+                                onCloseButtonPressed={onClose}
+                                onOk={onClose}
+                                title="Decryption Failed"
                             >
-                                <div>
-                                    <Modal
-                                        isVisible={showErrorModal}
-                                        okText="close"
-                                        onCancel={onClose}
-                                        onCloseButtonPressed={onClose}
-                                        onOk={onClose}
-                                        title="Decryption Failed"
-                                    >
-                                        <p
-                                            style={{
-                                                fontWeight: 600,
-                                                marginRight: "1em",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            File Decryption Unsucccessful due to
-                                            Incorrect Private Key
-                                        </p>
-                                    </Modal>
-                                </div>
-                            </div>
+                                <p
+                                    style={{
+                                        fontWeight: 600,
+                                        marginRight: "1em",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    File Decryption Unsucccessful due to
+                                    Incorrect Private Key
+                                </p>
+                            </Modal>
                         </div>
                     )}
                 </div>

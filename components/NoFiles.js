@@ -12,15 +12,15 @@ export default function NoFiles({customText}) {
     return (
         <div className="mx-auto">
             <Table
-                columnsConfig="80px 1fr 1fr 1fr 80px"
-                customNoDataText={`No Medical Reports related to ${customText}${additionalText} are available.`}
+                columnsConfig="80px 2fr 2fr 2fr 80px"
+                customNoDataText={`No Medical Reports related to ${customText}${additionalText} are available. If you're sure then reloading the page might help.`}
                 data={[]}
                 header={[
                     "",
-                    <span>File Name</span>,
-                    <span>IPFS URI</span>,
-                    <span>Date</span>,
-                    <span>Show QR</span>,
+                    <span></span>,
+                    <span className="md:ml-20">No Files</span>,
+                    <span></span>,
+                    <span></span>,
                     "",
                 ]}
                 // maxPages={3}
