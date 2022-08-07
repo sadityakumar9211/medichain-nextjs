@@ -1,10 +1,5 @@
 import Head from "next/head"
-import Image from "next/image"
 import { useMoralis, useWeb3Contract } from "react-moralis"
-// import networkMapping from "../constants/networkMapping.json"
-import { useQuery } from "@apollo/client"
-// import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
-import styles from "../styles/Home.module.css"
 import { ConnectButton, useNotification, Modal, Input } from "web3uikit"
 import Header from "../components/Header"
 import OwnerWorkflow from "../components/OwnerWorkflow"
@@ -15,7 +10,7 @@ import dateInUnix from "../utils/dateInUnix"
 
 export default function OwnerDashboard() {
     const dispatch = useNotification()
-    const {runContractFunction} = useWeb3Contract()
+    const { runContractFunction } = useWeb3Contract()
     const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
     const [isOwner, setIsOwner] = useState(false)
     const [showAddHospitalModal, setShowAddHospitalModal] = useState(false)
@@ -28,7 +23,6 @@ export default function OwnerDashboard() {
     const [doctorRegistrationId, setDoctorRegistrationId] = useState("")
     const [doctorSpecialization, setDoctorSpecialization] = useState("")
     const [doctorHospitalAddress, setDoctorHospitalAddress] = useState("")
-
 
     const [hospitalAddressToAddTo, setHospitalAddressToAddTo] = useState("")
     const [hospitalName, setHospitalName] = useState("")
@@ -87,10 +81,10 @@ export default function OwnerDashboard() {
             })
         }
     }
-    const onCloseDoctorModal = ()=>{
+    const onCloseDoctorModal = () => {
         setShowAddDoctorModal(false)
     }
-    const onCloseHospitalModal = ()=>{
+    const onCloseHospitalModal = () => {
         setShowAddHospitalModal(false)
     }
 
@@ -119,36 +113,38 @@ export default function OwnerDashboard() {
         onCloseDoctorModal && onCloseDoctorModal() //closing the modal on success
     }
 
-    const initiateAddDoctorTransaction = async() =>{
+    const initiateAddDoctorTransaction = async () => {
         console.log("Initiate Add Doctor Transaction")
         setCancelDisabled(true)
         setOkDisabled(true)
-        
+
         const addDoctorDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
             contractAddress: medicalRecordSystemAddress,
             functionName: "addDoctorDetails",
             params: {
-                //parameters of this function 
+                //parameters of this function
                 _doctorAddress: doctorAddressToAddTo,
                 _name: doctorName,
                 _doctorRegistrationId: doctorRegistrationId,
                 _dateOfRegistration: dateInUnix(new Date()),
                 _specialization: doctorSpecialization,
                 _hospitalAddress: doctorHospitalAddress,
-            }
+            },
         }
 
         await runContractFunction({
             params: addDoctorDetailsOptions,
             onError: (error) => {
-                console.log("Error while calling registerPatient function", error)
+                console.log(
+                    "Error while calling registerPatient function",
+                    error
+                )
             },
             onSuccess: handleAddDoctorSuccess,
         })
         setCancelDisabled(false)
         setOkDisabled(false)
-        
     }
 
     //Add Hospital
@@ -165,35 +161,37 @@ export default function OwnerDashboard() {
         onCloseHospitalModal && onCloseHospitalModal() //closing the modal on success
     }
 
-    const initiateAddHospitalTransaction = async() =>{
+    const initiateAddHospitalTransaction = async () => {
         console.log("Initiate Add Hospital Transaction")
         setCancelDisabled(true)
         setOkDisabled(true)
-        
+
         const addHospitalDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,
             contractAddress: medicalRecordSystemAddress,
             functionName: "addHospitalDetails",
             params: {
-                //parameters of this function 
+                //parameters of this function
                 _hospitalAddress: hospitalAddressToAddTo,
                 _name: hospitalName,
                 _hospitalRegistrationId: hospitalRegistrationId,
                 _email: hospitalEmail,
                 _phoneNumber: hospitalPhoneNumber,
-            }
+            },
         }
 
         await runContractFunction({
             params: addHospitalDetailsOptions,
             onError: (error) => {
-                console.log("Error while calling addHospitalDetails function: ", error)
+                console.log(
+                    "Error while calling addHospitalDetails function: ",
+                    error
+                )
             },
             onSuccess: handleAddHospitalSuccess,
         })
         setCancelDisabled(false)
         setOkDisabled(false)
-        
     }
 
     return (
@@ -212,7 +210,7 @@ export default function OwnerDashboard() {
                     <Modal
                         isVisible={showAddDoctorModal}
                         onCancel={onCloseDoctorModal}
-                        onCloseButtonPressed={onCloseDoctorModal }
+                        onCloseButtonPressed={onCloseDoctorModal}
                         onOk={initiateAddDoctorTransaction}
                         isCancelDisabled={cancelDisabled}
                         isOkDisabled={okDisabled}
@@ -287,14 +285,12 @@ export default function OwnerDashboard() {
                                 }}
                             />
                         </div>
-
-                        
                     </Modal>
 
                     <Modal
                         isVisible={showAddHospitalModal}
                         onCancel={onCloseHospitalModal}
-                        onCloseButtonPressed={onCloseHospitalModal }
+                        onCloseButtonPressed={onCloseHospitalModal}
                         onOk={initiateAddHospitalTransaction}
                         isCancelDisabled={cancelDisabled}
                         isOkDisabled={okDisabled}
@@ -305,7 +301,9 @@ export default function OwnerDashboard() {
                                 name="Hospital Account Address"
                                 type="text"
                                 onChange={(event) => {
-                                    setHospitalAddressToAddTo(event.target.value)
+                                    setHospitalAddressToAddTo(
+                                        event.target.value
+                                    )
                                 }}
                                 width="full"
                                 validation={{
@@ -333,7 +331,9 @@ export default function OwnerDashboard() {
                                 name="Hospital Registration Id"
                                 type="text"
                                 onChange={(event) => {
-                                    setHospitalRegistrationId(event.target.value)
+                                    setHospitalRegistrationId(
+                                        event.target.value
+                                    )
                                 }}
                                 width="full"
                                 validation={{
@@ -369,8 +369,6 @@ export default function OwnerDashboard() {
                                 }}
                             />
                         </div>
-
-                        
                     </Modal>
                     <div className="py-4 px-3 font-bold text-4xl ml-12">
                         Owner Dashboard
@@ -416,7 +414,12 @@ export default function OwnerDashboard() {
                                         className="btn"
                                         onClick={handVerificationClick}
                                     >
-                                        <a href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C" target="_blank">View on Etherscan</a>
+                                        <a
+                                            href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C"
+                                            target="_blank"
+                                        >
+                                            View on Etherscan
+                                        </a>
                                     </button>
                                 </div>
                             )

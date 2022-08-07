@@ -1,9 +1,9 @@
 import Head from "next/head"
-import { useMoralis, useWeb3Contract } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import DoctorWorkflow from "../components/DoctorWorkflow"
-import { useQuery} from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import networkMapping from "../constants/networkMapping.json"
 import { GET_ADDED_DOCTORS } from "../constants/subgraphQueries"
 import DoctorProfile from "../components/DoctorProfile"
@@ -91,7 +91,7 @@ export default function DoctorDashboard() {
                                         dateOfRegistration,
                                         specialization,
                                         hospitalAddress,
-                                        doctorRegistrationId
+                                        doctorRegistrationId,
                                     } = doctor
                                     console.log(doctor)
                                     return (
@@ -107,7 +107,9 @@ export default function DoctorDashboard() {
                                                 hospitalAddress={
                                                     hospitalAddress
                                                 }
-                                                doctorRegistrationId={doctorRegistrationId}
+                                                doctorRegistrationId={
+                                                    doctorRegistrationId
+                                                }
                                             />
                                         </div>
                                     )

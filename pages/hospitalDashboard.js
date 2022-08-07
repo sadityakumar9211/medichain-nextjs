@@ -5,8 +5,6 @@ import Head from "next/head"
 import { useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
 import { useQuery } from "@apollo/client"
-// import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
-import styles from "../styles/Home.module.css"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import HospitalWorkflow from "../components/HospitalWorkflow"
@@ -15,7 +13,7 @@ import HospitalProfile from "../components/HospitalProfile"
 import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId, account} = useMoralis()
+    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
 
     const patientMedicalRecordSystemAddress =
@@ -26,7 +24,7 @@ export default function HospitalDashboard() {
         data: addedHospitals,
     } = useQuery(GET_ADDED_HOSPITALS)
 
-    if(!fetchingAddedHospitals && addedHospitals) {
+    if (!fetchingAddedHospitals && addedHospitals) {
         console.log(addedHospitals)
     }
 
@@ -99,7 +97,7 @@ export default function HospitalDashboard() {
                                         email,
                                         phoneNumber,
                                         hospitalRegistrationId,
-                                        dateOfRegistration
+                                        dateOfRegistration,
                                     } = hospital
                                     return (
                                         <div>
@@ -111,8 +109,12 @@ export default function HospitalDashboard() {
                                                 }
                                                 email={email}
                                                 phoneNumber={phoneNumber}
-                                                hospitalRegistrationId={hospitalRegistrationId}
-                                                dateOfRegistration={dateOfRegistration}
+                                                hospitalRegistrationId={
+                                                    hospitalRegistrationId
+                                                }
+                                                dateOfRegistration={
+                                                    dateOfRegistration
+                                                }
                                             />
                                         </div>
                                     )

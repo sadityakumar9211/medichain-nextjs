@@ -1,7 +1,5 @@
 //This is the Home Page(landing page) of the application.
 import Head from "next/head"
-import Image from "next/image"
-import styles from "../styles/Home.module.css"
 import Header from "../components/Header"
 
 import Link from "next/link"
@@ -184,7 +182,10 @@ export default function Home() {
                                 className="flex justify-start block text-left sm:text-center lg:text-left sm:justify-center lg:justify-start"
                             >
                                 <span className="flex items-start sm:items-center">
-                                <img src="/logo.svg" alt="Logo of MediChain" />
+                                    <img
+                                        src="/logo.svg"
+                                        alt="Logo of MediChain"
+                                    />
                                 </span>
                             </a>
                             <p className="mt-6 mr-4 text-base text-gray-500">
@@ -199,7 +200,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://github.com/sadityakumar9211/medichain-hardhat" target="_blank"
+                                        href="https://github.com/sadityakumar9211/medichain-hardhat"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Hardhat Repository
@@ -207,7 +209,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://github.com/sadityakumar9211/medichain-nextjs" target="_blank"
+                                        href="https://github.com/sadityakumar9211/medichain-nextjs"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Next.js Repository
@@ -215,7 +218,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://github.com/sadityakumar9211/medichain-thegraph" target="_blank"
+                                        href="https://github.com/sadityakumar9211/medichain-thegraph"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         The Graph Repository
@@ -228,7 +232,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://hardhat.org/" target="_blank"
+                                        href="https://hardhat.org/"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Hardhat
@@ -236,7 +241,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://thegraph.com/en/" target="_blank"
+                                        href="https://thegraph.com/en/"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         The Graph
@@ -244,7 +250,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://moralis.io/" target="_blank"
+                                        href="https://moralis.io/"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Moralis Open Source Tools
@@ -257,7 +264,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://nextjs.org/" target="_blank"
+                                        href="https://nextjs.org/"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Next.js
@@ -273,7 +281,8 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://tailwindcss.com/" target="_blank"
+                                        href="https://tailwindcss.com/"
+                                        target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         Tailwind CSS

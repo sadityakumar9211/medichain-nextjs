@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { useMoralis, useWeb3Contract } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
 import PatientWorkflow from "../components/PatientWorkflow"
@@ -97,7 +97,10 @@ export default function PatientDashboard() {
                                         chronicHash,
                                         acuteHash,
                                     } = patient
-                                    console.log("vaccination hash from graph: ", vaccinationHash)
+                                    console.log(
+                                        "vaccination hash from graph: ",
+                                        vaccinationHash
+                                    )
                                     return (
                                         <div>
                                             <PatientProfile

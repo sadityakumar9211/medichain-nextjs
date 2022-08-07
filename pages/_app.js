@@ -1,7 +1,5 @@
 import "../styles/globals.css"
-// import '../public/static/bootstrap.min.css'
 import { MoralisProvider } from "react-moralis"
-import Head from "next/head"
 import { NotificationProvider } from "web3uikit"
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client"
 
