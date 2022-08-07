@@ -42,7 +42,7 @@ export default function ListItem({ metadataURI }) {
                 <div className="mt-2 mb-3">
                     <div className="card w-3/4 bg-primary text-primary-content mx-auto">
                         <div className="card-body">
-                            <h2 className="card-title" title="file name"><span className="hover:underline">{data.name}</span></h2>
+                            <h2 className="card-title" title="file name"><span className="hover:underline text-sm md:text-lg">{data.name}</span></h2>
                             <p>
                                 <span className="font-semibold hover:underline">
                                     Date of Upload:

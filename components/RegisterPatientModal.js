@@ -161,7 +161,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 </div>
                 <div className="mb-5">
                     <Input
-                        label="Enter Patient's account address"
+                        label="Enter Patient's account"
                         name="Patient Account Address"
                         type="text"
                         onChange={(event) => {
