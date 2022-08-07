@@ -7,10 +7,10 @@ export default function ListMedicalFiles({
     accidentHash,
     acuteHash,
 }) {
-    console.log("vaccination hash : ", vaccinationHash)
-    console.log("chronic hash : ", chronicHash)
-    console.log("accident hash : ", accidentHash)
-    console.log("acute hash : ", acuteHash)
+    // console.log("vaccination hash : ", vaccinationHash)
+    // console.log("chronic hash : ", chronicHash)
+    // console.log("accident hash : ", accidentHash)
+    // console.log("acute hash : ", acuteHash)
     return (
         <div>
             <div className="mt-5">

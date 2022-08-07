@@ -24,9 +24,9 @@ export default function HospitalDashboard() {
         data: addedHospitals,
     } = useQuery(GET_ADDED_HOSPITALS)
 
-    if (!fetchingAddedHospitals && addedHospitals) {
-        console.log(addedHospitals)
-    }
+    // if (!fetchingAddedHospitals && addedHospitals) {
+    //     console.log(addedHospitals)
+    // }
 
     let hospitalProfileFound = false
     let hospitalAddresses

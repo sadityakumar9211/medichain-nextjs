@@ -8,7 +8,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function ListItem({ metadataURI }) {
     //Here fetching the metadata
-    console.log("Metadata URI from the ListItem component", metadataURI)
+    // console.log("Metadata URI from the ListItem component", metadataURI)
     const { data, error } = useSWR(
         `https://ipfs.infura.io/ipfs/${metadataURI}`,
         fetcher
@@ -36,7 +36,7 @@ export default function ListItem({ metadataURI }) {
     }
 
     if (data) {
-        console.log(data)
+        // console.log(data)
         return (
             <div>
                 <div className="mt-2 mb-3">

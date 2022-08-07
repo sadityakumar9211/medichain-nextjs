@@ -3,7 +3,6 @@ import { useMoralis, useWeb3Contract } from "react-moralis"
 import { Modal, Input, Select, useNotification } from "web3uikit"
 import networkMapping from "../../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../../constants/PatientMedicalRecordSystem.json"
-// import FileReader from "../utils/fileReader"
 import { GET_PUBLIC_KEYS } from "../../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
 import NodeRSA from "node-rsa"
@@ -26,7 +25,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
-    console.log(medicalRecordSystemAddress)
+    // console.log(medicalRecordSystemAddress)
     const {
         loading: fetchingAddedPublicKeys,
         error,
@@ -67,7 +66,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         setOkDisabled(true)
         setCancelDisabled(true)
 
-        console.log("inside function patient Publick key:", addedPublicKeys)
+        // console.log("inside function patient Publick key:", addedPublicKeys)
         let patientPublicKey
         if (!fetchingAddedPublicKeys && addedPublicKeys) {
             for (let item of addedPublicKeys.addedPublicKeys) {
@@ -79,8 +78,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 }
             } //handle the case where the addresses doesnot match
         }
-        console.log('inside function : ', patientPublicKey)
-        console.log(category)
+        // console.log('inside function : ', patientPublicKey)
+        // console.log(category)
 
         //uploading file to ipfs
         let fileIpfsHash
@@ -97,7 +96,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             fileIpfsHash: fileIpfsHash,
         }
 
-        console.log("fileMetadata", fileMetadata)
+        // console.log("fileMetadata", fileMetadata)
 
         //uploading the fileMetadata to IPFS
         let IpfsHash
@@ -108,8 +107,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
             console.log(e)
         }
 
-        console.log("fileMetadata Hash: ", IpfsHash)
-        console.log("Link: ", `ipfs.infura.io/ipfs/${IpfsHash}`)
+        // console.log("fileMetadata Hash: ", IpfsHash)
+        // console.log("Link: ", `ipfs.infura.io/ipfs/${IpfsHash}`)
 
         //encrypting the fileMetadata using the public key of the patient
         const publicKeyPatient = new NodeRSA(patientPublicKey)
@@ -125,9 +124,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
             position: "topL",
         })
 
-        console.log(patientAddressToAddTo)
-        console.log(category)
-        console.log(encryptedIpfsHash)
+        // console.log(patientAddressToAddTo)
+        // console.log(category)
+        // console.log(encryptedIpfsHash)
 
         const addPatientDetailsOptions = {
             abi: PatientMedicalRecordSystemAbi,

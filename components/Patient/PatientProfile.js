@@ -49,10 +49,10 @@ export default function PatientProfile({
         setShowFiles(false)
     }
     const decryptHash = (encryptedHash) => {
-        console.log(encryptedHash)
+        // console.log(encryptedHash)
         const key_private = new NodeRSA(privateKey)
         const decryptedHash = key_private.decrypt(encryptedHash, "utf8")
-        console.log(decryptedHash)
+        // console.log(decryptedHash)
         return decryptedHash
     }
 
@@ -63,7 +63,7 @@ export default function PatientProfile({
 
     const handleOkPressed = () => {
         //decrypting the IPFS hashes and storing decrypted IPFS file metadatas in the same array
-        console.log("Encrypted vaccinationHash popo:", vaccinationHash)
+        // console.log("Encrypted vaccinationHash popo:", vaccinationHash)
         try {
             haveVaccinationFile &&
                 setDecryptedVaccinationHash(
@@ -91,7 +91,7 @@ export default function PatientProfile({
                         return decryptHash(encryptedHash)
                     })
                 )
-                console.log("decryptedVaccinationHash:", decryptedVaccinationHash)
+                // console.log("decryptedVaccinationHash:", decryptedVaccinationHash)
         } catch (e) {
             console.log(e)
             setIsCorrectlyDecrypted(false)

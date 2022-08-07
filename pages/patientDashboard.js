@@ -13,7 +13,7 @@ export default function PatientDashboard() {
     const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
 
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-    console.log(chainId)
+    // console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
     const {
@@ -97,10 +97,6 @@ export default function PatientDashboard() {
                                         chronicHash,
                                         acuteHash,
                                     } = patient
-                                    console.log(
-                                        "vaccination hash from graph: ",
-                                        vaccinationHash
-                                    )
                                     return (
                                         <div>
                                             <PatientProfile

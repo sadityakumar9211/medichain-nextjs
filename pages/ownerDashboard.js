@@ -54,11 +54,11 @@ export default function OwnerDashboard() {
         params: {},
     })
 
-    const handVerificationClick = async () => {
+    const handleVerificationClick = async () => {
         const contractOwner = await getOwner()
-        console.log(contractOwner)
-        console.log(account)
-        console.log(contractOwner === account)
+        // console.log(contractOwner)
+        // console.log(account)
+        // console.log(contractOwner === account)
         if (
             contractOwner.toString().toLowerCase() ===
             account.toString().toLowerCase()
@@ -89,12 +89,12 @@ export default function OwnerDashboard() {
     }
 
     const handleAddDoctorClick = async () => {
-        console.log("Add Doctor Clicked")
+        // console.log("Add Doctor Clicked")
         setShowAddDoctorModal(true)
     }
 
     const handleAddHospitalClick = async () => {
-        console.log("Add Hospital Clicked")
+        // console.log("Add Hospital Clicked")
         setShowAddHospitalModal(true)
     }
 
@@ -406,13 +406,12 @@ export default function OwnerDashboard() {
                                 <div className="text-center mt-16">
                                     <button
                                         className="btn mr-5"
-                                        onClick={handVerificationClick}
+                                        onClick={handleVerificationClick}
                                     >
                                         Verify Ownership
                                     </button>
                                     <button
                                         className="btn"
-                                        onClick={handVerificationClick}
                                     >
                                         <a
                                             href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C"

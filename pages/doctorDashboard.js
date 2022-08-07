@@ -13,7 +13,7 @@ export default function DoctorDashboard() {
     const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
 
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-    console.log(chainId)
+    // console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
     const {
@@ -93,7 +93,6 @@ export default function DoctorDashboard() {
                                         hospitalAddress,
                                         doctorRegistrationId,
                                     } = doctor
-                                    console.log(doctor)
                                     return (
                                         <div>
                                             <DoctorProfile

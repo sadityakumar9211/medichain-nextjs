@@ -18,7 +18,7 @@ export default function DoctorProfile({
         setShowModal(true)
     }
 
-    console.log(showModal)
+    // console.log(showModal)
     return (
         <div>
             <div>

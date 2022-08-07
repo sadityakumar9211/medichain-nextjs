@@ -17,7 +17,7 @@ export default function HospitalProfile({
         setShowModal(true)
     }
 
-    console.log(showModal)
+    // console.log(showModal)
     return (
         <div>
             <div>
