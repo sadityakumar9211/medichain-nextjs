@@ -1,7 +1,7 @@
 //This component will just render the files of a particular category by fetching it from the Subgraph and displaying it.
 
 import NoFiles from "./NoFiles"
-import ListItem from "./ListItem"
+import ListItem from "../Patient/ListItem"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 

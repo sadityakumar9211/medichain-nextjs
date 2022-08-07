@@ -2,11 +2,11 @@ import Head from "next/head"
 import { useMoralis } from "react-moralis"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
-import DoctorWorkflow from "../components/DoctorWorkflow"
+import DoctorWorkflow from "../components/Doctor/DoctorWorkflow"
 import { useQuery } from "@apollo/client"
 import networkMapping from "../constants/networkMapping.json"
 import { GET_ADDED_DOCTORS } from "../constants/subgraphQueries"
-import DoctorProfile from "../components/DoctorProfile"
+import DoctorProfile from "../components/Doctor/DoctorProfile"
 import NotRegistered from "../components/NotRegistered"
 
 export default function DoctorDashboard() {

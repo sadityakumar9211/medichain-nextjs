@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useMoralis, useWeb3Contract } from "react-moralis"
 import { Modal, Input, Select, useNotification } from "web3uikit"
-import networkMapping from "../constants/networkMapping.json"
-import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
-import dateInUnix from "../utils/dateInUnix"
+import networkMapping from "../../constants/networkMapping.json"
+import PatientMedicalRecordSystemAbi from "../../constants/PatientMedicalRecordSystem.json"
+import dateInUnix from "../../utils/dateInUnix"
 import NodeRSA from "node-rsa"
 
 export default function RegisterPatientModal({ isVisible, onClose, account }) {

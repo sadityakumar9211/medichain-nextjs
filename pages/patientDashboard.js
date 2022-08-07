@@ -2,12 +2,12 @@ import Head from "next/head"
 import { useMoralis } from "react-moralis"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
-import PatientWorkflow from "../components/PatientWorkflow"
+import PatientWorkflow from "../components/Patient/PatientWorkflow"
 import { useQuery } from "@apollo/client"
 import networkMapping from "../constants/networkMapping.json"
 import { GET_ADDED_PATIENTS } from "../constants/subgraphQueries"
-import PatientProfile from "../components/PatientProfile"
-import NotRegisteredPatient from "../components/NotRegisteredPatient"
+import PatientProfile from "../components/Patient/PatientProfile"
+import NotRegisteredPatient from "../components/Patient/NotRegisteredPatient"
 
 export default function PatientDashboard() {
     const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()

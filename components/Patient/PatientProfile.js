@@ -1,6 +1,6 @@
 
-import truncatStr from "../utils/truncateString"
-import timestampToDate from "../utils/timestampToDate"
+import truncatStr from "../../utils/truncateString"
+import timestampToDate from "../../utils/timestampToDate"
 import { useState } from "react"
 import ListMedicalFiles from "./ListMedicalFiles"
 import { Modal, Input, useNotification } from "web3uikit"
