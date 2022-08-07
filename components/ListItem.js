@@ -2,11 +2,16 @@
 
 import useSWR from "swr"
 import truncatStr from "../utils/truncateString"
-import { Loading } from "web3uikit"
+import { Loading, Modal } from "web3uikit"
+import QRCODE from "qrcode"
+import { useState} from "react"
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function ListItem({ metadataURI }) {
+    const [visible, setVisible] = useState(false)
+    const [source, setSource] = useState("")
+
     //Here fetching the metadata
     // console.log("Metadata URI from the ListItem component", metadataURI)
     const { data, error } = useSWR(
@@ -36,38 +41,83 @@ export default function ListItem({ metadataURI }) {
     }
 
     if (data) {
+        const onClose = () => {
+            setVisible(false)
+        }
+
+        const handleQRCode = () => {
+            QRCODE.toDataURL(
+                `http://ipfs.infura.io/ipfs/${data.fileIpfsHash}`
+            ).then((response) => {
+                setSource(response)
+            })
+            setVisible(true)
+        }
         // console.log(data)
         return (
             <div>
                 <div className="mt-2 mb-3">
                     <div className="card w-3/4 bg-primary text-primary-content mx-auto">
                         <div className="card-body">
-                            <h2 className="card-title" title="file name"><span className="hover:underline text-sm md:text-lg">{data.name}</span></h2>
+                            <h2 className="card-title" title="file name">
+                                <span className="hover:underline text-sm md:text-lg">
+                                    {data.name}
+                                </span>
+                            </h2>
                             <p>
                                 <span className="font-semibold hover:underline">
                                     Date of Upload:
                                 </span>{" "}
-                                {data.dateOfUpload.slice(0,10)}
+                                {data.dateOfUpload.slice(0, 10)}
                             </p>
                             <p>
                                 <span className="font-semibold hover:underline">
                                     File URI:
                                 </span>{" "}
-                                <span className="hidden md:inline-block">{truncatStr(data.fileIpfsHash, 40)}</span>
-                                <span className="inline-block md:hidden">{truncatStr(data.fileIpfsHash, 15)}</span>
+                                <span className="hidden md:inline-block">
+                                    {truncatStr(data.fileIpfsHash, 40)}
+                                </span>
+                                <span className="inline-block md:hidden">
+                                    {truncatStr(data.fileIpfsHash, 15)}
+                                </span>
                             </p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-secondary btn-sm">
-                                    <a
-                                        href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}
-                                        target="_blank"
-                                    >
-                                        View File
-                                    </a>
+                            <div className="card-actions justify-around mt-3">
+                                <button
+                                    className="btn btn-secondary btn-sm"
+                                >
+                                    <a href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}>View File</a>
+                                   
+                                </button>
+                                <button
+                                    className="btn btn-secondary btn-sm"
+                                    onClick={handleQRCode}
+                                >
+                                    Show QR Code
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <Modal
+                        okText="Done"
+                        onCancel={onClose}
+                        onCloseButtonPressed={onClose}
+                        onOk={onClose}
+                        title="Scan QR Code to View File"
+                        isVisible={visible}
+                        width="50vw"
+                    >
+                        <p
+                            style={{
+                                fontWeight: 600,
+                                marginRight: "1em",
+                                textAlign: "center",
+                            }}
+                        >
+                            <div className="md:ml-48"><img src={source} alt="QR Code" /></div>
+                        </p>
+                    </Modal>
                 </div>
             </div>
         )
