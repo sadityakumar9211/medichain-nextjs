@@ -51,7 +51,7 @@ export default function DoctorProfile({
                             </span>
                             :{" "}
                             <a
-                                className="badge ml-3 md:p-2 px-4"
+                                className="badge badge-success ml-3 md:p-2 px-4"
                             >
                                 {doctorRegistrationId}
                             </a>

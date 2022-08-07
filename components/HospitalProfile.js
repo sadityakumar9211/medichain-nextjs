@@ -60,7 +60,7 @@ export default function HospitalProfile({
                             </span>
                             :{" "}
                             <a
-                                className="badge ml-3 md:p-2 px-4"
+                                className="badge badge-warning ml-3 md:p-2 px-4"
                             >
                                 {hospitalRegistrationId}
                             </a>

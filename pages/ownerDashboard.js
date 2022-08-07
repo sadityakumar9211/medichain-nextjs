@@ -398,7 +398,7 @@ export default function OwnerDashboard() {
                                         Add a Doctor
                                     </button>
                                     <button
-                                        className="btn btn-secondary"
+                                        className="btn btn-secondary mr-5"
                                         onClick={handleAddHospitalClick}
                                     >
                                         Add a Hospital
@@ -407,10 +407,16 @@ export default function OwnerDashboard() {
                             ) : (
                                 <div className="text-center mt-16">
                                     <button
-                                        className="btn"
+                                        className="btn mr-5"
                                         onClick={handVerificationClick}
                                     >
                                         Verify Ownership
+                                    </button>
+                                    <button
+                                        className="btn"
+                                        onClick={handVerificationClick}
+                                    >
+                                        <a href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C" target="_blank">View on Etherscan</a>
                                     </button>
                                 </div>
                             )

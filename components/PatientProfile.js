@@ -213,7 +213,7 @@ export default function PatientProfile({
                                 Date of Birth
                             </span>
                             :{" "}
-                            <a className="badge ml-3 md:p-2 px-4">
+                            <a className="badge badge-success ml-3 md:p-2 px-4">
                                 {timestampToDate(dob)}
                             </a>
                         </div>
@@ -222,7 +222,7 @@ export default function PatientProfile({
                                 Date of Registration
                             </span>
                             :{" "}
-                            <a className="badge ml-3 md:p-2 px-4">
+                            <a className="badge badge-accent ml-3 md:p-2 px-4">
                                 {timestampToDate(dateOfRegistration)}
                             </a>
                         </div>
@@ -231,7 +231,7 @@ export default function PatientProfile({
                                 Phone Number
                             </span>
                             :{" "}
-                            <span className="badge badge-accent">
+                            <span className="badge badge-warning badge-accent">
                                 {phoneNumber}
                             </span>
                         </div>

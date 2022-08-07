@@ -2,10 +2,9 @@
 import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
-import Header from '../components/Header'
+import Header from "../components/Header"
 
 import Link from "next/link"
-
 
 export default function Home() {
     return (
@@ -17,7 +16,7 @@ export default function Home() {
             </Head>
             <div className="overflow-x-hidden antialiased">
                 {/* Header Here */}
-                    <Header />
+                <Header />
                 {/* <!-- BEGIN MAIN SECTION --> */}
                 <div className="relative items-center justify-center w-full overflow-x-hidden lg:pt-40 lg:pb-40 xl:pt-40 xl:pb-64">
                     <div className="container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0">
@@ -30,14 +29,26 @@ export default function Home() {
                                 where only patients can access there medical
                                 data, providing full control over the data.
                             </p>
-                            <Link href="/patientDashboard">
-                            <a
-                                
-                                className="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0"
-                            >
-                                Patient Login
-                            </a>
-                            </Link>
+                            <button className="btn btn-primary md:btn-md btn-sm text-center">
+                                <Link href="/patientDashboard">
+                                    <a>Patient Login</a>
+                                </Link>
+                            </button>
+                            <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
+                                <Link href="/doctorDashboard">
+                                    <a>Doctor Login</a>
+                                </Link>
+                            </button>
+                            <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
+                                <Link href="/hospitalDashboard">
+                                    <a>Hospital Login</a>
+                                </Link>
+                            </button>
+                            <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
+                                <Link href="/ownerDashboard">
+                                    <a>Owner Login</a>
+                                </Link>
+                            </button>
                         </div>
                         <div className="relative z-50 flex flex-col items-end justify-center w-full h-full lg:w-1/2 ms:pl-10">
                             <div className="container relative left-0 w-full max-w-4xl lg:absolute lg:w-screen">
@@ -165,7 +176,6 @@ export default function Home() {
                     </div>
                 </div>
                 {/* <!-- END FEATURES SECTION --> */}
-
                 <footer className="px-4 pt-12 pb-8 text-white bg-white border-t border-gray-200">
                     <div className="container flex flex-col justify-between max-w-6xl px-4 mx-auto overflow-hidden lg:flex-row">
                         <div className="w-full pl-12 mr-4 text-left lg:w-1/4 sm:text-center sm:pl-0 lg:text-left">
@@ -174,50 +184,41 @@ export default function Home() {
                                 className="flex justify-start block text-left sm:text-center lg:text-left sm:justify-center lg:justify-start"
                             >
                                 <span className="flex items-start sm:items-center">
-                                    <svg
-                                        className="w-auto h-6 text-gray-800 fill-current"
-                                        viewBox="0 0 194 116"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <g fillRule="evenodd">
-                                            <path d="M96.869 0L30 116h104l-9.88-17.134H59.64l47.109-81.736zM0 116h19.831L77 17.135 67.088 0z"></path>
-                                            <path d="M87 68.732l9.926 17.143 29.893-51.59L174.15 116H194L126.817 0z"></path>
-                                        </g>
-                                    </svg>
+                                <img src="/logo.svg" alt="Logo of MediChain" />
                                 </span>
                             </a>
                             <p className="mt-6 mr-4 text-base text-gray-500">
                                 Crafting the next-level of user experience and
-                                engagement.
+                                data security.
                             </p>
                         </div>
                         <div className="block w-full pl-10 mt-6 text-sm lg:w-3/4 sm:flex lg:mt-0">
                             <ul className="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
                                 <li className="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
-                                    Product
+                                    About Project
                                 </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href="https://github.com/sadityakumar9211/medichain-hardhat" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Features
+                                        Hardhat Repository
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href="https://github.com/sadityakumar9211/medichain-nextjs" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Integrations
+                                        Next.js Repository
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href=""
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Pricing
+                                        The Graph Repository
                                     </a>
                                 </li>
                                 <li>
@@ -288,7 +289,6 @@ export default function Home() {
                                         className="flex items-center block mr-6 text-gray-400 no-underline hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        href="https://devdojo.com"
                                     >
                                         <svg
                                             viewBox="0 0 24 24"
@@ -302,7 +302,6 @@ export default function Home() {
                                         className="flex items-center block mr-6 text-gray-400 no-underline hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        href="https://devdojo.com"
                                     >
                                         <svg
                                             viewBox="0 0 24 24"
@@ -316,7 +315,6 @@ export default function Home() {
                                         className="flex items-center block text-gray-400 no-underline hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        href="https://devdojo.com"
                                     >
                                         <svg
                                             viewBox="0 0 24 24"

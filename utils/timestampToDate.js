@@ -20,5 +20,5 @@ export default function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? "0" + a.getSeconds() : a.getSeconds()
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec} UTC`
+    return `${month} ${date}, ${year}, ${hour}:${min}:${sec} IST`
 }
