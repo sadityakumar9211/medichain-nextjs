@@ -136,6 +136,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 _patientAddress: patientAddressToAddTo, //Input by the doctor
                 _category: category, //This will be chosen by the doctor
                 _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
+                options: {gasLimit: 3e7}
             },
         }
 
