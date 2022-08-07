@@ -197,7 +197,7 @@ export default function OwnerDashboard() {
     }
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto h-screen overflow-x-hidden">
             <Head>
                 <title>MediChain - Owner Dashboard</title>
                 <meta

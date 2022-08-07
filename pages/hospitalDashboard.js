@@ -42,7 +42,7 @@ export default function HospitalDashboard() {
     }
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto  overflow-x-hidden h-screen">
             <Head>
                 <title>MediChain - Hospital Dashboard</title>
                 <meta

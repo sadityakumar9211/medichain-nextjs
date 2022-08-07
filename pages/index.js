@@ -215,68 +215,68 @@ export default function Home() {
                                 </li>
                                 <li>
                                     <a
-                                        href=""
+                                        href="https://github.com/sadityakumar9211/medichain-thegraph" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
                                         The Graph Repository
                                     </a>
                                 </li>
+                            </ul>
+                            <ul className="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
+                                <li className="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
+                                    Hardhat Tools
+                                </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href="https://hardhat.org/" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        FAQ
+                                        Hardhat
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://thegraph.com/en/" target="_blank"
+                                        className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
+                                    >
+                                        The Graph
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://moralis.io/" target="_blank"
+                                        className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
+                                    >
+                                        Moralis Open Source Tools
                                     </a>
                                 </li>
                             </ul>
                             <ul className="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
                                 <li className="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
-                                    Company
+                                    Frontend
                                 </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href="https://nextjs.org/" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Privacy
+                                        Next.js
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href="#_"
+                                        href="https://github.com/web3ui/web3uikit"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Terms of Service
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul className="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
-                                <li className="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
-                                    TailwindCSS
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://devdojo.com/tailwindcss/components"
-                                        className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
-                                    >
-                                        Tailwind Components
+                                        Web3uikit
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href="https://devdojo.com/tailwindcss/templates"
+                                        href="https://tailwindcss.com/" target="_blank"
                                         className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                     >
-                                        Tailwind Templates
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://devdojo.com/tails"
-                                        className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
-                                    >
-                                        Tails
+                                        Tailwind CSS
                                     </a>
                                 </li>
                             </ul>
