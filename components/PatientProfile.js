@@ -200,7 +200,7 @@ export default function PatientProfile({
                                     patientAddress
                                 }
                             >
-                                {truncatStr(patientAddress, 25)}
+                                {truncatStr(patientAddress, 20)}
                             </a>
                         </div>
                         <div className="mb-1">

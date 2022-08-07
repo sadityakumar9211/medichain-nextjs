@@ -53,7 +53,8 @@ export default function ListItem({ metadataURI }) {
                                 <span className="font-semibold hover:underline">
                                     File URI:
                                 </span>{" "}
-                                {truncatStr(data.fileIpfsHash, 40)}
+                                <span className="hidden md:inline-block">{truncatStr(data.fileIpfsHash, 40)}</span>
+                                <span className="inline-block md:hidden">{truncatStr(data.fileIpfsHash, 15)}</span>
                             </p>
                             <div className="card-actions justify-end">
                                 <button className="btn btn-secondary btn-sm">

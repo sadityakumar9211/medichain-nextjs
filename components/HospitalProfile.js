@@ -48,7 +48,7 @@ export default function HospitalProfile({
                                     hospitalAddress
                                 }
                             >
-                                {truncatStr(hospitalAddress, 25)}
+                                {truncatStr(hospitalAddress, 20)}
                             </a>
                         </div>
                         <div className="mb-1">
