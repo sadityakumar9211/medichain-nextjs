@@ -1,7 +1,7 @@
 //Here we make a call to the URI and fetch data and display each data as a card.
 
 import useSWR from "swr"
-import truncatStr from "../../utils/truncateString"
+import truncatStr from "../utils/truncateString"
 import { Loading } from "web3uikit"
 
 const fetcher = (url) => fetch(url).then((res) => res.json())

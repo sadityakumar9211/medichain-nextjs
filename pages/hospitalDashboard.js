@@ -7,9 +7,9 @@ import networkMapping from "../constants/networkMapping.json"
 import { useQuery } from "@apollo/client"
 import { ConnectButton, Loading } from "web3uikit"
 import Header from "../components/Header"
-import HospitalWorkflow from "../components/Hospital/HospitalWorkflow"
+import HospitalWorkflow from "../components/HospitalWorkflow"
 import { GET_ADDED_HOSPITALS } from "../constants/subgraphQueries"
-import HospitalProfile from "../components/Hospital/HospitalProfile"
+import HospitalProfile from "../components/HospitalProfile"
 import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {

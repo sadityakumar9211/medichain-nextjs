@@ -1,5 +1,5 @@
-import truncatStr from "../../utils/truncateString"
-import timestampToDate from "../../utils/timestampToDate"
+import truncatStr from "../utils/truncateString"
+import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
 import AddPatientModal from "./addPatientModal"
 
