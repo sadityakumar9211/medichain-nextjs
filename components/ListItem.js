@@ -85,7 +85,7 @@ export default function ListItem({ metadataURI }) {
                                 <button
                                     className="btn btn-secondary btn-sm"
                                 >
-                                    <a href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}>View File</a>
+                                    <a href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`} target="_blank">View File</a>
                                    
                                 </button>
                                 <button
