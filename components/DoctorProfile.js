@@ -1,4 +1,3 @@
-import Link from "next/link"
 import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
@@ -10,7 +9,7 @@ export default function DoctorProfile({
     hospitalAddress,
     specialization,
     dateOfRegistration,
-    doctorRegistrationId
+    doctorRegistrationId,
 }) {
     const [showModal, setShowModal] = useState(false)
 
@@ -50,9 +49,7 @@ export default function DoctorProfile({
                                 Doctor Registration Id
                             </span>
                             :{" "}
-                            <a
-                                className="badge badge-success ml-3 md:p-2 px-4"
-                            >
+                            <a className="badge badge-success ml-3 md:p-2 px-4">
                                 {doctorRegistrationId}
                             </a>
                         </div>

@@ -1,14 +1,10 @@
-import Link from "next/link"
+
 import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
-import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
-import { Tab, TabList } from "web3uikit"
 import ListMedicalFiles from "./ListMedicalFiles"
 import { Modal, Input, useNotification } from "web3uikit"
 import NodeRSA from "node-rsa"
-import useSWR from "swr"
-import returnUriFromCid from "../utils/returnUriFromCid"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 

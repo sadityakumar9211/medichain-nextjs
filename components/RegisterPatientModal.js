@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useMoralis, useWeb3Contract } from "react-moralis"
 import { Modal, Input, Select, useNotification } from "web3uikit"
 import networkMapping from "../constants/networkMapping.json"
@@ -89,7 +89,10 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         await runContractFunction({
             params: registerPatientOptions,
             onError: (error) => {
-                console.log("Error while calling registerPatient function", error)
+                console.log(
+                    "Error while calling registerPatient function",
+                    error
+                )
             },
             onSuccess: handleRegisterPatientSuccess,
         })

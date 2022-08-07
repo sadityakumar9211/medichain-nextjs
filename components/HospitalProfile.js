@@ -1,9 +1,6 @@
-import Link from "next/link"
 import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
-import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
-import AddPatientModal from "./addPatientModal"
 
 export default function HospitalProfile({
     name,
@@ -11,7 +8,7 @@ export default function HospitalProfile({
     email,
     phoneNumber,
     dateOfRegistration,
-    hospitalRegistrationId
+    hospitalRegistrationId,
 }) {
     const [showModal, setShowModal] = useState(false)
 
@@ -59,9 +56,7 @@ export default function HospitalProfile({
                                 Hospital Registration Id
                             </span>
                             :{" "}
-                            <a
-                                className="badge badge-warning ml-3 md:p-2 px-4"
-                            >
+                            <a className="badge badge-warning ml-3 md:p-2 px-4">
                                 {hospitalRegistrationId}
                             </a>
                         </div>
