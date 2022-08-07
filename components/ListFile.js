@@ -90,7 +90,7 @@ const [metadataArray, setMetadataArray] = useState([])
             type: "info",
             title: "Loading Your Data from IPFS",
             message: "This might take a while",
-            position: "topL",
+            position: "bottomR",
             isClosing: firstData || firstError,
         })
     }
@@ -101,7 +101,7 @@ const [metadataArray, setMetadataArray] = useState([])
             type: "error",
             title: "Request Timeout",
             message: "You may have entered incorrect PRIVATE KEY.",
-            position: "topR",
+            position: "bottomR",
             // isClosing: data || error,
         })
         return
@@ -124,7 +124,7 @@ const [metadataArray, setMetadataArray] = useState([])
                     type: "error",
                     title: "Couldn't load the data",
                     message: "HTTP Request Timed out",
-                    position: "topR",
+                    position: "bottomR",
                     // isClosing: data || error,
                 })
                 return

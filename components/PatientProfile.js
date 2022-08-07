@@ -1,4 +1,3 @@
-
 import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
@@ -91,7 +90,7 @@ export default function PatientProfile({
                         return decryptHash(encryptedHash)
                     })
                 )
-                // console.log("decryptedVaccinationHash:", decryptedVaccinationHash)
+            // console.log("decryptedVaccinationHash:", decryptedVaccinationHash)
         } catch (e) {
             console.log(e)
             setIsCorrectlyDecrypted(false)
@@ -111,7 +110,7 @@ export default function PatientProfile({
                 type: "warning",
                 title: "No Files Found",
                 message: "You don't have any medical file in the database yet!",
-                position: "topL",
+                position: "bottomR",
             })
             showModal && setShowModal(false)
             return
@@ -119,7 +118,7 @@ export default function PatientProfile({
             dispatch({
                 type: "success",
                 title: "File Decryption Process Over",
-                position: "topL",
+                position: "bottomR",
             })
             setShowFiles(true)
             setShowModal(false)

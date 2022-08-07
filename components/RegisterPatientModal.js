@@ -35,7 +35,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
             title: "Transaction Successful",
             message:
                 "You are now successfully registered to this decentralized medical record database system.",
-            position: "topR",
+            position: "bottomR",
         })
         onClose && onClose() //closing the modal on success
         setCancelDisabled(false)
@@ -64,7 +64,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
             title: "Public and Private Keys Generated",
             message:
                 "Public and Private Key for encrypting your medical files generated successfully",
-            position: "topL",
+            position: "bottomR",
             isClosing: !okDisabled && !cancelDisabled,
         })
 

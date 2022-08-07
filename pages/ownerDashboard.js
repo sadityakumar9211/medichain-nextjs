@@ -68,7 +68,7 @@ export default function OwnerDashboard() {
                 title: "Successfully Verified",
                 message:
                     "Ownership Successfully Verified. You can now perform following functions",
-                position: "topL",
+                position: "bottomR",
             })
             setIsOwner(true)
         } else {
@@ -76,7 +76,7 @@ export default function OwnerDashboard() {
                 type: "error",
                 title: "Verification Failed",
                 message: `As per our records ${contractOwner} is the owner of this smart contract.`,
-                position: "topL",
+                position: "bottomR",
                 isClosing: false,
             })
         }
@@ -107,7 +107,7 @@ export default function OwnerDashboard() {
             title: "Transaction Successful",
             message:
                 "Doctor Details Successfully Added. You can now add more doctors",
-            position: "topL",
+            position: "bottomR",
         })
         setShowAddDoctorModal(false)
         onCloseDoctorModal && onCloseDoctorModal() //closing the modal on success
@@ -155,7 +155,7 @@ export default function OwnerDashboard() {
             title: "Transaction Successful",
             message:
                 "Hospital Details Successfully Added. You can now add more hospitals",
-            position: "topL",
+            position: "bottomR",
         })
         setShowAddHospitalModal(false)
         onCloseHospitalModal && onCloseHospitalModal() //closing the modal on success
@@ -410,9 +410,7 @@ export default function OwnerDashboard() {
                                     >
                                         Verify Ownership
                                     </button>
-                                    <button
-                                        className="btn"
-                                    >
+                                    <button className="btn">
                                         <a
                                             href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C"
                                             target="_blank"

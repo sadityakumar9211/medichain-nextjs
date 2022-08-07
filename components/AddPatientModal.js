@@ -39,7 +39,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             title: "Transaction Successful",
             message:
                 "Patient Report added Successfully to the blockchain network",
-            position: "topR",
+            position: "bottomR",
         })
         onClose && onClose() //closing the modal on success
     }
@@ -121,7 +121,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             title: "IPFS Upload Successful!",
             message:
                 "Patient Medical Report Added to IPFS network successfully!",
-            position: "topL",
+            position: "bottomR",
         })
 
         // console.log(patientAddressToAddTo)
@@ -136,7 +136,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 _patientAddress: patientAddressToAddTo, //Input by the doctor
                 _category: category.toString(), //This will be chosen by the doctor
                 _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
-                options: {gasLimit: 3e7}
+                options: { gasLimit: 3e7 },
             },
         }
 
@@ -145,7 +145,10 @@ export default function AddPatientModal({ isVisible, onClose }) {
         await runContractFunction({
             params: addPatientDetailsOptions,
             onError: (error) => {
-                console.log("Error while calling addPatientDetails function: ", error)
+                console.log(
+                    "Error while calling addPatientDetails function: ",
+                    error
+                )
             },
             onSuccess: handleAddedPatientDetailsSuccess,
         })
