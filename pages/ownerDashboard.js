@@ -68,7 +68,7 @@ export default function OwnerDashboard() {
                 title: "Successfully Verified",
                 message:
                     "Ownership Successfully Verified. You can now perform following functions",
-                position: "bottomR",
+                position: "bottomL",
             })
             setIsOwner(true)
         } else {
@@ -76,7 +76,7 @@ export default function OwnerDashboard() {
                 type: "error",
                 title: "Verification Failed",
                 message: `As per our records ${contractOwner} is the owner of this smart contract.`,
-                position: "bottomR",
+                position: "bottomL",
                 isClosing: false,
             })
         }
@@ -107,7 +107,7 @@ export default function OwnerDashboard() {
             title: "Transaction Successful",
             message:
                 "Doctor Details Successfully Added. You can now add more doctors",
-            position: "bottomR",
+            position: "bottomL",
         })
         setShowAddDoctorModal(false)
         onCloseDoctorModal && onCloseDoctorModal() //closing the modal on success
@@ -155,7 +155,7 @@ export default function OwnerDashboard() {
             title: "Transaction Successful",
             message:
                 "Hospital Details Successfully Added. You can now add more hospitals",
-            position: "bottomR",
+            position: "bottomL",
         })
         setShowAddHospitalModal(false)
         onCloseHospitalModal && onCloseHospitalModal() //closing the modal on success

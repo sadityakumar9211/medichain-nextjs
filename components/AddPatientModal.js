@@ -39,7 +39,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             title: "Transaction Successful",
             message:
                 "Patient Report added Successfully to the blockchain network",
-            position: "bottomR",
+            position: "bottomL",
         })
         onClose && onClose() //closing the modal on success
     }
@@ -121,7 +121,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             title: "IPFS Upload Successful!",
             message:
                 "Patient Medical Report Added to IPFS network successfully!",
-            position: "bottomR",
+            position: "bottomL",
         })
 
         // console.log(patientAddressToAddTo)

@@ -110,7 +110,7 @@ export default function PatientProfile({
                 type: "warning",
                 title: "No Files Found",
                 message: "You don't have any medical file in the database yet!",
-                position: "bottomR",
+                position: "bottomL",
             })
             showModal && setShowModal(false)
             return
@@ -118,7 +118,7 @@ export default function PatientProfile({
             dispatch({
                 type: "success",
                 title: "File Decryption Process Over",
-                position: "bottomR",
+                position: "bottomL",
             })
             setShowFiles(true)
             setShowModal(false)
