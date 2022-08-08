@@ -60,18 +60,18 @@ export default function ListItem({ metadataURI }) {
                     <div className="card w-3/4 bg-info text-primary-content mx-auto">
                         <div className="card-body">
                             <h2 className="card-title" title="file name">
-                                <span className="hover:underline text-sm md:text-lg">
+                                <span className="hover:underline text-sm md:text-lg text-zinc-900">
                                     {data.name}
                                 </span>
                             </h2>
                             <p>
-                                <span className="font-semibold hover:underline">
+                                <span className="font-semibold hover:underline  text-zinc-900">
                                     Date of Upload:
                                 </span>{" "}
                                 {data.dateOfUpload.slice(0, 10)}
                             </p>
                             <p>
-                                <span className="font-semibold hover:underline">
+                                <span className="font-semibold hover:underline text-zinc-900">
                                     File URI:
                                 </span>{" "}
                                 <span className="hidden md:inline-block badge ml-4">
@@ -83,13 +83,13 @@ export default function ListItem({ metadataURI }) {
                             </p>
                             {data.doctorAddress ? (
                                 <p>
-                                    <span className="font-semibold hover:underline">
+                                    <span className="font-semibold hover:underline  text-zinc-900">
                                         Doctor Address:
                                     </span>
-                                    <a className="inline-block badge pb-3 ml-4" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
+                                    <a className="inline-block badge pb-3 ml-4 badge-warning" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
                                         {data.doctorAddress}
                                     </a>
-                                    <a className="inline-block md:hidden badge ml-4" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
+                                    <a className="inline-block md:hidden badge ml-4 badge-warning" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
                                     {truncatStr(data.doctorAddress, 15)}
                                 </a>
                                 </p>
@@ -97,7 +97,7 @@ export default function ListItem({ metadataURI }) {
                                 <></>
                             )}
                             <div className="card-actions justify-around mt-3">
-                                <button className="btn btn-secondary btn-sm">
+                                <button className="btn btn-primary btn-sm">
                                     <a
                                         href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}
                                         target="_blank"
