@@ -1,3 +1,5 @@
+[![Aditya's GitHub stats](https://github-readme-stats.vercel.app/api?username=sadityakumar9211)](https://github.com/anuraghazra/github-readme-stats)
+
 <img width="1266" alt="image" src="https://user-images.githubusercontent.com/78147198/183309237-aa7b12b6-53ca-456e-a275-7f1f8bddb4f3.png">
 
 Deployed at : [https://medichain.vercel.app](https://medichain.vercel.app)
