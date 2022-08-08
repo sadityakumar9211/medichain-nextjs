@@ -214,6 +214,7 @@ export default function OwnerDashboard() {
                         onOk={initiateAddDoctorTransaction}
                         isCancelDisabled={cancelDisabled}
                         isOkDisabled={okDisabled}
+                        width="63vw"
                     >
                         <div className="mb-5">
                             <Input
@@ -294,6 +295,7 @@ export default function OwnerDashboard() {
                         onOk={initiateAddHospitalTransaction}
                         isCancelDisabled={cancelDisabled}
                         isOkDisabled={okDisabled}
+                        width="63vw"
                     >
                         <div className="mb-5">
                             <Input
