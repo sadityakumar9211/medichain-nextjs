@@ -11,7 +11,7 @@ Contract Address: 0x72B5e274C989108f282605e359803f130C29e65C
     1. For patients this dashboard shows profile information, list of diagnostic information and link to encrypted files.
     2. For doctors this dashboard shows the details of doctors.
        He can add the patients details of any patient.
-    3. For owners this shows the list of all the patients and their details
+    3. Owner can add hospitals and doctors in the system.
     4. For hospitals it shows the hospital details that's all.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
