@@ -2,6 +2,7 @@ import "../styles/globals.css"
 import { MoralisProvider } from "react-moralis"
 import { NotificationProvider } from "web3uikit"
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client"
+import Footer from "../components/Footer"
 
 //The Graph
 const client = new ApolloClient({
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }) {
                 <ApolloProvider client={client}>
                     <NotificationProvider>
                         <Component {...pageProps} />
+                        <Footer />
                     </NotificationProvider>
                 </ApolloProvider>
             </MoralisProvider>
