@@ -11,7 +11,6 @@ import { create } from "ipfs-http-client"
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
     const { runContractFunction } = useWeb3Contract()
-
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
@@ -19,7 +18,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [cancelDisabled, setCancelDisabled] = useState(false)
     const [okDisabled, setOkDisabled] = useState(false)
 
-    const { chainId: chainHexId } = useMoralis()
+    const { chainId: chainHexId, account } = useMoralis()
 
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
@@ -94,6 +93,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             name: fileName,
             dateOfUpload: new Date(),
             fileIpfsHash: fileIpfsHash,
+            doctorAddress: account,
         }
 
         // console.log("fileMetadata", fileMetadata)
@@ -136,7 +136,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 _patientAddress: patientAddressToAddTo, //Input by the doctor
                 _category: category.toString(), //This will be chosen by the doctor
                 _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
-                options: { gasLimit: 3e7 },
+                options: { gasLimit: 3e6 },
             },
         }
 

@@ -4,7 +4,7 @@ import useSWR from "swr"
 import truncatStr from "../utils/truncateString"
 import { Loading, Modal } from "web3uikit"
 import QRCODE from "qrcode"
-import { useState} from "react"
+import { useState } from "react"
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -57,7 +57,7 @@ export default function ListItem({ metadataURI }) {
         return (
             <div>
                 <div className="mt-2 mb-3">
-                    <div className="card w-3/4 bg-primary text-primary-content mx-auto">
+                    <div className="card w-3/4 bg-info text-primary-content mx-auto">
                         <div className="card-body">
                             <h2 className="card-title" title="file name">
                                 <span className="hover:underline text-sm md:text-lg">
@@ -74,19 +74,36 @@ export default function ListItem({ metadataURI }) {
                                 <span className="font-semibold hover:underline">
                                     File URI:
                                 </span>{" "}
-                                <span className="hidden md:inline-block">
+                                <span className="hidden md:inline-block badge ml-4">
                                     {truncatStr(data.fileIpfsHash, 40)}
                                 </span>
-                                <span className="inline-block md:hidden">
+                                <span className="inline-block md:hidden badge ml-4">
                                     {truncatStr(data.fileIpfsHash, 15)}
                                 </span>
                             </p>
+                            {data.doctorAddress ? (
+                                <p>
+                                    <span className="font-semibold hover:underline">
+                                        Doctor Address:
+                                    </span>
+                                    <a className="inline-block badge pb-3 ml-4" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
+                                        {data.doctorAddress}
+                                    </a>
+                                    <a className="inline-block md:hidden badge ml-4" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
+                                    {truncatStr(data.doctorAddress, 15)}
+                                </a>
+                                </p>
+                            ) : (
+                                <></>
+                            )}
                             <div className="card-actions justify-around mt-3">
-                                <button
-                                    className="btn btn-secondary btn-sm"
-                                >
-                                    <a href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`} target="_blank">View File</a>
-                                   
+                                <button className="btn btn-secondary btn-sm">
+                                    <a
+                                        href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}
+                                        target="_blank"
+                                    >
+                                        View File
+                                    </a>
                                 </button>
                                 <button
                                     className="btn btn-secondary btn-sm"
@@ -115,7 +132,9 @@ export default function ListItem({ metadataURI }) {
                                 textAlign: "center",
                             }}
                         >
-                            <div className="md:ml-48"><img src={source} alt="QR Code" /></div>
+                            <div className="md:ml-48">
+                                <img src={source} alt="QR Code" />
+                            </div>
                         </p>
                     </Modal>
                 </div>
