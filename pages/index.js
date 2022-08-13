@@ -91,7 +91,7 @@ export default function Home() {
                                     <h4 className="relative mt-6 text-lg font-bold">
                                         Ease and Control
                                     </h4>
-                                    <p className="relative mt-2 text-base text-center text-gray-600">
+                                    <p className="relative mt-2 md:text-base text-sm text-center text-gray-600">
                                         Ease and control of your medical
                                         records. You can access it whenever you
                                         want. Only you can access your data and
@@ -123,7 +123,7 @@ export default function Home() {
                                     <h4 className="relative mt-6 text-lg font-bold">
                                         Immutability
                                     </h4>
-                                    <p className="relative mt-2 text-base text-center text-gray-600">
+                                    <p className="relative mt-2 md:text-base text-sm text-center text-gray-600">
                                         Being deployed on public blockchain,
                                         this application makes sure that the
                                         patient's data is permanent, indellible
@@ -155,12 +155,12 @@ export default function Home() {
                                     <h4 className="relative mt-6 text-lg font-bold">
                                         Enhanced Security
                                     </h4>
-                                    <p className="relative mt-2 text-base text-center text-gray-600">
+                                    <p className="relative mt-2 md:text-base text-sm text-center text-gray-600">
                                         Every node in the network has an
                                         encrypted copy of you data which only
                                         you can decrypt. This removes single
                                         point of failure making the data safe
-                                        from ransomeware hacking attempts.
+                                        from ransomeware attacks.
                                     </p>
                                     <a
                                         href="https://www.techopedia.com/can-the-blockchain-be-hacked/2/33623"
