@@ -84,7 +84,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading file to ipfs
         let fileIpfsHash
         try {
-            const client = await IPFS.create()
+            const client = await IPFS.create({repo: 'ok' + Math.random()})
             const {cid} = (await client.add(file))
             fileIpfsHash = cid.toString()
         } catch (e) {
@@ -103,7 +103,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading the fileMetadata to IPFS
         let IpfsHash
         try {
-            const client = await IPFS.create()
+            const client = await IPFS.create({repo: 'ok' + Math.random()})
             const {cid} = (await client.add(JSON.stringify(fileMetadata)))
             IpfsHash = cid.toString()
 
@@ -111,11 +111,11 @@ export default function AddPatientModal({ isVisible, onClose }) {
             console.log(e)
         }
 
-        console.log("fileMetadata Hash: ", IpfsHash)     ///-------------
+        // console.log("fileMetadata Hash: ", IpfsHash)     ///-------------
         // console.log("Link: ", `ipfs.infura.io/ipfs/${IpfsHash}`)
 
         //encrypting the fileMetadata using the public key of the patient
-        console.log("patientPublicKey: ", patientPublicKey)   ///---------
+        // console.log("patientPublicKey: ", patientPublicKey)   ///---------
         const publicKeyPatient = new NodeRSA(patientPublicKey)
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
 
