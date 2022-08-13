@@ -6,7 +6,8 @@ import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSyst
 import { GET_PUBLIC_KEYS } from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
 import NodeRSA from "node-rsa"
-import { create } from "ipfs-http-client"
+import * as IPFS from "ipfs-core"
+
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
@@ -83,8 +84,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading file to ipfs
         let fileIpfsHash
         try {
-            const client = create("https://ipfs.infura.io:5001/api/v0")
-            fileIpfsHash = (await client.add(file)).path
+            const client = await IPFS.create()
+            const {cid} = (await client.add(file))
+            fileIpfsHash = cid.toString()
         } catch (e) {
             console.log("IPFS Upload Error", e)
         }
@@ -101,16 +103,19 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading the fileMetadata to IPFS
         let IpfsHash
         try {
-            const client = create("https://ipfs.infura.io:5001/api/v0")
-            IpfsHash = (await client.add(JSON.stringify(fileMetadata))).path
+            const client = await IPFS.create()
+            const {cid} = (await client.add(JSON.stringify(fileMetadata)))
+            IpfsHash = cid.toString()
+
         } catch (e) {
             console.log(e)
         }
 
-        // console.log("fileMetadata Hash: ", IpfsHash)
+        console.log("fileMetadata Hash: ", IpfsHash)     ///-------------
         // console.log("Link: ", `ipfs.infura.io/ipfs/${IpfsHash}`)
 
         //encrypting the fileMetadata using the public key of the patient
+        console.log("patientPublicKey: ", patientPublicKey)   ///---------
         const publicKeyPatient = new NodeRSA(patientPublicKey)
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
 

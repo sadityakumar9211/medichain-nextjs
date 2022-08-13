@@ -1,3 +1,3 @@
 export default function (IpfsHash){
-    return `https://ipfs.infura.io/ipfs/${IpfsHash}`
+    return `https://ipfs.io/ipfs/${IpfsHash}`
 }

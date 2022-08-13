@@ -15,7 +15,7 @@ export default function ListItem({ metadataURI }) {
     //Here fetching the metadata
     // console.log("Metadata URI from the ListItem component", metadataURI)
     const { data, error } = useSWR(
-        `https://ipfs.infura.io/ipfs/${metadataURI}`,
+        `https://ipfs.io/ipfs/${metadataURI}`,
         fetcher
     )
 
@@ -47,7 +47,7 @@ export default function ListItem({ metadataURI }) {
 
         const handleQRCode = () => {
             QRCODE.toDataURL(
-                `http://ipfs.infura.io/ipfs/${data.fileIpfsHash}`
+                `http://ipfs.io/ipfs/${data.fileIpfsHash}`
             ).then((response) => {
                 setSource(response)
             })
@@ -99,7 +99,7 @@ export default function ListItem({ metadataURI }) {
                             <div className="card-actions justify-around mt-3">
                                 <button className="btn btn-primary btn-sm">
                                     <a
-                                        href={`https://ipfs.infura.io/ipfs/${data.fileIpfsHash}`}
+                                        href={`https://ipfs.io/ipfs/${data.fileIpfsHash}`}
                                         target="_blank"
                                     >
                                         View File
