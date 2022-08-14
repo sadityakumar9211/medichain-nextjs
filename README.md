@@ -210,7 +210,7 @@ If you appreciated this, feel free to follow me or donate!
 
 ETH Address: 0xED5A704De64Ff9699dB62d09248C8d179bb77D8A
 
-[![Aditya Singh Linkedin](https://img.shields.io/badge/LinkedIn?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/saditya9211/)
+[![Aditya Singh Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saditya9211/)
 [![Aditya Singh Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/sadityakumar921)
 [![Aditya Singh StackOverflow](https://img.shields.io/badge/StackOverflow-gray?style=for-the-badge&logo=stackoverflow&logoColor=orange)](https://stackoverflow.com/users/14769639/saditya)
 [![Aditya Singh Medium](https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@sadityakumar9211)
@@ -249,7 +249,7 @@ Project Link: [https://github.com/sadityakumar9211/medichain-hardhat](https://gi
 [issues-url]: https://github.com/sadityakumar9211/medichain-nextjs/issues
 [license-shield]: https://img.shields.io/github/license/sadityakumar9211/medichain-nextjs.svg?style=for-the-badge
 [license-url]: https://github.com/sadityakumar9211/medichain-nextjs/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/saditya9211
 [product-screenshot]: https://user-images.githubusercontent.com/78147198/184471278-42e393d0-db94-4577-bdc9-328510b777c0.png
 
