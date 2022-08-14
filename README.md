@@ -51,7 +51,7 @@
   </p>
 </div>
 
-
+### This is the Front-end repository of this project. 
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -93,7 +93,7 @@ With this system patients can access their medical records anytime anywhere with
 
 ### Read the detailed description of the project [here](https://ipfs.infura.io/QmZtqbqPkm74j43Lhwd93fvDXCDCdYB8y8Gnaayc1f9LWG)
 
-### This is the Front-end repository of this project. The links to other repositories of this project is at the top.
+### The links to other repositories of this project is at the top.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
