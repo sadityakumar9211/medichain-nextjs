@@ -58,7 +58,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-projecť">About The Project</a>
+      <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -66,11 +66,11 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#quickstart">Quickstart</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#locally-deploying">Locally Deploying</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -151,7 +151,7 @@ If you can't or don't want to run and install locally, you can work with this re
 
 <!-- USAGE EXAMPLES -->
 
-# Deployment to a testnet or mainnet
+## Locally Deploying
 
 2. Deploy to your contract to Rinkeby
 After installing dependencies, deploy your contracts to rinkeby:
