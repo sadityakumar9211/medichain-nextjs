@@ -79,7 +79,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 _patientAddress: patientAddress,
                 _name: name,
                 _dob: dob,
-                _phoneNumber: phoneNumber,
+                _phoneNumber: 0,    //phoneNumber
                 _bloodGroup: bloodGroup,
                 _publicKey: keys.publicKey,
             },
@@ -234,7 +234,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                         }}
                     />
                 </div>
-                <div className="mb-5">
+                {/* <div className="mb-5">
                     <Input
                         label="Enter Phone Number"
                         name="Phone Number"
@@ -244,7 +244,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                         }}
                         validation={{ required: true }}
                     />
-                </div>
+                </div> */}
                 {showKeys ? (
                     <div>
                         <div className="alert alert-success shadow-lg mb-4">

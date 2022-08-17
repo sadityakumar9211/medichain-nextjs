@@ -221,7 +221,7 @@ export default function PatientProfile({
                                 {timestampToDate(dateOfRegistration)}
                             </a>
                         </div>
-                        <div>
+                        {/* <div>
                             <span className="font-sans md:text-xl font-medium hover:underline">
                                 Phone Number
                             </span>
@@ -229,7 +229,7 @@ export default function PatientProfile({
                             <span className="badge badge-warning badge-accent">
                                 {phoneNumber}
                             </span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div>
