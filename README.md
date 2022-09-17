@@ -89,7 +89,6 @@ The proposed system is based on EVM compatible public blockchains using IPFS as 
 
 With this system patients can access their medical records anytime anywhere without the counterparty risk from centralized entity. This system also features QR code for sharing of medical files from patients to doctors. With the proposed implementation the decentralized medical record keeping system provides increased security and privacy compared to centralized systems without loss of significant performance or scalability benefits.
 
-### Read the detailed description of the project [here](https://ipfs.infura.io/QmZtqbqPkm74j43Lhwd93fvDXCDCdYB8y8Gnaayc1f9LWG)
 
 ### The links to other repositories of this project is at the top.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
