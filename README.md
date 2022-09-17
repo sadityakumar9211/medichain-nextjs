@@ -35,8 +35,6 @@
   <p align="center">
     This repository is one of the three repositories which are part of MediChain Project.
     <br />
-    <a href="https://ipfs.infura.io/QmZtqbqPkm74j43Lhwd93fvDXCDCdYB8y8Gnaayc1f9LWG"><strong>Explore the Final Project Report »</strong></a> 
-    <br>
     <a href="https://github.com/sadityakumar9211/medichain-hardhat"><strong> <i>medichain-hardhat</i>: Hardhat Repository of MediChain Project»</strong></a>
     <br>
     <a href="https://github.com/sadityakumar9211/medichain-thegraph"><strong> <i>medichain-thegraph</i>: The Graph Repository of MediChain Project»</strong></a>
