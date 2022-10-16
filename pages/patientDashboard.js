@@ -98,7 +98,7 @@ export default function PatientDashboard() {
                                         acuteHash,
                                     } = patient
                                     return (
-                                        <div>
+                                        <div key={patientAddress}>
                                             <PatientProfile
                                                 key={patientAddress}
                                                 name={name}
