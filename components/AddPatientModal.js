@@ -20,7 +20,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [okDisabled, setOkDisabled] = useState(false)
 
     const { chainId: chainHexId, account } = useMoralis()
-
+    // console.log(chainId)
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]

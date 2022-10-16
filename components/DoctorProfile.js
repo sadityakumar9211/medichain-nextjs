@@ -63,7 +63,7 @@ export default function DoctorProfile({
                                 title="view on etherscan"
                                 target="_blank"
                                 href={
-                                    "https://rinkeby.etherscan.io/address/" +
+                                    "https://goerli.etherscan.io/address/" +
                                     doctorAddress
                                 }
                             >
@@ -80,7 +80,7 @@ export default function DoctorProfile({
                                 title="view on etherscan"
                                 target="_blank"
                                 href={
-                                    "https://rinkeby.etherscan.io/address/" +
+                                    "https://goerli.etherscan.io/address/" +
                                     hospitalAddress
                                 }
                             >

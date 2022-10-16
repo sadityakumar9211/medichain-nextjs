@@ -46,11 +46,11 @@ export default function ListItem({ metadataURI }) {
         }
 
         const handleQRCode = () => {
-            QRCODE.toDataURL(
-                `http://ipfs.io/ipfs/${data.fileIpfsHash}`
-            ).then((response) => {
-                setSource(response)
-            })
+            QRCODE.toDataURL(`http://ipfs.io/ipfs/${data.fileIpfsHash}`).then(
+                (response) => {
+                    setSource(response)
+                }
+            )
             setVisible(true)
         }
         // console.log(data)
@@ -86,12 +86,20 @@ export default function ListItem({ metadataURI }) {
                                     <span className="font-semibold hover:underline  text-zinc-900">
                                         Doctor Address:
                                     </span>
-                                    <a className="inline-block badge pb-3 ml-4 badge-warning" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
+                                    <a
+                                        className="inline-block badge pb-3 ml-4 badge-warning"
+                                        href={`https://goerli.etherscan.io/address/${data.doctorAddress}`}
+                                        target="_blank"
+                                    >
                                         {data.doctorAddress}
                                     </a>
-                                    <a className="inline-block md:hidden badge ml-4 badge-warning" href={`https://rinkeby.etherscan.io/address/${data.doctorAddress}`} target="_blank">
-                                    {truncatStr(data.doctorAddress, 15)}
-                                </a>
+                                    <a
+                                        className="inline-block md:hidden badge ml-4 badge-warning"
+                                        href={`https://goerli.etherscan.io/address/${data.doctorAddress}`}
+                                        target="_blank"
+                                    >
+                                        {truncatStr(data.doctorAddress, 15)}
+                                    </a>
                                 </p>
                             ) : (
                                 <></>
