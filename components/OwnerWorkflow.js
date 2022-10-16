@@ -1,7 +1,7 @@
 //This is a component representing the workflow of patient in the system.
 //This explains how patient can interact with the system.
 
-export default function PatientWorkflow() {
+export default function OwnerWorkflow() {
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto">
