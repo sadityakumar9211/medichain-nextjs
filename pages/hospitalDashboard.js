@@ -100,7 +100,7 @@ export default function HospitalDashboard() {
                                         dateOfRegistration,
                                     } = hospital
                                     return (
-                                        <div>
+                                        <div key={hospitalAddress}>
                                             <HospitalProfile
                                                 key={hospitalAddress}
                                                 name={name}

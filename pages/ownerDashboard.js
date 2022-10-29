@@ -414,7 +414,7 @@ export default function OwnerDashboard() {
                                     </button>
                                     <button className="btn">
                                         <a
-                                            href="https://rinkeby.etherscan.io/address/0x72B5e274C989108f282605e359803f130C29e65C"
+                                            href={`https://goerli.etherscan.io/address/${medicalRecordSystemAddress}`}
                                             target="_blank"
                                         >
                                             View on Etherscan

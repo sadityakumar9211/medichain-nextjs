@@ -44,7 +44,7 @@ export default function HospitalProfile({
                                 title="view on etherscan"
                                 target="_blank"
                                 href={
-                                    "https://rinkeby.etherscan.io/address/" +
+                                    "https://goerli.etherscan.io/address/" +
                                     hospitalAddress
                                 }
                             >

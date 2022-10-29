@@ -94,7 +94,7 @@ export default function DoctorDashboard() {
                                         doctorRegistrationId,
                                     } = doctor
                                     return (
-                                        <div>
+                                        <div key={doctorAddress}>
                                             <DoctorProfile
                                                 key={doctorAddress}
                                                 name={name}
