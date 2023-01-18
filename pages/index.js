@@ -20,12 +20,12 @@ export default function Home() {
                     <div className="container flex flex-col items-center justify-between h-full max-w-6xl px-8 mx-auto -mt-32 lg:flex-row xl:px-0">
                         <div className="z-30 flex flex-col items-center w-full max-w-xl pt-48 text-center lg:items-start lg:w-1/2 lg:pt-20 xl:pt-40 lg:text-left">
                             <h1 className="relative mb-4 text-3xl font-black leading-tight text-gray-900 sm:text-6xl xl:mb-8">
-                                Decentralized Medical Record Keeping System
+                                Decentralized Telemedicine and Medical Records
                             </h1>
                             <p className="pr-0 mb-8 text-base text-gray-600 sm:text-lg xl:text-xl lg:pr-20">
-                                An ethereum based decentralized application
-                                where only patients can access there medical
-                                data, providing full control over the data.
+                                An EVM compatible decentralized application
+                                where only patients can access their medical
+                                data, giving them full control over their own data.
                             </p>
                             <button className="btn btn-primary md:btn-md btn-sm text-center">
                                 <Link href="/patientDashboard">

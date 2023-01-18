@@ -15,7 +15,7 @@ import NotRegistered from "../components/NotRegistered"
 export default function HospitalDashboard() {
     const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
-
+    console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[-1]
     const {
