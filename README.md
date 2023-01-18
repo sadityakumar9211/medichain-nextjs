@@ -29,7 +29,7 @@
     <img src="public/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">MediChain: Decentralized Medical Record Keeping System</h3>
+  <h3 align="center">MediChain: Decentralized Telemedicine and Medical Records</h3>
 
   <p align="center">
     This repository is one of the three repositories which are part of MediChain Project.
@@ -80,7 +80,7 @@
 
 ## About The Project
 
-<img width="1278" alt="image" src="https://user-images.githubusercontent.com/78147198/184471278-42e393d0-db94-4577-bdc9-328510b777c0.png">
+<img width="1278" alt="current image" src="https://gateway.pinata.cloud/ipfs/QmXvkXXZ6LCMGESiJCoifJAuZAurTyjXu4HoqMaY5Ko7d9?_gl=1*1r1ds1w*_ga*MTM2MzA3MTc2Ni4xNjc0MDczMjM4*_ga_5RMPXG14TE*MTY3NDA3MzIzNy4xLjEuMTY3NDA3MzMwMy42MC4wLjA.">
 
 **Blockchain** being an immutable ledger and with decentralized nature has a great potential for increasing the security, privacy and efficiency of Medical Health Record keeping systems. Currently existing solutions rely on centralised database which are susceptible to _Ransomware attacks, Denial of Service(DoS) attacks and also have significant counterparty risks_. Some decentralized solutions are also exist but some of them are not really decentralized that are based on private or permis- sioned blockchain, while some which are based on public blockchain have not properly addressed the performance and scalability issues.
 
