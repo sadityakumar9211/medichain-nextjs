@@ -4,11 +4,13 @@ import useSWR from "swr"
 import truncatStr from "../utils/truncateString"
 import { Loading, Modal } from "@web3uikit/core"
 import QRCODE from "qrcode"
+import { useRouter } from "next/router"
 import { useState } from "react"
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function ListItem({ metadataURI }) {
+    const router = useRouter()
     const [visible, setVisible] = useState(false)
     const [source, setSource] = useState("")
 
@@ -21,7 +23,7 @@ export default function ListItem({ metadataURI }) {
 
     if (error) {
         console.log("Error while fetching file metadata: ", error)
-        return <div>Failed to Load...Reloading the page might help.</div>
+        router.push({ pathname: "/error", query: { message: error.message } })
     }
 
     if (!data) {

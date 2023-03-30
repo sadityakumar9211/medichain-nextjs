@@ -21,8 +21,9 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const [cancelDisabled, setCancelDisabled] = useState(false)
     const [okDisabled, setOkDisabled] = useState(false)
     const [showKeys, setShowKeys] = useState(false)
-    const [publicKey, setPublicKey] = useState("")
-    const [privateKey, setPrivateKey] = useState("")
+    // const [publicKey, setPublicKey] = useState("")
+    // const [privateKey, setPrivateKey] = useState("")
+    const [keys, setKeys] = useState({ publicKey: "", privateKey: "" })
 
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
@@ -34,7 +35,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     // console.log("I am contract address", medicalRecordSystemAddress)
     // console.log("I am chain Id: ", chainId)
     const handleRegisterPatientSuccess = async (tx) => {
-        await tx.wait(1)
+        // await tx.wait(1)
         dispatch({
             type: "success",
             title: "Transaction Successful",
@@ -47,20 +48,36 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         setOkDisabled(false)
         setShowKeys(false)
     }
-    const generateKeys = async () => {
-        const key = new NodeRSA({ bits: 2048 })
+    const generateKeys = () => {
+        const key = new NodeRSA({ bits: 4096 })
         const publicKey = key.exportKey("pkcs8-public-pem")
         const privateKey = key.exportKey("pkcs8-private-pem")
-        return { publicKey, privateKey }
+        setKeys({ publicKey, privateKey })
     }
+
+    const { config: registerPatientConfig, error: registerPatientConfigError } =
+        usePrepareContractWrite({
+            address: medicalRecordSystemAddress,
+            abi: PatientMedicalRecordSystemAbi,
+            functionName: "registerPatient",
+            args: [patientAddress, name, dob, 0, bloodGroup, keys?.publicKey],
+            chainId: process.env.CHAIN_ID,
+        })
+
+    const {
+        data: tx,
+        error: registerPatientError,
+        isError: isRegisterPatientTxError,
+        isLoading,
+        isSuccess,
+        write,
+    } = useContractWrite(registerPatientConfig)
 
     const initiateRegisterPatientTransaction = async () => {
         setCancelDisabled(true)
         setOkDisabled(true)
         setShowKeys(true)
-        const keys = await generateKeys()
-        setPublicKey(keys.publicKey)
-        setPrivateKey(keys.privateKey)
+        generateKeys()
 
         // console.log(`publicKey: ${keys.publicKey}`)
         // console.log(`privateKey: ${privateKey}`)
@@ -90,17 +107,6 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //     },
         // }
 
-        const {
-            config: registerPatientConfig,
-            error: registerPatientConfigError,
-        } = usePrepareContractWrite({
-            address: medicalRecordSystemAddress,
-            abi: PatientMedicalRecordSystemAbi,
-            functionName: "registerPatient",
-            args: [patientAddress, name, dob, 0, bloodGroup, keys.publicKey],
-            chainId: process.env.CHAIN_ID,
-        })
-
         if (registerPatientConfigError) {
             console.log(
                 "Error while preparing registerPatient function",
@@ -124,13 +130,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //     onSuccess: handleRegisterPatientSuccess,
         // })
 
-        const {
-            data: tx,
-            error: registerPatientError,
-            isError: isRegisterPatientTxError,
-            isLoading,
-            isSuccess,
-        } = useContractWrite(registerPatientConfig)
+        const tx = write?.()
 
         if (isRegisterPatientTxError) {
             console.log(
@@ -147,7 +147,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         const element = document.createElement("a")
         const file = await new Blob(
             [
-                privateKey ||
+                keys.privateKey ||
                     "Failed to Generate Private Key... Please cancel the Patient Registration...",
             ],
             {
@@ -164,7 +164,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         const element = document.createElement("a")
         const file = await new Blob(
             [
-                publicKey ||
+                keys.publicKey ||
                     "Failed to Generate Public Key... Please cancel the Patient Registration...",
             ],
             {
@@ -186,7 +186,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 onOk={initiateRegisterPatientTransaction}
                 okButtonColor="blue"
                 isCancelDisabled={cancelDisabled}
-                isOkDisabled={okDisabled}
+                isOkDisabled={okDisabled || !write}
             >
                 <div className="mb-5">
                     <Input
