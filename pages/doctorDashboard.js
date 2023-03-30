@@ -1,6 +1,7 @@
 import Head from "next/head"
-import { useMoralis } from "react-moralis"
-import { ConnectButton, Loading } from "web3uikit"
+import { Loading } from "@web3uikit/core"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { useAccount, useNetwork } from "wagmi"
 import Header from "../components/Header"
 import DoctorWorkflow from "../components/DoctorWorkflow"
 import { useQuery } from "@apollo/client"
@@ -8,11 +9,15 @@ import networkMapping from "../constants/networkMapping.json"
 import { GET_ADDED_DOCTORS } from "../constants/subgraphQueries"
 import DoctorProfile from "../components/DoctorProfile"
 import NotRegistered from "../components/NotRegistered"
+import { useRouter } from "next/router"
 
 export default function DoctorDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
+    const router = useRouter()
+    const { isConnected} = useAccount()
+    const {chain} = useNetwork()
+    const chainId = chain.id || "31337"
 
-    const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+    // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     // console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
@@ -24,7 +29,11 @@ export default function DoctorDashboard() {
 
     let doctorProfileFound = false
     let doctorAddresses
-    if (!fetchingAddedDoctors && addedDoctors) {
+    if (error) {
+        console.log(error)
+        router.push({pathname: '/error', query: {message: error.message}})
+    }
+    else if (!fetchingAddedDoctors && addedDoctors) {
         doctorAddresses = addedDoctors.addedDoctors.map(
             (doctor) => doctor.doctorAddress
         )
@@ -47,7 +56,7 @@ export default function DoctorDashboard() {
             <div className="container">
                 <div className="py-4 px-3 font-bold text-4xl ml-12">
                     Doctor Dashboard
-                    {isWeb3Enabled ? (
+                    {isConnected ? (
                         <div className="badge badge-primary ml-4">
                             Web3 is Enabled
                         </div>
@@ -58,11 +67,11 @@ export default function DoctorDashboard() {
                     )}
                 </div>
                 <div className="mx-auto ml-12">
-                    <ConnectButton moralisAuth={false} />
+                    <ConnectButton label="Doctor Dashboard - Sign in" />
                 </div>
 
                 <div className="ml-10 w-4/6">
-                    {isWeb3Enabled ? (
+                    {isConnected ? (
                         fetchingAddedDoctors || !addedDoctors ? (
                             <div
                                 style={{

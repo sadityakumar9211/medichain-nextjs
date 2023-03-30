@@ -1,6 +1,5 @@
 import Head from "next/head"
-import { useMoralis, useWeb3Contract } from "react-moralis"
-import { ConnectButton, useNotification, Modal, Input } from "web3uikit"
+import { useNotification, Modal, Input } from "@web3uikit/core"
 import Header from "../components/Header"
 import OwnerWorkflow from "../components/OwnerWorkflow"
 import { useState } from "react"
@@ -8,10 +7,17 @@ import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSyst
 import networkMapping from "../constants/networkMapping.json"
 import dateInUnix from "../utils/dateInUnix"
 
+import { useAccount, useNetwork } from "wagmi"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import {
+    useContractRead,
+    usePrepareContractWrite,
+    useContractWrite,
+} from "wagmi"
+
 export default function OwnerDashboard() {
     const dispatch = useNotification()
-    const { runContractFunction } = useWeb3Contract()
-    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
+
     const [isOwner, setIsOwner] = useState(false)
     const [showAddHospitalModal, setShowAddHospitalModal] = useState(false)
     const [showAddDoctorModal, setShowAddDoctorModal] = useState(false)
@@ -30,7 +36,13 @@ export default function OwnerDashboard() {
     const [hospitalEmail, setHospitalEmail] = useState("")
     const [hospitalPhoneNumber, setHospitalPhoneNumber] = useState("")
 
-    const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+    const router = useRouter()
+    const { isConnected, address: account } = useAccount()
+    const { chain } = useNetwork()
+    const chainId = chain.id || "31337"
+
+    // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
     // const marketplaceAddress = networkMapping[chainId].NftMarketplace[0]
@@ -47,21 +59,35 @@ export default function OwnerDashboard() {
     //     console.log("listed NFT is empty")
     // }
 
-    const { runContractFunction: getOwner } = useWeb3Contract({
-        abi: PatientMedicalRecordSystemAbi,
-        contractAddress: medicalRecordSystemAddress,
-        functionName: "getOwner",
-        params: {},
-    })
+    // const { runContractFunction: getOwner } = useWeb3Contract({
+    //     abi: PatientMedicalRecordSystemAbi,
+    //     contractAddress: medicalRecordSystemAddress,
+    //     functionName: "getOwner",
+    //     params: {},
+    // })
 
+    // verifying if the current user is the owner of the contract or not.
     const handleVerificationClick = async () => {
-        const contractOwner = await getOwner()
+        const { contractOwner, isError, isLoading, error } = useContractRead({
+            address: medicalRecordSystemAddress,
+            abi: PatientMedicalRecordSystemAbi,
+            functionName: "getOwner",
+            args: [],
+            chainId: process.env.CHAIN_ID || "31337",
+        })
         // console.log(contractOwner)
         // console.log(account)
         // console.log(contractOwner === account)
-        if (
+        if (isError) {
+            console.log("Error while calling getOwner function")
+            router.push({
+                pathname: "/error",
+                query: { message: error.message },
+            })
+        } else if (
+            !isLoading &&
             contractOwner.toString().toLowerCase() ===
-            account.toString().toLowerCase()
+                account.toString().toLowerCase()
         ) {
             dispatch({
                 type: "success",
@@ -98,8 +124,7 @@ export default function OwnerDashboard() {
         setShowAddHospitalModal(true)
     }
 
-    //Add Doctor
-
+    // showing success notification when a new doctor is added in the system.
     const handleAddDoctorSuccess = async (tx) => {
         await tx.wait(1)
         dispatch({
@@ -118,36 +143,81 @@ export default function OwnerDashboard() {
         setCancelDisabled(true)
         setOkDisabled(true)
 
-        const addDoctorDetailsOptions = {
+        // const addDoctorDetailsOptions = {
+        //     abi: PatientMedicalRecordSystemAbi,
+        //     contractAddress: medicalRecordSystemAddress,
+        //     functionName: "addDoctorDetails",
+        //     params: {
+        //         //parameters of this function
+        //         _doctorAddress: doctorAddressToAddTo,
+        //         _name: doctorName,
+        //         _doctorRegistrationId: doctorRegistrationId,
+        //         _dateOfRegistration: dateInUnix(new Date()),
+        //         _specialization: doctorSpecialization,
+        //         _hospitalAddress: doctorHospitalAddress,
+        //     },
+        // }
+
+        const {
+            config: addDoctorDetailsConfig,
+            error: errorAddDoctorDetailsConfig,
+        } = usePrepareContractWrite({
+            address: medicalRecordSystemAddress,
             abi: PatientMedicalRecordSystemAbi,
-            contractAddress: medicalRecordSystemAddress,
             functionName: "addDoctorDetails",
-            params: {
-                //parameters of this function
-                _doctorAddress: doctorAddressToAddTo,
-                _name: doctorName,
-                _doctorRegistrationId: doctorRegistrationId,
-                _dateOfRegistration: dateInUnix(new Date()),
-                _specialization: doctorSpecialization,
-                _hospitalAddress: doctorHospitalAddress,
-            },
+            args: [
+                doctorAddressToAddTo,
+                doctorName,
+                doctorRegistrationId,
+                dateInUnix(new Date()),
+                doctorSpecialization,
+                doctorHospitalAddress,
+            ],
+        })
+
+        if (errorAddDoctorDetailsConfig) {
+            console.log("Error while preparing addDoctorDetails Transaction")
+            router.push({
+                pathname: "/error",
+                query: { message: errorAddDoctorDetailsConfig.message },
+            })
         }
 
-        await runContractFunction({
-            params: addDoctorDetailsOptions,
-            onError: (error) => {
-                console.log(
-                    "Error while calling registerPatient function",
-                    error
-                )
-            },
-            onSuccess: handleAddDoctorSuccess,
-        })
+        const {
+            data: tx,
+            error,
+            isError,
+            isIdle,
+            isLoading,
+            isSuccess,
+            status,
+        } = useContractWrite(addDoctorDetailsConfig)
+
+        if (isError) {
+            console.log("Error while calling addDoctorDetails function")
+            router.push({
+                pathname: "/error",
+                query: { message: error.message },
+            })
+        } else if (isSuccess) {
+            await handleAddDoctorSuccess(tx)
+        }
+
+        // await runContractFunction({
+        //     params: addDoctorDetailsOptions,
+        //     onError: (error) => {
+        //         console.log(
+        //             "Error while calling registerPatient function",
+        //             error
+        //         )
+        //     },
+        //     onSuccess: handleAddDoctorSuccess,
+        // })
         setCancelDisabled(false)
         setOkDisabled(false)
     }
 
-    //Add Hospital
+    // showing success notification when a new hospital is added in the system.
     const handleAddHospitalSuccess = async (tx) => {
         await tx.wait(1)
         dispatch({
@@ -161,35 +231,73 @@ export default function OwnerDashboard() {
         onCloseHospitalModal && onCloseHospitalModal() //closing the modal on success
     }
 
+    // adding a new hospital in the system.
     const initiateAddHospitalTransaction = async () => {
         console.log("Initiate Add Hospital Transaction")
         setCancelDisabled(true)
         setOkDisabled(true)
 
-        const addHospitalDetailsOptions = {
+        // const addHospitalDetailsOptions = {
+        //     abi: PatientMedicalRecordSystemAbi,
+        //     contractAddress: medicalRecordSystemAddress,
+        //     functionName: "addHospitalDetails",
+        //     params: {
+        //         //parameters of this function
+        //         _hospitalAddress: hospitalAddressToAddTo,
+        //         _name: hospitalName,
+        //         _hospitalRegistrationId: hospitalRegistrationId,
+        //         _email: hospitalEmail,
+        //         _phoneNumber: hospitalPhoneNumber,
+        //     },
+        // }
+
+        const {
+            config: addHospitalDetailsConfig,
+            error: errorAddHospitalDetailsConfig,
+        } = usePrepareContractWrite({
+            address: medicalRecordSystemAddress,
             abi: PatientMedicalRecordSystemAbi,
-            contractAddress: medicalRecordSystemAddress,
             functionName: "addHospitalDetails",
-            params: {
-                //parameters of this function
-                _hospitalAddress: hospitalAddressToAddTo,
-                _name: hospitalName,
-                _hospitalRegistrationId: hospitalRegistrationId,
-                _email: hospitalEmail,
-                _phoneNumber: hospitalPhoneNumber,
-            },
+            args: [
+                hospitalAddressToAddTo,
+                hospitalName,
+                hospitalRegistrationId,
+                hospitalEmail,
+                hospitalPhoneNumber,
+            ],
+        })
+
+        // await runContractFunction({
+        //     params: addHospitalDetailsOptions,
+        //     onError: (error) => {
+        //         console.log(
+        //             "Error while calling addHospitalDetails function: ",
+        //             error
+        //         )
+        //     },
+        //     onSuccess: handleAddHospitalSuccess,
+        // })
+
+        const {
+            data: tx,
+            error,
+            isError,
+            isIdle,
+            isLoading,
+            isSuccess,
+            status,
+        } = useContractWrite(addHospitalDetailsConfig)
+
+        if (isError) {
+            console.log("Error while calling addHospitalDetails function")
+            router.push({
+                pathname: "/error",
+                query: { message: error.message },
+            })
+        } else if (isSuccess) {
+            await handleAddHospitalSuccess(tx)
         }
 
-        await runContractFunction({
-            params: addHospitalDetailsOptions,
-            onError: (error) => {
-                console.log(
-                    "Error while calling addHospitalDetails function: ",
-                    error
-                )
-            },
-            onSuccess: handleAddHospitalSuccess,
-        })
         setCancelDisabled(false)
         setOkDisabled(false)
     }
@@ -374,7 +482,7 @@ export default function OwnerDashboard() {
                     </Modal>
                     <div className="py-4 px-3 font-bold text-4xl ml-12">
                         Owner Dashboard
-                        {isWeb3Enabled ? (
+                        {isConnected ? (
                             <div className="badge badge-primary ml-4">
                                 Web3 is Enabled
                             </div>
@@ -385,10 +493,10 @@ export default function OwnerDashboard() {
                         )}
                     </div>
                     <div className="mx-auto ml-12">
-                        <ConnectButton moralisAuth={false} />
+                        <ConnectButton label="Owner Dashboard - Sign in" />
                     </div>
                     <div className="mx-auto ml-12 w-3/4">
-                        {isWeb3Enabled ? (
+                        {isConnected ? (
                             isOwner ? (
                                 <div className="mt-16 text-center">
                                     <button

@@ -1,14 +1,17 @@
 import { useState } from "react"
-import { useMoralis, useWeb3Contract } from "react-moralis"
-import { Modal, Input, Select, useNotification } from "web3uikit"
+import { Modal, Input, Select, useNotification } from "@web3uikit/core"
 import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import dateInUnix from "../utils/dateInUnix"
 import NodeRSA from "node-rsa"
 
+import { useNetwork, useAccount } from "wagmi"
+import { useContractWrite, usePrepareContractWrite } from "wagmi"
+import { useRouter } from "next/router"
+
 export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const dispatch = useNotification()
-    const { runContractFunction } = useWeb3Contract()
+    // const { runContractFunction } = useWeb3Contract()
 
     const [name, setName] = useState("")
     const [patientAddress, setPatientAddress] = useState(account)
@@ -21,8 +24,11 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const [publicKey, setPublicKey] = useState("")
     const [privateKey, setPrivateKey] = useState("")
 
-    const { chainId: chainHexId } = useMoralis()
-    const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+
+    const { chain } = useNetwork()
+    const chainId = chain.id || "31337"
+    const router = useRouter()
+
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
@@ -71,31 +77,69 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //NOTIFICATION FOR GEENRATING PUBLIC AND PRIVATE KEYS
 
         // ---------Here I am getting the contract function which has to be run for registerPatient -----------------------
-        const registerPatientOptions = {
-            abi: PatientMedicalRecordSystemAbi,
-            contractAddress: medicalRecordSystemAddress,
-            functionName: "registerPatient",
-            params: {
-                _patientAddress: patientAddress,
-                _name: name,
-                _dob: dob,
-                _phoneNumber: 0,    //phoneNumber
-                _bloodGroup: bloodGroup,
-                _publicKey: keys.publicKey,
-            },
+        // const registerPatientOptions = {
+        //     abi: PatientMedicalRecordSystemAbi,
+        //     contractAddress: medicalRecordSystemAddress,
+        //     functionName: "registerPatient",
+        //     params: {
+        //         _patientAddress: patientAddress,
+        //         _name: name,
+        //         _dob: dob,
+        //         _phoneNumber: 0,    //phoneNumber
+        //         _bloodGroup: bloodGroup,
+        //         _publicKey: keys.publicKey,
+        //     },
+        // }
+
+        const { config: registerPatientConfig, error: registerPatientConfigError } =
+            usePrepareContractWrite({
+                address: medicalRecordSystemAddress,
+                abi: PatientMedicalRecordSystemAbi,
+                functionName: "registerPatient",
+                args: [
+                    patientAddress,
+                    name,
+                    dob,
+                    0,
+                    bloodGroup,
+                    keys.publicKey,
+                ],
+                chainId: process.env.CHAIN_ID,
+            })
+
+        if (registerPatientConfigError) {
+            console.log(
+                "Error while preparing registerPatient function",
+                registerPatientError
+            )
+            router.push({
+                pathname: "/error",
+                query: { error: registerPatientConfigError },
+            })
         }
 
         //Acutaly calling the function. [This is where the transaction initiation actually begins].
-        await runContractFunction({
-            params: registerPatientOptions,
-            onError: (error) => {
-                console.log(
-                    "Error while calling registerPatient function",
-                    error
-                )
-            },
-            onSuccess: handleRegisterPatientSuccess,
-        })
+        // await runContractFunction({
+        //     params: registerPatientOptions,
+        //     onError: (error) => {
+        //         console.log(
+        //             "Error while calling registerPatient function",
+        //             error
+        //         )
+        //     },
+        //     onSuccess: handleRegisterPatientSuccess,
+        // })
+
+        const {data: tx, error: registerPatientError, isError: isRegisterPatientTxError, isLoading, isSuccess} = useContractWrite(registerPatientConfig)
+        
+        if (isRegisterPatientTxError) {
+            console.log(
+                "Error while preparing registerPatient function",
+                registerPatientError
+            )
+        } else {
+            await handleRegisterPatientSuccess(tx)
+        }
     }
 
     const downloadPrivateKey = async () => {
@@ -234,17 +278,6 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                         }}
                     />
                 </div>
-                {/* <div className="mb-5">
-                    <Input
-                        label="Enter Phone Number"
-                        name="Phone Number"
-                        type="text"
-                        onChange={(event) => {
-                            setPhoneNumber(event.target.value)
-                        }}
-                        validation={{ required: true }}
-                    />
-                </div> */}
                 {showKeys ? (
                     <div>
                         <div className="alert alert-success shadow-lg mb-4">

@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { useMoralis, useWeb3Contract } from "react-moralis"
-import { Modal, Input, Select, useNotification } from "web3uikit"
+import { Modal, Input, Select, useNotification } from "@web3uikit/core"
 import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import { GET_PUBLIC_KEYS } from "../constants/subgraphQueries"
@@ -8,10 +7,13 @@ import { useQuery } from "@apollo/client"
 import NodeRSA from "node-rsa"
 import * as IPFS from "ipfs-core"
 
+import { useNetwork, useAccount } from "wagmi"
+import { useContractWrite, usePrepareContractWrite } from "wagmi/hooks"
+import { useRouter } from "next/router"
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
-    const { runContractFunction } = useWeb3Contract()
+    // const { runContractFunction } = useWeb3Contract()
     const [patientAddressToAddTo, setPatientAddressToAddTo] = useState("")
     const [category, setCategory] = useState(3)
     const [file, setFile] = useState(null)
@@ -19,9 +21,13 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [cancelDisabled, setCancelDisabled] = useState(false)
     const [okDisabled, setOkDisabled] = useState(false)
 
-    const { chainId: chainHexId, account } = useMoralis()
-    // console.log(chainId)
-    const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+    const { isConnected } = useAccount()
+    const { chain } = useNetwork()
+    const chainId = chain.id || "31337"
+    console.log(chainId)
+    const router = useRouter()
+
+    // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
@@ -31,6 +37,11 @@ export default function AddPatientModal({ isVisible, onClose }) {
         error,
         data: addedPublicKeys,
     } = useQuery(GET_PUBLIC_KEYS)
+
+    if (error) {
+        console.log(error)
+        router.push({ pathname: "/error", query: { message: error.message } })
+    }
 
     const handleAddedPatientDetailsSuccess = async (tx) => {
         await tx.wait(1)
@@ -84,8 +95,8 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading file to ipfs
         let fileIpfsHash
         try {
-            const client = await IPFS.create({repo: 'ok' + Math.random()})
-            const {cid} = (await client.add(file))
+            const client = await IPFS.create({ repo: "ok" + Math.random() })
+            const { cid } = await client.add(file)
             fileIpfsHash = cid.toString()
         } catch (e) {
             console.log("IPFS Upload Error", e)
@@ -103,10 +114,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading the fileMetadata to IPFS
         let IpfsHash
         try {
-            const client = await IPFS.create({repo: 'ok' + Math.random()})
-            const {cid} = (await client.add(JSON.stringify(fileMetadata)))
+            const client = await IPFS.create({ repo: "ok" + Math.random() })
+            const { cid } = await client.add(JSON.stringify(fileMetadata))
             IpfsHash = cid.toString()
-
         } catch (e) {
             console.log(e)
         }
@@ -133,31 +143,66 @@ export default function AddPatientModal({ isVisible, onClose }) {
         // console.log(category)
         // console.log(encryptedIpfsHash)
 
-        const addPatientDetailsOptions = {
+        // const addPatientDetailsOptions = {
+        //     abi: PatientMedicalRecordSystemAbi,
+        //     contractAddress: medicalRecordSystemAddress,
+        //     functionName: "addPatientDetails",
+        //     params: {
+        //         _patientAddress: patientAddressToAddTo, //Input by the doctor
+        //         _category: category.toString(), //This will be chosen by the doctor
+        //         _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
+        //         options: { gasLimit: 3e6 },
+        //     },
+        // }
+
+        const { config: addPatientDetailsConfig } = await runContractFunction({
+            address: medicalRecordSystemAddress,
             abi: PatientMedicalRecordSystemAbi,
-            contractAddress: medicalRecordSystemAddress,
             functionName: "addPatientDetails",
-            params: {
-                _patientAddress: patientAddressToAddTo, //Input by the doctor
-                _category: category.toString(), //This will be chosen by the doctor
-                _IpfsHash: encryptedIpfsHash, //This will be the encrypted IpfsHash of the file Metadata of the file uploaded by the doctor.
-                options: { gasLimit: 3e6 },
-            },
-        }
-
-        // //Actually calling the function. [This is where the transaction initiation actually begins].
-
-        await runContractFunction({
-            params: addPatientDetailsOptions,
-            onError: (error) => {
-                console.log(
-                    "Error while calling addPatientDetails function: ",
-                    error
-                )
-            },
-            onSuccess: handleAddedPatientDetailsSuccess,
+            args: [
+                patientAddressToAddTo,
+                category.toString(),
+                encryptedIpfsHash,
+            ],
+            chainId: process.env.CHAIN_ID,
         })
 
+        // //Actually calling the function. [This is where the transaction initiation actually begins].
+        // await runContractFunction({
+        //     params: addPatientDetailsOptions,
+        //     onError: (error) => {
+        //         console.log(
+        //             "Error while calling addPatientDetails function: ",
+        //             error
+        //         )
+        //     },
+        //     onSuccess: handleAddedPatientDetailsSuccess,
+        // })
+
+        const {
+            data: tx,
+            error,
+            isLoading,
+            isSuccess,
+            status,
+        } = useContractWrite(addPatientDetailsConfig)
+
+        if (error) {
+            console.log(
+                "Error while calling addPatientDetails function: ",
+                error
+            )
+            router.push({
+                pathname: "/error",
+                query: { message: error.message },
+            })
+        } else if (isSuccess) {
+            console.log(
+                "Success while calling addPatientDetails function: ",
+                data
+            )
+            await handleAddedPatientDetailsSuccess(tx)
+        }
         setOkDisabled(false)
         setCancelDisabled(false)
     }

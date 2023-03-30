@@ -2,7 +2,7 @@ import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
 import ListMedicalFiles from "./ListMedicalFiles"
-import { Modal, Input, useNotification } from "web3uikit"
+import { Modal, Input, useNotification } from "@web3uikit/core"
 import NodeRSA from "node-rsa"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())

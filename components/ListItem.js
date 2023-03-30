@@ -2,7 +2,7 @@
 
 import useSWR from "swr"
 import truncatStr from "../utils/truncateString"
-import { Loading, Modal } from "web3uikit"
+import { Loading, Modal } from "@web3uikit/core"
 import QRCODE from "qrcode"
 import { useState } from "react"
 

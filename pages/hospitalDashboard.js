@@ -2,10 +2,12 @@
 //This is just a add-on / redundant page. Just entity was coming up so I made this new page.
 
 import Head from "next/head"
-import { useMoralis } from "react-moralis"
+import { useRouter } from "next/router"
 import networkMapping from "../constants/networkMapping.json"
 import { useQuery } from "@apollo/client"
-import { ConnectButton, Loading } from "web3uikit"
+import { Loading } from "@web3uikit/core"
+import { useNetwork, useAccount } from "wagmi"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Header from "../components/Header"
 import HospitalWorkflow from "../components/HospitalWorkflow"
 import { GET_ADDED_HOSPITALS } from "../constants/subgraphQueries"
@@ -13,8 +15,10 @@ import HospitalProfile from "../components/HospitalProfile"
 import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {
-    const { isWeb3Enabled, chainId: chainHexId, account } = useMoralis()
-    const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
+    const router = useRouter()
+    const {isConnected} = useAccount()
+    const {chain} = useNetwork()
+    const chainId = chain.id || "31337"
     console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[-1]
@@ -30,7 +34,11 @@ export default function HospitalDashboard() {
 
     let hospitalProfileFound = false
     let hospitalAddresses
-    if (!fetchingAddedHospitals && addedHospitals) {
+    if (error) {
+        console.log(error)
+        router.push({pathname: '/error', query: {message: error.message}})
+    }
+    else if (!fetchingAddedHospitals && addedHospitals) {
         hospitalAddresses = addedHospitals.addedHospitals.map(
             (hospital) => hospital.hospitalAddress
         )
@@ -53,7 +61,7 @@ export default function HospitalDashboard() {
             <div className="container">
                 <div className="py-4 px-3 font-bold text-4xl ml-12">
                     Hospital Dashboard
-                    {isWeb3Enabled ? (
+                    {isConnected ? (
                         <div className="badge badge-primary ml-4">
                             Web3 is Enabled
                         </div>
@@ -64,11 +72,11 @@ export default function HospitalDashboard() {
                     )}
                 </div>
                 <div className="mx-auto ml-12">
-                    <ConnectButton moralisAuth={false} />
+                    <ConnectButton label="Hospital Dashboard - Sign in" />
                 </div>
 
                 <div className="ml-10 w-4/6">
-                    {isWeb3Enabled ? (
+                    {isConnected ? (
                         fetchingAddedHospitals || !addedHospitals ? (
                             <div
                                 style={{

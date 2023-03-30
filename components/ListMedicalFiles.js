@@ -1,5 +1,5 @@
 import ListFile from "./ListFile"
-import { TabList, Tab } from "web3uikit"
+import { TabList, Tab } from "@web3uikit/core"
 
 export default function ListMedicalFiles({
     vaccinationHash,

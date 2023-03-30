@@ -74,11 +74,11 @@ export default function Footer() {
                             </li>
                             <li>
                                 <a
-                                    href="https://moralis.io/"
+                                    href="https://wagmi.sh/"
                                     target="_blank"
                                     className="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600"
                                 >
-                                    Moralis Open Source Tools
+                                    Wagmi
                                 </a>
                             </li>
                         </ul>

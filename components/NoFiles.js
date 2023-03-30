@@ -1,4 +1,4 @@
-import {Table} from "web3uikit"
+import {Table} from "@web3uikit/core"
 
 export default function NoFiles({customText}) {
     let additionalText
