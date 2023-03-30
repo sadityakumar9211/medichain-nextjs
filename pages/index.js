@@ -29,22 +29,22 @@ export default function Home() {
                             </p>
                             <button className="btn btn-primary md:btn-md btn-sm text-center">
                                 <Link href="/patientDashboard">
-                                    <a>Patient Login</a>
+                                    Patient Login
                                 </Link>
                             </button>
                             <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
                                 <Link href="/doctorDashboard">
-                                    <a>Doctor Login</a>
+                                    Doctor Login
                                 </Link>
                             </button>
                             <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
                                 <Link href="/hospitalDashboard">
-                                    <a>Hospital Login</a>
+                                    Hospital Login
                                 </Link>
                             </button>
                             <button className="btn btn-primary md:btn-base btn-sm md:hidden mt-4 md:mt-0">
                                 <Link href="/ownerDashboard">
-                                    <a>Owner Login</a>
+                                    Owner Login
                                 </Link>
                             </button>
                         </div>
@@ -176,5 +176,5 @@ export default function Home() {
                 {/* <!-- END FEATURES SECTION --> */}
             </div>
         </div>
-    )
+    );
 }
