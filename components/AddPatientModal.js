@@ -23,7 +23,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
 
     const { isConnected } = useAccount()
     const { chain } = useNetwork()
-    const chainId = chain.id || "31337"
+    const chainId = chain?.id || "31337"
     console.log(chainId)
     const router = useRouter()
 

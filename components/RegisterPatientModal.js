@@ -24,9 +24,8 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const [publicKey, setPublicKey] = useState("")
     const [privateKey, setPrivateKey] = useState("")
 
-
     const { chain } = useNetwork()
-    const chainId = chain.id || "31337"
+    const chainId = chain?.id || "31337"
     const router = useRouter()
 
     const medicalRecordSystemAddress =
@@ -91,21 +90,16 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //     },
         // }
 
-        const { config: registerPatientConfig, error: registerPatientConfigError } =
-            usePrepareContractWrite({
-                address: medicalRecordSystemAddress,
-                abi: PatientMedicalRecordSystemAbi,
-                functionName: "registerPatient",
-                args: [
-                    patientAddress,
-                    name,
-                    dob,
-                    0,
-                    bloodGroup,
-                    keys.publicKey,
-                ],
-                chainId: process.env.CHAIN_ID,
-            })
+        const {
+            config: registerPatientConfig,
+            error: registerPatientConfigError,
+        } = usePrepareContractWrite({
+            address: medicalRecordSystemAddress,
+            abi: PatientMedicalRecordSystemAbi,
+            functionName: "registerPatient",
+            args: [patientAddress, name, dob, 0, bloodGroup, keys.publicKey],
+            chainId: process.env.CHAIN_ID,
+        })
 
         if (registerPatientConfigError) {
             console.log(
@@ -130,8 +124,14 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //     onSuccess: handleRegisterPatientSuccess,
         // })
 
-        const {data: tx, error: registerPatientError, isError: isRegisterPatientTxError, isLoading, isSuccess} = useContractWrite(registerPatientConfig)
-        
+        const {
+            data: tx,
+            error: registerPatientError,
+            isError: isRegisterPatientTxError,
+            isLoading,
+            isSuccess,
+        } = useContractWrite(registerPatientConfig)
+
         if (isRegisterPatientTxError) {
             console.log(
                 "Error while preparing registerPatient function",

@@ -39,7 +39,7 @@ export default function OwnerDashboard() {
     const router = useRouter()
     const { isConnected, address: account } = useAccount()
     const { chain } = useNetwork()
-    const chainId = chain.id || "31337"
+    const chainId = chain?.id || "31337"
 
     // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
 

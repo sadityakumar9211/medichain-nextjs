@@ -13,9 +13,9 @@ import { useRouter } from "next/router"
 
 export default function DoctorDashboard() {
     const router = useRouter()
-    const { isConnected} = useAccount()
-    const {chain} = useNetwork()
-    const chainId = chain.id || "31337"
+    const { isConnected } = useAccount()
+    const { chain } = useNetwork()
+    const chainId = chain?.id || "31337"
 
     // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     // console.log(chainId)
@@ -31,9 +31,8 @@ export default function DoctorDashboard() {
     let doctorAddresses
     if (error) {
         console.log(error)
-        router.push({pathname: '/error', query: {message: error.message}})
-    }
-    else if (!fetchingAddedDoctors && addedDoctors) {
+        router.push({ pathname: "/error", query: { message: error.message } })
+    } else if (!fetchingAddedDoctors && addedDoctors) {
         doctorAddresses = addedDoctors.addedDoctors.map(
             (doctor) => doctor.doctorAddress
         )

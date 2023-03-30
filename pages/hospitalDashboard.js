@@ -16,9 +16,9 @@ import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {
     const router = useRouter()
-    const {isConnected} = useAccount()
-    const {chain} = useNetwork()
-    const chainId = chain.id || "31337"
+    const { isConnected } = useAccount()
+    const { chain } = useNetwork()
+    const chainId = chain?.id || "31337"
     console.log(chainId)
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[-1]
@@ -36,9 +36,8 @@ export default function HospitalDashboard() {
     let hospitalAddresses
     if (error) {
         console.log(error)
-        router.push({pathname: '/error', query: {message: error.message}})
-    }
-    else if (!fetchingAddedHospitals && addedHospitals) {
+        router.push({ pathname: "/error", query: { message: error.message } })
+    } else if (!fetchingAddedHospitals && addedHospitals) {
         hospitalAddresses = addedHospitals.addedHospitals.map(
             (hospital) => hospital.hospitalAddress
         )

@@ -12,11 +12,9 @@ import { useNetwork, useAccount } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export default function PatientDashboard() {
-
-
-    const {isConnected} = useAccount()
-    const {chain} = useNetwork()
-    const chainId = chain.id || "31337"
+    const {address: account, isConnected } = useAccount()
+    const { chain } = useNetwork()
+    const chainId = chain?.id || "31337"
     console.log(chainId)
 
     const patientMedicalRecordSystemAddress =
@@ -29,7 +27,7 @@ export default function PatientDashboard() {
 
     if (error) {
         console.log(error)
-        router.push({pathname: '/error', query: {message: error.message}})
+        router.push({ pathname: "/error", query: { message: error.message } })
     }
 
     let isRegistered = false
