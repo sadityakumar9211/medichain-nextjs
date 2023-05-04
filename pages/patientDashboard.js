@@ -49,12 +49,15 @@ export default function PatientDashboard() {
 
     if (addedPatients) {
         let isRegistered = false
+        // console.log({addedPatients})
         let patientAddresses
         if (!fetchingAddedPatients && addedPatients) {
             patientAddresses = addedPatients.addedPatients.map(
                 (patient) => patient.patientAddress
             )
-            if (patientAddresses.includes(account)) {
+            // console.log(account)
+            if (patientAddresses.includes(account.toLowerCase())) {
+                // console.log("registered")
                 isRegistered = true
             }
         }
@@ -112,7 +115,7 @@ export default function PatientDashboard() {
                                     patientAddresses.push(
                                         patient.patientAddress
                                     )
-                                    if (patient.patientAddress === account) {
+                                    if (patient.patientAddress === account.toLowerCase()) {
                                         const {
                                             name,
                                             patientAddress,

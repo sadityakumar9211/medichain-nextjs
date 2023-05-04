@@ -34,8 +34,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
 
     // console.log("I am contract address", medicalRecordSystemAddress)
     // console.log("I am chain Id: ", chainId)
-    const handleRegisterPatientSuccess = async (tx) => {
-        // await tx.wait(1)
+    const handleRegisterPatientSuccess = async () => {
         dispatch({
             type: "success",
             title: "Transaction Successful",
@@ -65,7 +64,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         })
 
     const {
-        data: tx,
+        data,
         error: registerPatientError,
         isError: isRegisterPatientTxError,
         isLoading,
@@ -78,6 +77,11 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         setOkDisabled(true)
         setShowKeys(true)
         generateKeys()
+
+        // console.log("coming here")
+        // console.log("I am a public key", keys.publicKey)
+        // console.log("I am a private key", keys.privateKey)
+        // console.log("showKeys", showKeys)
 
         // console.log(`publicKey: ${keys.publicKey}`)
         // console.log(`privateKey: ${privateKey}`)
@@ -130,7 +134,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         //     onSuccess: handleRegisterPatientSuccess,
         // })
 
-        const tx = write?.()
+        write?.()
 
         if (isRegisterPatientTxError) {
             console.log(
@@ -138,8 +142,12 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 registerPatientError
             )
         } else {
-            await handleRegisterPatientSuccess(tx)
+            if (isSuccess) {
+                await handleRegisterPatientSuccess(tx)
+            }
         }
+        // console.log("exiting registerPatient function")
+        // console.log(okDisabled, cancelDisabled, showKeys)
     }
 
     const downloadPrivateKey = async () => {
@@ -159,6 +167,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         document.body.appendChild(element)
         element.click()
     }
+
     const downloadPublicKey = async () => {
         // console.log("I am a public key inside function", publicKey)
         const element = document.createElement("a")
@@ -186,7 +195,8 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 onOk={initiateRegisterPatientTransaction}
                 okButtonColor="blue"
                 isCancelDisabled={cancelDisabled}
-                isOkDisabled={okDisabled || !write}
+                // isOkDisabled={okDisabled || !write}
+                isOkDisabled={okDisabled}
             >
                 <div className="mb-5">
                     <Input
