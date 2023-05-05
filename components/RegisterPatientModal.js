@@ -11,7 +11,6 @@ import { useRouter } from "next/router"
 
 export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const dispatch = useNotification()
-    // const { runContractFunction } = useWeb3Contract()
 
     const [name, setName] = useState("")
     const [patientAddress, setPatientAddress] = useState(account)
@@ -121,18 +120,6 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
                 query: { error: registerPatientConfigError },
             })
         }
-
-        //Acutaly calling the function. [This is where the transaction initiation actually begins].
-        // await runContractFunction({
-        //     params: registerPatientOptions,
-        //     onError: (error) => {
-        //         console.log(
-        //             "Error while calling registerPatient function",
-        //             error
-        //         )
-        //     },
-        //     onSuccess: handleRegisterPatientSuccess,
-        // })
 
         write?.()
 

@@ -1,4 +1,5 @@
 import { useRouter } from "next/router"
+import Head from "next/head"
 
 export default function Error() {
     const router = useRouter()
@@ -9,10 +10,10 @@ export default function Error() {
                 <meta name="description" content="MediChain - Error" />
                 <link rel="icon" href="/logo.svg" />
             </Head>
-            <div>
-                <div className="py-4 px-3 font-bold text-4xl ml-12">
-                    <div>It's not you, it's us.</div>
-                    <span>Error: {router.query.message}</span>
+            <div className="flex justify-center items-center">
+                <div className="py-4 px-3 font-bold w-3/4 mt-20 bg-green-400 border rounded-md">
+                    <div className="bg-yellow-400 border rounded-md w-full text-semibold text-center">It's not you, it's us.</div>
+                    <span className="text-sm">Error: {router.query.message}</span>
                 </div>
             </div>
         </div>

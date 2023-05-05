@@ -16,7 +16,6 @@ export default function PatientDashboard() {
     const { chain } = useNetwork()
 
     const chainId = chain?.id || "31337"
-    // console.log(chainId)
 
     const patientMedicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
@@ -56,7 +55,7 @@ export default function PatientDashboard() {
                 (patient) => patient.patientAddress
             )
             // console.log(account)
-            if (patientAddresses.includes(account.toLowerCase())) {
+            if (patientAddresses.includes(account?.toLowerCase())) {
                 // console.log("registered")
                 isRegistered = true
             }
