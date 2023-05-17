@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import networkMapping from "../constants/networkMapping.json"
 import dateInUnix from "../utils/dateInUnix"
-
+import useIsMounted from "../utils/useIsMounted"
 import { useAccount, useNetwork } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import {
@@ -38,6 +38,7 @@ export default function OwnerDashboard() {
     const [hospitalPhoneNumber, setHospitalPhoneNumber] = useState("")
 
     const router = useRouter()
+    const { mounted } = useIsMounted()
     const { isConnected, address: account } = useAccount()
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
@@ -45,39 +46,29 @@ export default function OwnerDashboard() {
     const medicalRecordSystemAddress =
         networkMapping[chainId].PatientMedicalRecordSystem[0]
 
-    const {
-        contractOwner,
-        isError: isGetOwnerError,
-        isLoading: isGetOwnerLoading,
-        error: getOwnerError,
-    } = useContractRead({
+    const { data: contractOwner } = useContractRead({
         address: medicalRecordSystemAddress,
         abi: PatientMedicalRecordSystemAbi,
         functionName: "getOwner",
     })
 
     useEffect(() => {
-      if (! isGetOwnerError && ! isGetOwnerLoading) {
-        console.log("Contract Owner: ", contractOwner)
-      }
-      if (isGetOwnerError) {
-        console.log("Error in getting owner of the contract")
-        console.log({getOwnerError})
-      }
-    })
+        if (contractOwner) {
+            console.log("Contract Owner: ", contractOwner)
+        }
+    }, [contractOwner])
 
     // verifying if the current user is the owner of the contract or not.
     const handleVerificationClick = async () => {
-        if (isGetOwnerError) {
+        if (!contractOwner) {
             console.log("Error while calling getOwner function")
             router.push({
                 pathname: "/error",
-                query: { message: getOwnerError.message },
+                query: { message: "Error while reading on-chain data!!" },
             })
         } else if (
-            !isGetOwnerLoading &&
             contractOwner?.toString()?.toLowerCase() ===
-                account?.toString()?.toLowerCase()
+            account?.toString()?.toLowerCase()
         ) {
             dispatch({
                 type: "success",
@@ -247,6 +238,10 @@ export default function OwnerDashboard() {
 
         setCancelDisabled(false)
         setOkDisabled(false)
+    }
+
+    if (!mounted) {
+        return null
     }
 
     return (
