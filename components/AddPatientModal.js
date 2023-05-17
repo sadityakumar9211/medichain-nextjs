@@ -10,6 +10,7 @@ import * as IPFS from "ipfs-core"
 import { useNetwork, useAccount } from "wagmi"
 import { useContractWrite, usePrepareContractWrite } from "wagmi/hooks"
 import { useRouter } from "next/router"
+import useIsMounted from "../utils/useIsMounted"
 
 export default function AddPatientModal({ isVisible, onClose }) {
     const dispatch = useNotification()
@@ -20,6 +21,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     const [cancelDisabled, setCancelDisabled] = useState(false)
     const [okDisabled, setOkDisabled] = useState(false)
 
+    const { mounted } = useIsMounted()
     const { isConnected } = useAccount()
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
@@ -67,18 +69,16 @@ export default function AddPatientModal({ isVisible, onClose }) {
         }
     }
 
-    const { config: addPatientDetailsConfig, error: addPatientDetailsConfigError } =
-        usePrepareContractWrite({
-            address: medicalRecordSystemAddress,
-            abi: PatientMedicalRecordSystemAbi,
-            functionName: "addPatientDetails",
-            args: [
-                patientAddressToAddTo,
-                category.toString(),
-                encryptedIpfsHash,
-            ],
-            chainId: process.env.CHAIN_ID,
-        })
+    const {
+        config: addPatientDetailsConfig,
+        error: addPatientDetailsConfigError,
+    } = usePrepareContractWrite({
+        address: medicalRecordSystemAddress,
+        abi: PatientMedicalRecordSystemAbi,
+        functionName: "addPatientDetails",
+        args: [patientAddressToAddTo, category.toString(), encryptedIpfsHash],
+        chainId: process.env.CHAIN_ID,
+    })
 
     const {
         data,
@@ -88,7 +88,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
         isSuccess,
         write,
     } = useContractWrite(registerPatientConfig)
-
 
     const initiateAddPatientDetailsTransaction = async () => {
         //Getting the parameters for the transaction
@@ -160,7 +159,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
             position: "bottomL",
         })
 
-
         if (addPatientDetailsConfigError) {
             console.log(
                 "Error while preparing registerPatient function",
@@ -172,7 +170,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
             })
         }
 
-         write?.()
+        write?.()
 
         if (isAddPatientDetailsTxError) {
             console.log(
@@ -184,7 +182,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
                 await handleAddedPatientDetailsSuccess()
             }
         }
-
 
         // if (error) {
         //     console.log(
@@ -208,6 +205,9 @@ export default function AddPatientModal({ isVisible, onClose }) {
     }
 
     // console.log('public keys:', fetchingAddedPublicKeys? "null" : addedPublicKeys.addedPublicKeys[0].publicKey)
+    if (!mounted) {
+        return null
+    }
 
     return (
         <Modal

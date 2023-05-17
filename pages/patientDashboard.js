@@ -7,14 +7,14 @@ import networkMapping from "../constants/networkMapping.json"
 import { GET_ADDED_PATIENTS } from "../constants/subgraphQueries"
 import PatientProfile from "../components/PatientProfile"
 import NotRegisteredPatient from "../components/NotRegisteredPatient"
+import useIsMounted from "../utils/useIsMounted"
 import { useNetwork, useAccount } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export default function PatientDashboard() {
+    const {mounted} = useIsMounted()
     const { address: account, isConnected } = useAccount()
-
     const { chain } = useNetwork()
-
     const chainId = chain?.id || "31337"
 
     const patientMedicalRecordSystemAddress =
@@ -28,6 +28,10 @@ export default function PatientDashboard() {
     if (error) {
         console.log(error)
         router.push({ pathname: "/error", query: { message: error.message } })
+    }
+
+    if (!mounted) {
+        return null
     }
 
     if (fetchingAddedPatients || !addedPatients) {

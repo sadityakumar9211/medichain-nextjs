@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import networkMapping from "../constants/networkMapping.json"
 import { useQuery } from "@apollo/client"
 import { Loading } from "@web3uikit/core"
+import useIsMounted from "../utils/useIsMounted"
 import { useNetwork, useAccount } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Header from "../components/Header"
@@ -16,6 +17,7 @@ import NotRegistered from "../components/NotRegistered"
 
 export default function HospitalDashboard() {
     const router = useRouter()
+    const {mounted} = useIsMounted()
     const { isConnected } = useAccount()
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
@@ -44,6 +46,10 @@ export default function HospitalDashboard() {
         if (hospitalAddresses.includes(account)) {
             hospitalProfileFound = true
         }
+    }
+
+    if (!mounted) {
+        return null
     }
 
     return (

@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { use, useState } from "react"
 import { Modal, Input, Select, useNotification } from "@web3uikit/core"
 import networkMapping from "../constants/networkMapping.json"
 import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSystem.json"
 import dateInUnix from "../utils/dateInUnix"
 import NodeRSA from "node-rsa"
-
+import useIsMounted from "../utils/useIsMounted"
 import { useNetwork, useAccount } from "wagmi"
 import { useContractWrite, usePrepareContractWrite } from "wagmi"
 import { useRouter } from "next/router"
@@ -24,6 +24,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     // const [privateKey, setPrivateKey] = useState("")
     const [keys, setKeys] = useState({ publicKey: "", privateKey: "" })
 
+    const { mounted } = useIsMounted()
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
     const router = useRouter()
@@ -171,6 +172,9 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         element.download = "publicKey.txt"
         document.body.appendChild(element)
         element.click()
+    }
+    if (!mounted) {
+        return null
     }
 
     return (

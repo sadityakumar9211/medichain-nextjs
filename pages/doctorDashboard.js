@@ -2,6 +2,7 @@ import Head from "next/head"
 import { Loading } from "@web3uikit/core"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useAccount, useNetwork } from "wagmi"
+import useIsMounted from "../utils/useIsMounted"
 import Header from "../components/Header"
 import DoctorWorkflow from "../components/DoctorWorkflow"
 import { useQuery } from "@apollo/client"
@@ -16,6 +17,7 @@ export default function DoctorDashboard() {
     const { isConnected } = useAccount()
     const { chain } = useNetwork()
     const chainId = chain?.id || "31337"
+    const { mounted } = useIsMounted()
 
     // const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     // console.log(chainId)
@@ -39,6 +41,10 @@ export default function DoctorDashboard() {
         if (doctorAddresses.includes(account)) {
             doctorProfileFound = true
         }
+    }
+
+    if (!mounted) {
+        return null
     }
 
     return (
