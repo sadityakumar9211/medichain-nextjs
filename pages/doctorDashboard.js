@@ -15,7 +15,7 @@ export default function DoctorDashboard() {
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     // console.log(chainId)
     const patientMedicalRecordSystemAddress =
-        networkMapping[chainId].PatientMedicalRecordSystem[0]
+        networkMapping[chainId]?.PatientMedicalRecordSystem[0]
     const {
         loading: fetchingAddedDoctors,
         error,

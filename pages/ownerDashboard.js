@@ -32,7 +32,7 @@ export default function OwnerDashboard() {
 
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
-        networkMapping[chainId].PatientMedicalRecordSystem[0]
+        networkMapping[chainId]?.PatientMedicalRecordSystem[0]
     // const marketplaceAddress = networkMapping[chainId].NftMarketplace[0]
 
     // const {

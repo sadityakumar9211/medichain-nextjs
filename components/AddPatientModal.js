@@ -23,7 +23,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
     // console.log(chainId)
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
-        networkMapping[chainId].PatientMedicalRecordSystem[0]
+        networkMapping[chainId]?.PatientMedicalRecordSystem[0]
 
     // console.log(medicalRecordSystemAddress)
     const {
@@ -116,6 +116,7 @@ export default function AddPatientModal({ isVisible, onClose }) {
 
         //encrypting the fileMetadata using the public key of the patient
         // console.log("patientPublicKey: ", patientPublicKey)   ///---------
+        // console.log({patientPublicKey})
         const publicKeyPatient = new NodeRSA(patientPublicKey)
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
 

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 
 const GET_ADDED_DOCTORS = gql`
     {
-        addedDoctors(first: 10) {
+        addedDoctors(first: 15) {
             id
             name
             doctorAddress
@@ -16,7 +16,7 @@ const GET_ADDED_DOCTORS = gql`
 
 const GET_ADDED_HOSPITALS = gql`
     {
-        addedHospitals(first: 10) {
+        addedHospitals(first: 15) {
             id
             name
             hospitalAddress
@@ -30,7 +30,7 @@ const GET_ADDED_HOSPITALS = gql`
 
 const GET_ADDED_PATIENTS = gql`
     {
-        addedPatients(first: 10) {
+        addedPatients(first: 15) {
             id
             name
             patientAddress
@@ -49,7 +49,7 @@ const GET_ADDED_PATIENTS = gql`
 
 const GET_PUBLIC_KEYS = gql`
     {
-        addedPublicKeys(first: 10) {
+        addedPublicKeys(first: 15) {
             id
             patientAddress
             publicKey

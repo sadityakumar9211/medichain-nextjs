@@ -24,7 +24,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
     const { chainId: chainHexId } = useMoralis()
     const chainId = chainHexId ? parseInt(chainHexId).toString() : "31337"
     const medicalRecordSystemAddress =
-        networkMapping[chainId].PatientMedicalRecordSystem[0]
+        networkMapping[chainId]?.PatientMedicalRecordSystem[0]
 
     // console.log("I am contract address", medicalRecordSystemAddress)
     // console.log("I am chain Id: ", chainId)
