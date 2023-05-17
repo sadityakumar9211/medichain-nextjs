@@ -126,7 +126,7 @@ export default function Home() {
                                     <p className="relative mt-2 md:text-base text-sm text-center text-gray-600">
                                         Being deployed on public blockchain,
                                         this application makes sure that the
-                                        patient's data is permanent, indellible
+                                        patient&apos;s data is permanent, indellible
                                         and unalterable.
                                     </p>
                                     <a

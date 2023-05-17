@@ -8,7 +8,7 @@ import NodeRSA from "node-rsa"
 import * as IPFS from "ipfs-core"
 
 import { useNetwork, useAccount } from "wagmi"
-import { useContractWrite, usePrepareContractWrite } from "wagmi/hooks"
+import { useContractWrite, usePrepareContractWrite } from "wagmi"
 import { useRouter } from "next/router"
 import useIsMounted from "../utils/useIsMounted"
 

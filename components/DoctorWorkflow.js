@@ -25,7 +25,7 @@ export default function PatientWorkflow() {
                             View Details
                         </h2>
                         <p className="leading-relaxed text-base">
-                            Each doctor registered in the system by the "Owner"
+                            Each doctor registered in the system by the &quot;Owner&quot;
                             can view his/her details. These details are
                             basically the profile information of the doctor.
                         </p>
@@ -47,13 +47,13 @@ export default function PatientWorkflow() {
                     </div>
                     <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
                         <h2 className="text-gray-900 text-lg title-font font-medium mb-2">
-                            Add Patient's Medical Records
+                            Add Patient&apos;s Medical Records
                         </h2>
                         <p className="leading-relaxed text-base">
                             A registered doctor can add medical records of a
                             patient to the blockchain through this system. This
                             will be immutable record in the form of transaction
-                            and can't be changed once added.
+                            and can&apos;t be changed once added.
                         </p>
                     </div>
                 </div>

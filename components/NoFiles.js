@@ -17,10 +17,10 @@ export default function NoFiles({customText}) {
                 data={[]}
                 header={[
                     "",
-                    <span></span>,
-                    <span className="md:ml-20">No Files</span>,
-                    <span></span>,
-                    <span></span>,
+                    // <span></span>,
+                    // <span className="md:ml-20">No Files</span>,
+                    // <span></span>,
+                    // <span></span>,
                     "",
                 ]}
                 // maxPages={3}

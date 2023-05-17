@@ -116,27 +116,35 @@ export default function OwnerDashboard() {
         onCloseDoctorModal && onCloseDoctorModal() //closing the modal on success
     }
 
+    const {
+        config: addDoctorDetailsConfig,
+        error: addDoctorDetailsConfigError,
+    } = usePrepareContractWrite({
+        address: medicalRecordSystemAddress,
+        abi: PatientMedicalRecordSystemAbi,
+        functionName: "addDoctorDetails",
+        args: [
+            doctorAddressToAddTo,
+            doctorName,
+            doctorRegistrationId,
+            dateInUnix(new Date()),
+            doctorSpecialization,
+            doctorHospitalAddress,
+        ],
+    })
+
+    const {
+        error: addDoctorDetailsError,
+        isError: isAddDoctorDetailsTxError,
+        isLoading: isLoadingAddDoctorDetails,
+        isSuccess: isSuccessAddDoctorDetails,
+        write: writeAddDoctorDetails,
+    } = useContractWrite(addDoctorDetailsConfig)
+
     const initiateAddDoctorTransaction = async () => {
         console.log("Initiate Add Doctor Transaction")
         setCancelDisabled(true)
         setOkDisabled(true)
-
-        const {
-            config: addDoctorDetailsConfig,
-            error: addDoctorDetailsConfigError,
-        } = usePrepareContractWrite({
-            address: medicalRecordSystemAddress,
-            abi: PatientMedicalRecordSystemAbi,
-            functionName: "addDoctorDetails",
-            args: [
-                doctorAddressToAddTo,
-                doctorName,
-                doctorRegistrationId,
-                dateInUnix(new Date()),
-                doctorSpecialization,
-                doctorHospitalAddress,
-            ],
-        })
 
         if (addDoctorDetailsConfigError) {
             console.log("Error while preparing addDoctorDetails Transaction")
@@ -145,14 +153,6 @@ export default function OwnerDashboard() {
                 query: { message: addDoctorDetailsConfigError.message },
             })
         }
-
-        const {
-            error: addDoctorDetailsError,
-            isError: isAddDoctorDetailsTxError,
-            isLoading: isLoadingAddDoctorDetails,
-            isSuccess: isSuccessAddDoctorDetails,
-            write: writeAddDoctorDetails,
-        } = useContractWrite(addDoctorDetailsConfig)
 
         if (isAddDoctorDetailsTxError) {
             console.log("Error while calling addDoctorDetails function")
@@ -181,36 +181,36 @@ export default function OwnerDashboard() {
         onCloseHospitalModal && onCloseHospitalModal() //closing the modal on success
     }
 
+    const {
+        config: addHospitalDetailsConfig,
+        error: addHospitalDetailsConfigError,
+    } = usePrepareContractWrite({
+        address: medicalRecordSystemAddress,
+        abi: PatientMedicalRecordSystemAbi,
+        functionName: "addHospitalDetails",
+        args: [
+            hospitalAddressToAddTo,
+            hospitalName,
+            hospitalRegistrationId,
+            hospitalEmail,
+            hospitalPhoneNumber,
+        ],
+    })
+
+    const {
+        data,
+        error: addHospitalDetailsError,
+        isError: isAddHospitalDetailsTxError,
+        isLoading: isLoadingAddHospitalDetails,
+        isSuccess: isSuccessAddHospitalDetails,
+        write: writeAddHospitalDetails,
+    } = useContractWrite(addHospitalDetailsConfig)
+
     // adding a new hospital in the system.
     const initiateAddHospitalTransaction = async () => {
         console.log("Initiate Add Hospital Transaction")
         setCancelDisabled(true)
         setOkDisabled(true)
-
-        const {
-            config: addHospitalDetailsConfig,
-            error: addHospitalDetailsConfigError,
-        } = usePrepareContractWrite({
-            address: medicalRecordSystemAddress,
-            abi: PatientMedicalRecordSystemAbi,
-            functionName: "addHospitalDetails",
-            args: [
-                hospitalAddressToAddTo,
-                hospitalName,
-                hospitalRegistrationId,
-                hospitalEmail,
-                hospitalPhoneNumber,
-            ],
-        })
-
-        const {
-            data,
-            error: addHospitalDetailsError,
-            isError: isAddHospitalDetailsTxError,
-            isLoading: isLoadingAddHospitalDetails,
-            isSuccess: isSuccessAddHospitalDetails,
-            write: writeAddHospitalDetails,
-        } = useContractWrite(addHospitalDetailsConfig)
 
         if (addHospitalDetailsConfigError) {
             console.log(

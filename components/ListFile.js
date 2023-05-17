@@ -21,13 +21,8 @@ export default function ListFile({ fileMetadataHash, customText, haveFiles }) {
 
     return (
         <div>
-            {fileMetadataHash.map((item) => {
-                return (
-                    <div>
-                        {" "}
-                        <ListItem metadataURI={item} key={item} />
-                    </div>
-                )
+            {fileMetadataHash.map((item, index) => {
+                return <ListItem metadataURI={item} key={index} />
             })}
         </div>
     )

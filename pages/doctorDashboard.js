@@ -141,8 +141,3 @@ export default function DoctorDashboard() {
         </div>
     )
 }
-
-/* 1. registered doctors can view their details. 
-                        
-2. Registered doctors can add diagnostic tests and diagnosis details in a particular patient's record. For this Add a Button which opens a modal form.
-*/
