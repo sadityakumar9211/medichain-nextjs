@@ -157,7 +157,7 @@ export default function Home() {
                                     </h4>
                                     <p className="relative mt-2 md:text-base text-sm text-center text-gray-600">
                                         Every node in the network has an
-                                        encrypted copy of you data which only
+                                        encrypted copy of your data which only
                                         you can decrypt. This removes single
                                         point of failure making the data safe
                                         from ransomeware attacks.
