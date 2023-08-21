@@ -6,7 +6,7 @@ import PatientMedicalRecordSystemAbi from "../constants/PatientMedicalRecordSyst
 import { GET_PUBLIC_KEYS } from "../constants/subgraphQueries"
 import { useQuery } from "@apollo/client"
 import NodeRSA from "node-rsa"
-import * as IPFS from "ipfs-core"
+import {Web3Storage} from "web3.storage"
 
 
 export default function AddPatientModal({ isVisible, onClose }) {
@@ -84,9 +84,10 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading file to ipfs
         let fileIpfsHash
         try {
-            const client = await IPFS.create({repo: 'ok' + Math.random()})
-            const {cid} = (await client.add(file))
+            const client = new Web3Storage({ token: process.env.web3storage_token })
+            const cid = await client.put([file], {wrapWithDirectory: false})
             fileIpfsHash = cid.toString()
+            // console.log("hash: ",fileIpfsHash)
         } catch (e) {
             console.log("IPFS Upload Error", e)
         }
@@ -103,9 +104,20 @@ export default function AddPatientModal({ isVisible, onClose }) {
         //uploading the fileMetadata to IPFS
         let IpfsHash
         try {
-            const client = await IPFS.create({repo: 'ok' + Math.random()})
-            const {cid} = (await client.add(JSON.stringify(fileMetadata)))
+            const blob = new Blob([JSON.stringify(fileMetadata)], {
+                type: "application/json",
+            })
+
+            const files = [
+                new File([blob], "fileMetadata.json"),
+            ]
+            const client = new Web3Storage({
+                token: process.env.web3storage_token,
+            })
+            const cid = await client.put(files, { wrapWithDirectory: false })
             IpfsHash = cid.toString()
+
+            // console.log("metadata hash: ", IpfsHash)
 
         } catch (e) {
             console.log(e)
@@ -116,7 +128,6 @@ export default function AddPatientModal({ isVisible, onClose }) {
 
         //encrypting the fileMetadata using the public key of the patient
         // console.log("patientPublicKey: ", patientPublicKey)   ///---------
-        // console.log({patientPublicKey})
         const publicKeyPatient = new NodeRSA(patientPublicKey)
         const encryptedIpfsHash = publicKeyPatient.encrypt(IpfsHash, "base64")
 

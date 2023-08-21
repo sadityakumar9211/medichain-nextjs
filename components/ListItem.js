@@ -15,13 +15,14 @@ export default function ListItem({ metadataURI }) {
     //Here fetching the metadata
     // console.log("Metadata URI from the ListItem component", metadataURI)
     const { data, error } = useSWR(
-        `https://ipfs.io/ipfs/${metadataURI}`,
+        `https://${metadataURI}.ipfs.w3s.link`,
         fetcher
     )
 
     if (error) {
         console.log("Error while fetching file metadata: ", error)
-        return <div>Failed to Load...Reloading the page might help.</div>
+        // return <div>Failed to Load...Reloading the page might help.</div>
+        return <div></div>
     }
 
     if (!data) {
@@ -46,7 +47,7 @@ export default function ListItem({ metadataURI }) {
         }
 
         const handleQRCode = () => {
-            QRCODE.toDataURL(`http://ipfs.io/ipfs/${data.fileIpfsHash}`).then(
+            QRCODE.toDataURL(`http://${data.fileIpfsHash}.ipfs.w3s.link`).then(
                 (response) => {
                     setSource(response)
                 }

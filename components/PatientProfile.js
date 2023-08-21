@@ -2,7 +2,7 @@ import truncatStr from "../utils/truncateString"
 import timestampToDate from "../utils/timestampToDate"
 import { useState } from "react"
 import ListMedicalFiles from "./ListMedicalFiles"
-import { Modal, Input, useNotification } from "web3uikit"
+import { Modal, useNotification } from "web3uikit"
 import NodeRSA from "node-rsa"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
@@ -127,6 +127,31 @@ export default function PatientProfile({
     }
     // console.log("Decrypted Vaccination Hash: ", decryptedVaccinationHash)
 
+    function readFileContent(file) {
+        return new Promise((resolve, reject) => {
+            if (!file) {
+                reject("No file provided.")
+            }
+
+            if (!file.name.endsWith(".txt")) {
+                reject("Invalid file format. Only .txt files are supported.")
+            }
+
+            const reader = new FileReader()
+
+            reader.onload = (event) => {
+                const content = event.target.result
+                resolve(content)
+            }
+
+            reader.onerror = () => {
+                reject("Error reading file.")
+            }
+
+            reader.readAsText(file)
+        })
+    }
+
     return (
         <div>
             <div>
@@ -154,17 +179,17 @@ export default function PatientProfile({
                                 will not store it and only use to decrypt the
                                 IPFS hashes locally.
                             </div>
-                            <Input
-                                label="Enter your private key here"
-                                name="Patient Private Key"
-                                autoFocus={true}
-                                type="password"
-                                width="full"
-                                onChange={(event) => {
-                                    setPrivateKey(event.target.value)
-                                }}
-                                validation={{
-                                    required: true,
+
+                            <input
+                                type="file"
+                                id="fileInput"
+                                accept=".txt"
+                                required
+                                onChange={async (event) => {
+                                    const privateKey = await readFileContent(
+                                        event.target.files[0]
+                                    )
+                                    setPrivateKey(privateKey)
                                 }}
                             />
                         </div>
@@ -268,7 +293,7 @@ export default function PatientProfile({
                                         textAlign: "center",
                                     }}
                                 >
-                                    File Decryption Unsucccessful due to
+                                    File Decryption Unsuccessful due to
                                     Incorrect Private Key
                                 </p>
                             </Modal>

@@ -43,7 +43,7 @@ export default function RegisterPatientModal({ isVisible, onClose, account }) {
         setShowKeys(false)
     }
     const generateKeys = async () => {
-        const key = new NodeRSA({ bits: 2048 })
+        const key = new NodeRSA({ bits: 4096 })
         const publicKey = key.exportKey("pkcs8-public-pem")
         const privateKey = key.exportKey("pkcs8-private-pem")
         return { publicKey, privateKey }
