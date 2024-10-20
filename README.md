@@ -49,6 +49,9 @@
   </p>
 </div>
 
+### Latest
+The current version (v2) of this project is available at [github.com/myriad-org](https://github.com/myriad-org/).
+
 ### This is the Front-end repository of this project.
 
 <!-- TABLE OF CONTENTS -->
